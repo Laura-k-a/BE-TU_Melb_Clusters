@@ -1,0 +1,254 @@
+K-means clustering with 4 clusters of sizes 86, 1124, 1839, 7580
+
+Cluster means:
+  X26_PropComm X28_Balance X31_PedConnect    X32_PBN X35_Parkiteer  X37_ACDist
+1    3.6545544   3.1831014      3.6726561  1.6059389    -0.1188253 -0.55683457
+2    0.9185094   0.9096051     -1.0268214 -0.1506290    -0.1036407  1.52171203
+3    0.5832204   0.2595867      1.0158684  0.5500011     0.5169133 -0.58612967
+4   -0.3191608  -0.2339740     -0.1358685 -0.1293213    -0.1086929 -0.07712719
+  X38_ACCount    X39._FTZ X40_Parking X41_PropUrban X42_PropRural X43_EmpAccess
+1   0.9747519  9.98120441 -0.14244901    -0.1630258   -0.10009551     4.8671511
+2  -0.3551996 -0.08141739 -0.09571846    -2.2671398   -0.04225845    -0.3236561
+3   1.5658729 -0.08141739  0.52787151     0.1867728   -0.04683677     1.1632828
+4  -0.3382882 -0.08141739 -0.11225825     0.2927190    0.01876511    -0.2894542
+     Factor1      Factor2     Factor3
+1  0.2354734  9.266470660  1.87598946
+2 -0.8736083  0.314082749 -1.08000867
+3  1.1800763  0.002654093  0.43270278
+4 -0.1594295 -0.152351763  0.03388578
+
+Clustering vector:
+ 3059-bus 10253-bus 10235-bus 10226-bus 10233-bus 11843-bus 10206-bus 10200-bus  6673-bus 
+        2         2         2         2         2         4         2         2         4 
+ 6954-bus  6903-bus  7021-bus  7080-bus  7261-bus  7340-bus  7277-bus  6874-bus  6720-bus 
+        4         4         4         4         4         4         4         4         4 
+ 6949-bus  7113-bus  6618-bus  7041-bus  7087-bus  7495-bus  7077-bus  6528-bus  6897-bus 
+        4         4         4         4         4         4         4         4         4 
+ 7198-bus  6649-bus  6285-bus  6816-bus  6844-bus  6850-bus  7101-bus  6871-bus  7084-bus 
+        3         4         4         4         4         4         3         4         4 
+ 7175-bus  2992-bus  2986-bus 10196-bus  3106-bus  3064-bus  3080-bus  3091-bus  3061-bus 
+        3         2         2         2         2         2         2         2         2 
+ 3098-bus 11308-bus 12302-bus 12375-bus 12606-bus 12480-bus 12597-bus 12585-bus  3497-bus 
+        2         2         4         4         4         4         4         4         2 
+12654-bus  3124-bus  3142-bus  3131-bus  3148-bus  3924-bus 10181-bus  3137-bus  3960-bus 
+        4         2         2         2         2         2         2         2         2 
+ 3891-bus  3961-bus  3134-bus  3208-bus 12292-bus  3930-bus  3140-bus  3933-bus 12291-bus 
+        2         2         2         2         2         2         2         2         2 
+ 3380-bus    18-bus  3143-bus  3904-bus 12306-bus  3963-bus 12303-bus 12771-bus 11173-bus 
+        2         2         2         2         2         2         2         2         2 
+ 3145-bus  3286-bus 12295-bus 11053-bus 10179-bus  3329-bus  3023-bus  3966-bus  3958-bus 
+        2         2         2         2         2         2         2         4         2 
+ 3964-bus 12301-bus 11406-bus 11404-bus 11137-bus  2977-bus  3969-bus  4034-bus 11077-bus 
+        2         2         2         2         2         2         4         4         2 
+ 3967-bus  2978-bus  2902-bus  4052-bus 12300-bus 11123-bus  2980-bus  2898-bus  3982-bus 
+        2         2         2         4         2         2         2         2         2 
+ 3979-bus  2919-bus  3988-bus  3984-bus  3981-bus  2889-bus 11072-bus  3978-bus  3972-bus 
+        2         2         2         2         2         2         2         4         4 
+ 3990-bus  3001-bus  3976-bus  2892-bus  3985-bus 12283-bus 11065-bus  3022-bus  3017-bus 
+        2         2         2         2         2         2         2         2         2 
+12298-bus  3987-bus  3975-bus  3970-bus 12297-bus 12294-bus  3973-bus 12288-bus 12286-bus 
+        2         2         2         2         2         2         2         2         2 
+11075-bus  2996-bus  3391-bus  3016-bus  3002-bus  6883-bus  3368-bus  3991-bus 11084-bus 
+        2         2         2         2         2         4         2         2         2 
+10988-bus  3049-bus 11081-bus 11054-bus  7042-bus  6783-bus  3458-bus 11086-bus  6910-bus 
+        2         2         2         2         4         4         2         2         4 
+12733-bus  3472-bus  4083-bus 10949-bus  2998-bus 11030-bus 10940-bus  3445-bus 11087-bus 
+        4         2         4         2         2         2         2         2         2 
+ 2958-bus  3050-bus 12282-bus 10928-bus 11041-bus 12768-bus  3389-bus  3047-bus  3367-bus 
+        2         2         2         2         2         2         2         2         2 
+ 3359-bus 11089-bus  3993-bus  3007-bus  4566-bus  3331-bus  3008-bus  3005-bus 11098-bus 
+        2         2         2         2         2         2         2         2         2 
+ 3314-bus  3994-bus  3317-bus  3013-bus  3046-bus  3044-bus  3035-bus 11090-bus 648-train 
+        2         2         2         2         2         2         2         2         2 
+11093-bus  3295-bus  3302-bus  3299-bus  3029-bus  3332-bus  3040-bus  3028-bus  3011-bus 
+        2         2         2         2         2         2         2         2         2 
+ 4963-bus  9807-bus  8884-bus  9000-bus  8854-bus  9040-bus  9132-bus  9063-bus  9102-bus 
+        4         2         4         4         4         4         4         4         4 
+ 9193-bus  9052-bus  9138-bus  9238-bus  9191-bus  9239-bus  9350-bus  8826-bus  3032-bus 
+        4         4         4         4         4         4         2         2         2 
+ 3043-bus  3038-bus  3037-bus  8768-bus  3322-bus  3328-bus  3020-bus  6232-bus  6141-bus 
+        2         2         2         4         2         2         2         4         4 
+11457-bus  3025-bus  7044-bus  3019-bus  4961-bus  3394-bus  4391-bus  3382-bus  3034-bus 
+        2         2         4         2         4         2         4         2         2 
+ 3298-bus  3395-bus  8402-bus  3026-bus  3383-bus  3361-bus 12685-bus 12595-bus 10728-bus 
+        2         2         4         2         2         2         4         4         4 
+11250-bus 11414-bus 10929-bus 10296-bus 10818-bus 10338-bus 10275-bus 11046-bus 11136-bus 
+        4         4         4         3         4         3         3         4         4 
+10500-bus 10434-bus 10578-bus  9959-bus 10668-bus  9833-bus  9724-bus  9300-bus  9261-bus 
+        4         4         4         3         4         4         4         4         4 
+ 9234-bus  9739-bus  9246-bus  9285-bus  8798-bus  9634-bus 10144-bus  8822-bus  9670-bus 
+        4         4         3         4         4         3         4         3         4 
+ 8828-bus  8849-bus  9579-bus  9531-bus  8181-bus  8426-bus  9902-bus  9378-bus  8411-bus 
+        4         4         4         3         3         3         3         3         3 
+ 9519-bus  9628-bus  9273-bus  9625-bus  8771-bus  7747-bus  3014-bus  8453-bus  3350-bus 
+        3         3         3         3         3         3         2         4         2 
+ 3386-bus  7114-bus  4383-bus  3031-bus  6261-bus  5834-bus  3412-bus  9155-bus  3385-bus 
+        2         4         4         2         4         2         2         4         2 
+ 6070-bus 10433-bus 10376-bus 10653-bus 10557-bus 12273-bus  4002-bus  9372-bus 10842-bus 
+        2         2         2         4         4         4         2         4         4 
+ 4916-bus  6189-bus  9164-bus  6069-bus  9357-bus 10425-bus 10779-bus  8304-bus  6244-bus 
+        4         2         4         2         4         4         4         4         2 
+ 9516-bus 12276-bus  9243-bus  9643-bus  3379-bus  9450-bus  6849-bus  4939-bus 12279-bus 
+        4         4         4         4         2         4         4         4         4 
+ 9857-bus  6789-bus  9760-bus  9107-bus  7189-bus  9005-bus  9026-bus 10468-bus 10755-bus 
+        4         4         4         4         4         4         4         2         4 
+12270-bus  4349-bus  8978-bus 12280-bus 12252-bus 10496-bus  6348-bus 12262-bus  6703-bus 
+        2         4         4         4         4         2         2         2         4 
+ 8591-bus 12269-bus  8954-bus 11564-bus 11567-bus 11537-bus 11666-bus 11510-bus 11822-bus 
+        4         2         4         4         4         4         4         4         4 
+ 5582-bus  4918-bus  5593-bus 12249-bus 10307-bus  6547-bus 12255-bus  3415-bus 12259-bus 
+        4         4         4         4         2         4         2         2         2 
+12773-bus 10588-bus 10603-bus 10622-bus 10538-bus 10456-bus 10550-bus 10541-bus 10453-bus 
+        4         4         4         4         4         4         4         4         4 
+10414-bus 10523-bus 10435-bus 10421-bus 10532-bus 10436-bus 10450-bus 10502-bus 10661-bus 
+        4         4         4         4         4         4         4         4         4 
+10492-bus 10457-bus 10534-bus 10517-bus 10467-bus 10270-bus 10451-bus 10417-bus 10682-bus 
+        4         4         4         4         4         4         4         4         4 
+10372-bus 10361-bus 10340-bus 10441-bus 10487-bus 10298-bus 10507-bus 10316-bus    13-bus 
+        4         4         4         4         4         4         4         4         4 
+10484-bus 10775-bus    15-bus    14-bus 10609-bus 10483-bus  3401-bus  6487-bus  8232-bus 
+        3         4         4         3         2         2         4         2         4 
+ 8930-bus  8534-bus 10303-bus 12277-bus 10645-bus  4199-bus  4190-bus  8366-bus  4151-bus 
+        4         4         2         2         2         4         4         4         4 
+ 7174-bus  4206-bus  4136-bus  6642-bus  4187-bus  4155-bus  4077-bus 10669-bus  4073-bus 
+        4         4         4         4         4         4         4         2         4 
+ 4160-bus 10607-bus  8825-bus  6692-bus  2901-bus  4071-bus 10613-bus  2922-bus  8894-bus 
+        4         2         4         2         4         4         2         2         4 
+ 6549-bus  4038-bus  3995-bus  3362-bus  4020-bus  8666-bus  4247-bus  4005-bus  4132-bus 
+        2         4         4         2         4         4         2         4         2 
+ 3999-bus  5830-bus  2916-bus 10837-bus  4263-bus 12230-bus  7180-bus 10567-bus  5677-bus 
+        4         4         2         2         2         4         4         2         4 
+10573-bus  4001-bus  2904-bus 10600-bus  2913-bus  4014-bus 10601-bus  3335-bus  4011-bus 
+        2         4         2         2         2         4         2         2         4 
+10561-bus  4008-bus 10883-bus 10558-bus  4013-bus 12213-bus  3077-bus 12268-bus 10832-bus 
+        2         4         2         2         4         4         4         2         4 
+10699-bus 10799-bus 10796-bus 10406-bus 10802-bus 10823-bus 10804-bus 10660-bus 10808-bus 
+        4         4         4         4         4         4         4         4         4 
+10300-bus 10318-bus 10562-bus 10637-bus 10559-bus 10525-bus 10556-bus 10570-bus 10519-bus 
+        4         4         4         4         4         4         3         4         4 
+10522-bus 10498-bus 10633-bus 10597-bus 10555-bus 10582-bus 10760-bus 10781-bus 10705-bus 
+        4         4         4         4         4         3         4         4         4 
+10792-bus 10643-bus 10358-bus 10544-bus 10672-bus 10723-bus 10594-bus 10693-bus 10514-bus 
+        4         4         2         4         2         4         3         4         4 
+10678-bus 10771-bus 10724-bus 10711-bus 10658-bus 10595-bus 10744-bus 10648-bus 10630-bus 
+        4         4         4         4         3         3         4         2         3 
+10367-bus 10405-bus 10396-bus 10381-bus 10691-bus 10375-bus 10675-bus 10684-bus 10490-bus 
+        4         4         4         4         4         4         2         2         4 
+ 8675-bus  4880-bus 10529-bus 12554-bus  4031-bus  4010-bus  2910-bus  4007-bus 12770-bus 
+        4         4         2         4         4         4         2         4         2 
+12695-bus  4035-bus  5794-bus 10535-bus 12769-bus  5749-bus  4025-bus  4040-bus 12662-bus 
+        4         4         4         2         2         4         4         4         2 
+ 4016-bus 10856-bus  2907-bus  4667-bus  4353-bus 12240-bus  6184-bus  4068-bus  4046-bus 
+        4         2         2         2         4         4         4         4         4 
+ 4205-bus  7628-bus  4379-bus  4376-bus  4385-bus  3725-bus  3731-bus  4094-bus 10511-bus 
+        4         4         4         4         4         2         2         4         2 
+ 3761-bus  4176-bus  5048-bus  4029-bus  2928-bus 11032-bus  2961-bus 10982-bus 11036-bus 
+        4         4         4         4         2         2         2         2         2 
+ 4997-bus 12215-bus 11039-bus 11882-bus 12032-bus 12226-bus 12151-bus 12348-bus 12621-bus 
+        4         4         2         4         4         4         4         2         2 
+12681-bus 12599-bus  2890-bus 10973-bus  7192-bus  5008-bus  4251-bus 11023-bus  3074-bus 
+        2         2         2         2         4         4         4         2         4 
+11017-bus  3058-bus  4224-bus  4203-bus  3707-bus  8603-bus 10990-bus  3068-bus  3701-bus 
+        2         2         3         3         4         4         2         4         4 
+ 4310-bus  3704-bus  3713-bus  5158-bus  4260-bus  2955-bus  4283-bus  3266-bus  2970-bus 
+        4         4         2         4         4         2         4         2         2 
+ 4118-bus  3082-bus  4157-bus  4102-bus  4244-bus  5110-bus  5014-bus  4331-bus 11604-bus 
+        4         2         3         4         4         4         4         4         2 
+ 7992-bus  4140-bus  5057-bus  4044-bus  3076-bus  4254-bus  5174-bus  4373-bus  5087-bus 
+        2         3         4         4         4         4         4         4         4 
+ 3695-bus  3213-bus  3734-bus  4148-bus  3850-bus 10931-bus  3073-bus  2949-bus  3052-bus 
+        2         2         2         3         4         4         4         2         2 
+10966-bus  4358-bus  3872-bus  2946-bus 11011-bus  2952-bus  4017-bus  3070-bus  3249-bus 
+        2         4         4         2         2         2         4         4         2 
+ 3719-bus  5182-bus  3234-bus 11012-bus 10470-bus  3692-bus  4281-bus 11020-bus 10999-bus 
+        2         4         2         2         2         4         2         2         2 
+10505-bus  4004-bus 10951-bus 10906-bus  2943-bus  2940-bus  3896-bus 11018-bus 11259-bus 
+        2         4         2         2         4         4         4         2         4 
+11202-bus 11142-bus 11031-bus 11399-bus 11411-bus 11669-bus 12378-bus 12525-bus 11579-bus 
+        4         4         3         4         4         3         4         4         4 
+12399-bus 12549-bus 12633-bus 12582-bus 11519-bus 11384-bus 10177-bus 10890-bus 11220-bus 
+        4         4         4         4         4         4         3         4         4 
+10979-bus 10970-bus 10985-bus 10996-bus 10921-bus 10499-bus  4095-bus 12274-bus  3258-bus 
+        2         2         2         2         2         2         4         2         2 
+ 3219-bus 10442-bus  4153-bus  4065-bus 11119-bus 10927-bus 10843-bus  4032-bus 10429-bus 
+        2         2         2         4         4         2         2         4         2 
+ 3808-bus  4056-bus 10840-bus  7784-bus  5239-bus  3805-bus 10922-bus  3117-bus  6054-bus 
+        2         4         2         2         4         2         2         4         2 
+10942-bus  4179-bus  3138-bus  4185-bus  9047-bus  4074-bus  6037-bus  3114-bus  3996-bus 
+        2         4         2         4         4         4         4         4         4 
+ 4037-bus  3998-bus  3135-bus  3090-bus  3953-bus  4483-bus  4050-bus 11116-bus  3153-bus 
+        4         4         2         4         4         4         4         4         2 
+ 2967-bus  3096-bus  3093-bus  3677-bus  6799-bus  3177-bus  4134-bus  4043-bus  3276-bus 
+        2         4         4         4         4         2         4         4         2 
+ 4223-bus  4150-bus  3156-bus  5264-bus  3186-bus  6796-bus  3105-bus 12267-bus  4156-bus 
+        3         2         2         4         2         4         4         2         2 
+11125-bus  4202-bus  4143-bus  4062-bus  3844-bus  4236-bus  3126-bus 10876-bus  8984-bus 
+        4         3         4         4         4         4         2         4         4 
+ 4079-bus 12679-bus  3354-bus  5521-bus  3668-bus  3674-bus  3071-bus  3489-bus  4152-bus 
+        4         4         2         2         4         2         4         2         4 
+ 4080-bus 10328-bus  5254-bus 10339-bus  3108-bus  5614-bus 11201-bus 12677-bus  7788-bus 
+        4         2         4         2         4         2         2         4         4 
+ 8258-bus  8173-bus  8065-bus  7979-bus  8057-bus  8083-bus  3087-bus  3327-bus  3339-bus 
+        4         4         4         4         4         4         4         2         2 
+ 4173-bus  7945-bus  7846-bus  8147-bus  8029-bus  8066-bus  8078-bus  8165-bus  5255-bus 
+        3         4         4         4         4         4         4         4         4 
+ 8101-bus  4165-bus  7521-bus  3229-bus  3294-bus  4235-bus  4518-bus 11195-bus  3378-bus 
+        4         2         4         2         2         4         4         2         2 
+ 3212-bus  3671-bus 10301-bus 10364-bus  7605-bus 11213-bus 10357-bus  4474-bus  3251-bus 
+        2         4         2         2         4         4         2         4         2 
+ 4193-bus  4131-bus 12766-bus 12754-bus  6181-bus  3501-bus  3662-bus  2931-bus  7529-bus 
+        4         4         4         4         2         2         4         2         4 
+ 3309-bus  6694-bus  3450-bus 11219-bus  4879-bus  5756-bus  3926-bus  5681-bus  2934-bus 
+        2         4         2         4         4         2         4         2         2 
+ 8023-bus  4250-bus  4548-bus  5321-bus  4154-bus 10865-bus  4098-bus 10274-bus  4231-bus 
+        4         4         4         4         4         4         4         2         2 
+ 3129-bus  3075-bus  6634-bus  4163-bus  2937-bus  4533-bus  3402-bus  2988-bus  4900-bus 
+        4         4         4         4         4         4         2         2         4 
+ 4166-bus  3066-bus  4106-bus 10793-bus  4221-bus  3525-bus  6637-bus  6640-bus  4275-bus 
+        4         4         4         2         4         2         2         4         4 
+ 4211-bus  3659-bus  7548-bus  4133-bus  4137-bus  3012-bus  4130-bus  4159-bus  5078-bus 
+        4         4         4         4         4         4         4         2         4 
+ 4124-bus  5921-bus 10831-bus  3065-bus  7201-bus  4233-bus  4229-bus  4265-bus  4867-bus 
+        4         4         2         2         4         4         4         4         4 
+ 4245-bus  4241-bus  3653-bus  3528-bus  4278-bus  4239-bus  6216-bus 10861-bus  4145-bus 
+        4         4         4         2         4         4         4         4         4 
+ 6504-bus  4191-bus  5071-bus  6811-bus  5081-bus  4127-bus 10895-bus  6229-bus  6834-bus 
+        4         4         4         4         4         4         4         4         4 
+ 4237-bus  4209-bus  6601-bus  3698-bus  7191-bus  6124-bus  4164-bus 10915-bus  6111-bus 
+        2         4         4         4         2         4         4         4         4 
+ 2997-bus  4218-bus  6681-bus  4849-bus 10877-bus  4110-bus 10870-bus  3540-bus  4089-bus 
+        4         4         4         4         4         4         4         2         4 
+11230-bus  4531-bus  6898-bus  6243-bus  3632-bus  6220-bus  4049-bus  4041-bus  4053-bus 
+        4         4         4         4         4         4         4         4         4 
+ 4101-bus  3504-bus  4085-bus  5969-bus  3516-bus  2982-bus  4542-bus  6091-bus  4022-bus 
+        4         2         4         4         2         4         4         4         4 
+12699-bus 12767-bus  4088-bus  4019-bus  4023-bus  4525-bus 10874-bus  4113-bus  6980-bus 
+        4         4         4         4         4         4         4         4         2 
+ 4844-bus  4706-bus  4642-bus  3575-bus  3144-bus  8049-bus  5135-bus  9119-bus 11941-bus 
+        4         4         4         2         4         2         4         4         4 
+ 4688-bus  4648-bus 11117-bus  4987-bus  4658-bus  4528-bus  4973-bus  5938-bus  3510-bus 
+        4         4         4         4         4         4         4         4         2 
+ 5993-bus 10464-bus 12200-bus  3537-bus  4709-bus  3549-bus 10459-bus  4810-bus  6049-bus 
+        4         2         4         2         4         2         2         4         4 
+ 4087-bus  4681-bus  4738-bus  9616-bus 10295-bus 10292-bus  5597-bus 10591-bus 10568-bus 
+        4         4         4         4         4         4         4         4         4 
+10427-bus 10418-bus 10438-bus 10430-bus 10382-bus 10531-bus 10385-bus 10336-bus 10373-bus 
+        4         3         4         4         3         4         4         4         4 
+10424-bus 10324-bus 10411-bus 10426-bus 10448-bus 10378-bus 10370-bus 10354-bus 10346-bus 
+        4         4         3         3         3         4         4         4         4 
+10352-bus 10412-bus 10327-bus 10423-bus 10465-bus 10445-bus 10454-bus 10462-bus 10501-bus 
+        4         4         4         4         4         4         4         4         4 
+10478-bus 10334-bus 10379-bus 10363-bus 10409-bus 10312-bus 10400-bus 10432-bus 10345-bus 
+        4         3         3         3         3         4         3         3         4 
+10399-bus 
+        3 
+ [ reached getOption("max.print") -- omitted 9629 entries ]
+
+Within cluster sum of squares by cluster:
+[1]  5173.788 19495.550 45249.314 34559.322
+ (between_SS / total_SS =  34.5 %)
+
+Available components:
+
+[1] "cluster"      "centers"      "totss"        "withinss"     "tot.withinss"
+[6] "betweenss"    "size"         "iter"         "ifault"      
