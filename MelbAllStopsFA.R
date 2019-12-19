@@ -200,7 +200,11 @@ Melb_All_fs <- factor.scores(cormat.BE.Allmodes.800, fa.BE.800.3.promax)
 Melb_All_fs <-Melb_All_fs$scores    #get the columns of factor scores for each case
 Allmodes.Melb.800<- cbind(Allmodes.Melb.800,Melb_All_fs) #append factor scores to dataset
 
+Melb_All_fs
+options(max.print=10000000)
 capture.output(Allmodes.Melb.800, file = "Allmodes.Melb.800.csv")
+capture.output(Melb_All_fs, file = "Melb_All_fsb.800.csv")
+
 #factor1 = Local access
 #factor2 = Employment density
 #factor 3 = Residential density
