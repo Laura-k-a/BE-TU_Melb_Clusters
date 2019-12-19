@@ -3,8 +3,10 @@ Call:
 factanal(x = cormat.BE.Allmodes.800, factors = 3, scores = "regression",     rotation = "promax", lower = 0.01)
 
 Uniquenesses:
-    X21_Empden     X23_Popden      X24_Dwell  X27_RetailEmp X30_HousingDiv  X33_DestScore  X34_DestCount    X36_CDBDist 
-         0.010          0.010          0.021          0.053          0.369          0.292          0.177          0.503 
+    X21_Empden     X23_Popden      X24_Dwell  X27_RetailEmp 
+         0.010          0.010          0.021          0.053 
+X30_HousingDiv  X33_DestScore  X34_DestCount    X36_CDBDist 
+         0.369          0.292          0.177          0.503 
 
 Loadings:
                Factor1 Factor2 Factor3

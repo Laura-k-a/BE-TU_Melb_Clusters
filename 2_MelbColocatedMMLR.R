@@ -191,5 +191,48 @@ plot(lm(ln_Centroid_Mode ~ X10_PropComm+X12_LUEntropy+ X20_PropUrban+ X22_EmpAcc
 
 plot(lm(ln_Bus ~ X10_PropComm+X12_LUEntropy+ X20_PropUrban+ X22_EmpAccess+ X23_C_LOS+ X24_O_Bus_LOS+ X26_O_Train_LOS+ X29_PropOS+ X30_PropBach+ X31_LocalAccess_800+ X32_EmpDen_800+ X34_censored_PropFTE, data =Melb.Trambus.noFTZ.rd2))
 
-#first, try rerunning the factor analysis, excluding free tram zone. 
-#remove276-tram, remove258bus
+#first, try rerunning the factor analysis, excluding free tram zone.
+#did not yield strnog factor solutions
+#remove276-tram, remove258
+
+which(rownames(Melb.Trambus.noFTZ.rd2) == "276-tram") #47
+which(rownames(Melb.Trambus.noFTZ.rd2) == "258-tram") #151
+
+#remove influential outlier
+Melb.Trambus.noFTZ.rd3 <- Melb.Trambus.noFTZ.rd2[-c(47, 151),]
+
+#rd 3
+Melb.Trambus.noFTZ.MMLR.3.1<-lm(cbind(ln_Centroid_Mode, ln_Bus) ~ X10_PropComm+X12_LUEntropy+ X13_PedConnect+ X14_PBN+ X16_ACDist+ X17_ACCount+ X20_PropUrban+ X22_EmpAccess+ X23_C_LOS+ X24_O_Bus_LOS+ X26_O_Train_LOS+ X29_PropOS+ X30_PropBach+ X31_LocalAccess_800+ X32_EmpDen_800+ X34_censored_PropFTE+ X35_censored_MeanSize, data =Melb.Trambus.noFTZ.rd3)
+summary(Melb.Trambus.noFTZ.MMLR.3.1)
+Anova(Melb.Trambus.noFTZ.MMLR.3.1)
+
+#remove ACDist
+Melb.Trambus.noFTZ.MMLR.3.2<-lm(cbind(ln_Centroid_Mode, ln_Bus) ~ X10_PropComm+X12_LUEntropy+ X13_PedConnect+ X14_PBN+ X17_ACCount+ X20_PropUrban+ X22_EmpAccess+ X23_C_LOS+ X24_O_Bus_LOS+ X26_O_Train_LOS+ X29_PropOS+ X30_PropBach+ X31_LocalAccess_800+ X32_EmpDen_800+ X34_censored_PropFTE+ X35_censored_MeanSize, data =Melb.Trambus.noFTZ.rd3)
+summary(Melb.Trambus.noFTZ.MMLR.3.2)
+Anova(Melb.Trambus.noFTZ.MMLR.3.2)
+
+#remove AC Count
+Melb.Trambus.noFTZ.MMLR.3.3<-lm(cbind(ln_Centroid_Mode, ln_Bus) ~ X10_PropComm+X12_LUEntropy+ X13_PedConnect+ X14_PBN+ X20_PropUrban+ X22_EmpAccess+ X23_C_LOS+ X24_O_Bus_LOS+ X26_O_Train_LOS+ X29_PropOS+ X30_PropBach+ X31_LocalAccess_800+ X32_EmpDen_800+ X34_censored_PropFTE+ X35_censored_MeanSize, data =Melb.Trambus.noFTZ.rd3)
+summary(Melb.Trambus.noFTZ.MMLR.3.3)
+Anova(Melb.Trambus.noFTZ.MMLR.3.3)
+
+#remove mean size
+Melb.Trambus.noFTZ.MMLR.3.4<-lm(cbind(ln_Centroid_Mode, ln_Bus) ~ X10_PropComm+X12_LUEntropy+ X13_PedConnect+ X14_PBN+ X20_PropUrban+ X22_EmpAccess+ X23_C_LOS+ X24_O_Bus_LOS+ X26_O_Train_LOS+ X29_PropOS+ X30_PropBach+ X31_LocalAccess_800+ X32_EmpDen_800+ X34_censored_PropFTE, data =Melb.Trambus.noFTZ.rd3)
+summary(Melb.Trambus.noFTZ.MMLR.3.4)
+Anova(Melb.Trambus.noFTZ.MMLR.3.4)
+
+#remove PEdConnect
+Melb.Trambus.noFTZ.MMLR.3.5<-lm(cbind(ln_Centroid_Mode, ln_Bus) ~ X10_PropComm+X12_LUEntropy+ X14_PBN+ X20_PropUrban+ X22_EmpAccess+ X23_C_LOS+ X24_O_Bus_LOS+ X26_O_Train_LOS+ X29_PropOS+ X30_PropBach+ X31_LocalAccess_800+ X32_EmpDen_800+ X34_censored_PropFTE, data =Melb.Trambus.noFTZ.rd3)
+summary(Melb.Trambus.noFTZ.MMLR.3.5)
+Anova(Melb.Trambus.noFTZ.MMLR.3.5)
+
+#remove PBN
+Melb.Trambus.noFTZ.MMLR.3.6<-lm(cbind(ln_Centroid_Mode, ln_Bus) ~ X10_PropComm+X12_LUEntropy+ X20_PropUrban+ X22_EmpAccess+ X23_C_LOS+ X24_O_Bus_LOS+ X26_O_Train_LOS+ X29_PropOS+ X30_PropBach+ X31_LocalAccess_800+ X32_EmpDen_800+ X34_censored_PropFTE, data =Melb.Trambus.noFTZ.rd3)
+summary(Melb.Trambus.noFTZ.MMLR.3.6)
+Anova(Melb.Trambus.noFTZ.MMLR.3.6)
+
+#diagnostics
+par(mfrow=c(2,2))
+plot(lm(ln_Centroid_Mode ~ X10_PropComm+X12_LUEntropy+ X20_PropUrban+ X22_EmpAccess+ X23_C_LOS+ X24_O_Bus_LOS+ X26_O_Train_LOS+ X29_PropOS+ X30_PropBach+ X31_LocalAccess_800+ X32_EmpDen_800+ X34_censored_PropFTE, data =Melb.Trambus.noFTZ.rd3))
+
+plot(lm(ln_Bus ~ X10_PropComm+X12_LUEntropy+ X20_PropUrban+ X22_EmpAccess+ X23_C_LOS+ X24_O_Bus_LOS+ X26_O_Train_LOS+ X29_PropOS+ X30_PropBach+ X31_LocalAccess_800+ X32_EmpDen_800+ X34_censored_PropFTE, data =Melb.Trambus.noFTZ.rd3))
