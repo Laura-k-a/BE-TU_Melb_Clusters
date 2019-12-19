@@ -1,36 +1,33 @@
 
 Call:
-factanal(x = fa.data.Allmodes.800.BE, factors = 3, rotation = "promax")
+factanal(x = cormat.BE.Allmodes.800, factors = 3, scores = "regression",     rotation = "promax", lower = 0.01)
 
 Uniquenesses:
-     X2_EmpDen      X4_PopDen       X5_Dwell   X8_RetailEmp     X9_Balance 
-         0.058          0.005          0.025          0.005          0.589 
-X11_HousingDiv  X14_DestScore  X15_DestCount    X17_CBDDist 
-         0.311          0.357          0.224          0.455 
+    X21_Empden     X23_Popden      X24_Dwell  X27_RetailEmp X30_HousingDiv  X33_DestScore  X34_DestCount    X36_CDBDist 
+         0.010          0.010          0.021          0.053          0.369          0.292          0.177          0.503 
 
 Loadings:
                Factor1 Factor2 Factor3
-X2_EmpDen      -0.163   0.429   0.819 
-X4_PopDen       0.227   0.843         
-X5_Dwell        0.243   0.799         
-X8_RetailEmp            0.375   0.837 
-X9_Balance      0.180  -0.336   0.627 
-X11_HousingDiv  0.862          -0.115 
-X14_DestScore   0.811                 
-X15_DestCount   0.533   0.293   0.276 
-X17_CBDDist    -0.709                 
+X21_Empden              1.016         
+X23_Popden                      0.924 
+X24_Dwell       0.116           0.860 
+X27_RetailEmp           0.955         
+X30_HousingDiv  0.814  -0.134         
+X33_DestScore   0.929          -0.106 
+X34_DestCount   0.640   0.369         
+X36_CDBDist    -0.654          -0.101 
 
                Factor1 Factor2 Factor3
-SS loadings      2.360   1.880   1.868
-Proportion Var   0.262   0.209   0.208
-Cumulative Var   0.262   0.471   0.679
+SS loadings      2.391   2.108   1.619
+Proportion Var   0.299   0.263   0.202
+Cumulative Var   0.299   0.562   0.765
 
 Factor Correlations:
         Factor1 Factor2 Factor3
-Factor1   1.000  -0.329   0.558
-Factor2  -0.329   1.000  -0.349
-Factor3   0.558  -0.349   1.000
+Factor1   1.000  -0.648   0.713
+Factor2  -0.648   1.000  -0.436
+Factor3   0.713  -0.436   1.000
 
 Test of the hypothesis that 3 factors are sufficient.
-The chi square statistic is 3971.72 on 12 degrees of freedom.
+The chi square statistic is 1527.74 on 7 degrees of freedom.
 The p-value is 0 
