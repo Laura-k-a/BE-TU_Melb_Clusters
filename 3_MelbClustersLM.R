@@ -165,3 +165,27 @@ Melb.800.SD.Cluster.Z.validate<-Melb.800.SD.Cluster.Z.validate %>%
 capture.output(Melb.800.SD.Cluster.Z.validate,file="SDClusterMembership.csv")
 
 
+#Refer to sampling script
+MMLR_Data<- read.csv("Melb.AllStops.Data.18Dec19.csv", header=TRUE, sep=",")
+row.names(MMLR_Data) <- MMLR_Data[,c(2)]
+
+#transpose density and patronage
+
+MMLR_Data<-mutate(MMLR_Data,
+                  ln_Patronage= log(X19_Total_Pat),
+                  ln_Emp = log(X21_Empden),
+                  ln_Pop = log(X23_Popden),)
+
+Clustersample.bus.400<- MMLR_Data[which (MMLR_Data$Mode=='bus'
+                                                  & MMLR_Data$Sample=='Yes'),]
+Clustersample.tram.600<- MMLR_Data[which (MMLR_Data$Mode=='tram'
+                                          & MMLR_Data$Sample=='Yes'),]
+Clustersample.train.800<- MMLR.data[which (MMLR_Data$Mode=='train'
+                                           &MMLR_Data$Sample=='Yes'),]
+
+
+
+
+
+
+
