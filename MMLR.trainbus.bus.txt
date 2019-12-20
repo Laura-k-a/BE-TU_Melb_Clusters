@@ -1,0 +1,40 @@
+
+Call:
+lm(formula = ln_Bus ~ X11_Balance + X14_PBN + X15_Parkiteer + 
+    X19_Parking + X17_ACCount + X22_EmpAccess + X23_C_LOS + X24_O_Bus_LOS + 
+    ln_Pop, data = Melb.Trainbus.rd3)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-3.1741 -0.6577  0.0403  0.5763  3.2038 
+
+Coefficients:
+                    Estimate   Standardized     Std. Error t value
+(Intercept)    2.25616713708  0.00000000000  1.65210933205   1.366
+X11_Balance    3.32789525753  0.16490216998  1.22843727965   2.709
+X14_PBN       -0.54453678213 -0.06217245998  0.49585927108  -1.098
+X15_Parkiteer  0.54307972439  0.16813655323  0.20485965069   2.651
+X19_Parking   34.87669605202  0.08241578369 23.74887650481   1.469
+X17_ACCount    0.58860326216  0.18002696812  0.19352637457   3.041
+X22_EmpAccess  0.00000001794  0.00180571640  0.00000075032   0.024
+X23_C_LOS      0.00414890483  0.13877210345  0.00179873146   2.307
+X24_O_Bus_LOS  0.01286345144  0.50902723650  0.00159253562   8.077
+ln_Pop         0.08265022255  0.02838551990  0.21901274240   0.377
+                       Pr(>|t|)    
+(Intercept)             0.17438    
+X11_Balance             0.00764 ** 
+X14_PBN                 0.27413    
+X15_Parkiteer           0.00901 ** 
+X19_Parking             0.14433    
+X17_ACCount             0.00284 ** 
+X22_EmpAccess           0.98096    
+X23_C_LOS               0.02264 *  
+X24_O_Bus_LOS 0.000000000000365 ***
+ln_Pop                  0.70650    
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 1.018 on 132 degrees of freedom
+Multiple R-squared:  0.6268,	Adjusted R-squared:  0.6014 
+F-statistic: 24.64 on 9 and 132 DF,  p-value: < 0.00000000000000022
+

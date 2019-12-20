@@ -24,7 +24,8 @@
 library(lm.beta)
 library(car)
 library(Hmisc)
-library(pysych)
+library(psych)
+library(dplyr)
 
 #turn off scientific notation
 options(scipen = 999)
@@ -50,7 +51,12 @@ Melb.Trambus.noFTZ<- MMLR_Data[ which(MMLR_Data$Mode=='tram'
                                 & MMLR_Data$X18_FTZ=='0'),]
 Melb.Trainbus<- MMLR_Data[ which(MMLR_Data$Mode=='train'),]
 
-#Step 2 estimate covariance of the outcome variables 
+#Step 2 estimate covariance of the outcome variables
+Melb.Trambus.noFTZ<-mutate(Melb.Trambus.noFTZ,
+                  ln_Pop = log(Population_surrogate),
+                  ln_Emp = log(EmpDen_surrogate),)
+row.names(Melb.Trambus.noFTZ) <- Melb.Trambus.noFTZ[,c(2)]
+
 cov_Trambus.noFTZ<-cor.test(Melb.Trambus.noFTZ$X9_Bus_patronage, Melb.Trambus.noFTZ$X8_Total_Pat, method = "pearson", conf.level = 0.95)
 cov_Trambus.noFTZ #0.12  p < 0.02
 
@@ -68,12 +74,13 @@ cov_Trainbus_ln #0.66, p=<0.000
 capture.output(cov_Trainbus_ln,file="cov_Trainbus_ln.txt")
 
 #step 3 Check for multicolinearity
-Melb.Trambus.noFTZ.VIF<-vif(lm(ln_Centroid_Mode ~ X10_PropComm+X11_Balance+ X12_LUEntropy+ X13_PedConnect+ X14_PBN+ X16_ACDist+ X17_ACCount+ X22_EmpAccess+ X23_C_LOS+ X24_O_Bus_LOS+ X26_O_Train_LOS+ X29_PropOS+ X30_PropBach+ X34_censored_PropFTE+ X35_censored_MeanSize+ EmpDen_surrogate	+ Population_surrogate+ DestScore_surrogate, data =Melb.Trambus.noFTZ))
-#removed parking, rural, urban overlapping level of service to get rid of singularity
+Melb.Trambus.noFTZ.VIF<-vif(lm(ln_Centroid_Mode ~ X10_PropComm+X11_Balance+ X12_LUEntropy+ X13_PedConnect+ X14_PBN+ X16_ACDist+ X17_ACCount+ X22_EmpAccess+ X23_C_LOS+ X24_O_Bus_LOS+ X26_O_Train_LOS+ X29_PropOS+ X30_PropBach+ X34_censored_PropFTE+ X35_censored_MeanSize+ DestScore_surrogate +ln_Pop + ln_Emp +X19_Parking, data =Melb.Trambus.noFTZ))
+#removed  rural, overlapping level of service to get rid of singularity
+#removed urban (high VIF)
 Melb.Trambus.noFTZ.VIF
 
 #step 4 Simple correlations
-Corrdata.Trambus.noFTZ<-Melb.Trambus.noFTZ[,c(39,40,10,11,12,13,14,16,17,22,23,24,26,29,30,34,35, 36, 37, 38)]
+Corrdata.Trambus.noFTZ<-Melb.Trambus.noFTZ[,c(39,40,10,11,12,13,14,16,17,19,22,23,24,26,29,30,34,35,38,41,42)]
 
 #Option 1 for Correlation matrices with p-values
 Corrdata.Trambus.noFTZ<-rcorr(as.matrix(Corrdata.Trambus.noFTZ))
@@ -106,132 +113,256 @@ capture.output(Corrdata.Trambus.noFTZ,file="FlatCor.Trambus.noFTZ.csv")
 
 #ln_Tram
 #X11_Balance
+#X19_Parking
 
 #exclude balance
 
 #Step 4 maximally adjusted model
 
-Melb.Trambus.noFTZ.MMLR.S1<-lm(cbind(ln_Centroid_Mode, ln_Bus) ~ X10_PropComm+ X12_LUEntropy+ X13_PedConnect+ X14_PBN+ X16_ACDist+ X17_ACCount+ X22_EmpAccess+ X23_C_LOS+ X24_O_Bus_LOS+ X26_O_Train_LOS+ X29_PropOS+ X30_PropBach+ X34_censored_PropFTE+ X35_censored_MeanSize+ EmpDen_surrogate	+ Population_surrogate+ DestScore_surrogate, data =Melb.Trambus.noFTZ)
-summary(Melb.Trambus.noFTZ.MMLR.S1)
-Anova(Melb.Trambus.noFTZ.MMLR.S1)
+Melb.Trambus.noFTZ.MMLR.1<-lm(cbind(ln_Centroid_Mode, ln_Bus) ~ X10_PropComm+ X12_LUEntropy+ X13_PedConnect+ X14_PBN+ X16_ACDist+ X17_ACCount+ X22_EmpAccess+ X23_C_LOS+ X24_O_Bus_LOS+ X26_O_Train_LOS+ X29_PropOS+ X30_PropBach+ X34_censored_PropFTE+ X35_censored_MeanSize+ DestScore_surrogate +ln_Emp + ln_Pop, data =Melb.Trambus.noFTZ)
+summary(Melb.Trambus.noFTZ.MMLR.1)
+Anova(Melb.Trambus.noFTZ.MMLR.1)
 
-#remove ACDist
-Melb.Trambus.noFTZ.MMLR.S2<-lm(cbind(ln_Centroid_Mode, ln_Bus) ~ X10_PropComm+ X12_LUEntropy+ X13_PedConnect+ X14_PBN+ X17_ACCount+ X22_EmpAccess+ X23_C_LOS+ X24_O_Bus_LOS+ X26_O_Train_LOS+ X29_PropOS+ X30_PropBach+ X34_censored_PropFTE+ X35_censored_MeanSize+ EmpDen_surrogate	+ Population_surrogate+ DestScore_surrogate, data =Melb.Trambus.noFTZ)
-summary(Melb.Trambus.noFTZ.MMLR.S2)
-Anova(Melb.Trambus.noFTZ.MMLR.S2)
+#AC Dist
+Melb.Trambus.noFTZ.MMLR.2<-lm(cbind(ln_Centroid_Mode, ln_Bus) ~ X10_PropComm+ X12_LUEntropy+ X13_PedConnect+ X14_PBN+X17_ACCount+ X22_EmpAccess+ X23_C_LOS+ X24_O_Bus_LOS+ X26_O_Train_LOS+ X29_PropOS+ X30_PropBach+ X34_censored_PropFTE+ X35_censored_MeanSize+ DestScore_surrogate +ln_Emp + ln_Pop, data =Melb.Trambus.noFTZ)
+summary(Melb.Trambus.noFTZ.MMLR.2)
+Anova(Melb.Trambus.noFTZ.MMLR.2)
 
-#remove ACCount
-Melb.Trambus.noFTZ.MMLR.S3<-lm(cbind(ln_Centroid_Mode, ln_Bus) ~ X10_PropComm+ X12_LUEntropy+ X13_PedConnect+ X14_PBN+ X22_EmpAccess+ X23_C_LOS+ X24_O_Bus_LOS+ X26_O_Train_LOS+ X29_PropOS+ X30_PropBach+ X34_censored_PropFTE+ X35_censored_MeanSize+ EmpDen_surrogate	+ Population_surrogate+ DestScore_surrogate, data =Melb.Trambus.noFTZ)
-summary(Melb.Trambus.noFTZ.MMLR.S4)
-Anova(Melb.Trambus.noFTZ.MMLR.S4)
+#ln_EMp
+Melb.Trambus.noFTZ.MMLR.3<-lm(cbind(ln_Centroid_Mode, ln_Bus) ~ X10_PropComm+ X12_LUEntropy+ X13_PedConnect+ X14_PBN+X17_ACCount+ X22_EmpAccess+ X23_C_LOS+ X24_O_Bus_LOS+ X26_O_Train_LOS+ X29_PropOS+ X30_PropBach+ X34_censored_PropFTE+ X35_censored_MeanSize+ DestScore_surrogate + ln_Pop, data =Melb.Trambus.noFTZ)
+summary(Melb.Trambus.noFTZ.MMLR.3)
+Anova(Melb.Trambus.noFTZ.MMLR.3)
 
-#remove meansize
-Melb.Trambus.noFTZ.MMLR.S4<-lm(cbind(ln_Centroid_Mode, ln_Bus) ~ X10_PropComm+ X12_LUEntropy+ X14_PBN+ X22_EmpAccess+ X23_C_LOS+ X24_O_Bus_LOS+ X26_O_Train_LOS+ X29_PropOS+ X30_PropBach+ X34_censored_PropFTE+ EmpDen_surrogate	+ Population_surrogate+ DestScore_surrogate, data =Melb.Trambus.noFTZ)
-summary(Melb.Trambus.noFTZ.MMLR.S4)
-Anova(Melb.Trambus.noFTZ.MMLR.S4)
+#ACCount
+Melb.Trambus.noFTZ.MMLR.4<-lm(cbind(ln_Centroid_Mode, ln_Bus) ~ X10_PropComm+ X12_LUEntropy+ X13_PedConnect+ X14_PBN+X22_EmpAccess+ X23_C_LOS+ X24_O_Bus_LOS+ X26_O_Train_LOS+ X29_PropOS+ X30_PropBach+ X34_censored_PropFTE+ X35_censored_MeanSize+ DestScore_surrogate + ln_Pop, data =Melb.Trambus.noFTZ)
+summary(Melb.Trambus.noFTZ.MMLR.4)
+Anova(Melb.Trambus.noFTZ.MMLR.4)
 
-#remove train LOS
-Melb.Trambus.noFTZ.MMLR.S5<-lm(cbind(ln_Centroid_Mode, ln_Bus) ~ X10_PropComm+ X12_LUEntropy+ X14_PBN+ X22_EmpAccess+ X23_C_LOS+ X24_O_Bus_LOS+X29_PropOS+ X30_PropBach+ X34_censored_PropFTE+ EmpDen_surrogate	+ Population_surrogate+ DestScore_surrogate, data =Melb.Trambus.noFTZ)
-summary(Melb.Trambus.noFTZ.MMLR.S5)
-Anova(Melb.Trambus.noFTZ.MMLR.S5)
+#Meansize
+Melb.Trambus.noFTZ.MMLR.5<-lm(cbind(ln_Centroid_Mode, ln_Bus) ~ X10_PropComm+ X12_LUEntropy+ X13_PedConnect+ X14_PBN+X22_EmpAccess+ X23_C_LOS+ X24_O_Bus_LOS+ X26_O_Train_LOS+ X29_PropOS+ X30_PropBach+ X34_censored_PropFTE+ DestScore_surrogate + ln_Pop, data =Melb.Trambus.noFTZ)
+summary(Melb.Trambus.noFTZ.MMLR.5)
+Anova(Melb.Trambus.noFTZ.MMLR.5)
 
-#remove empden surrogate
-Melb.Trambus.noFTZ.MMLR.S6<-lm(cbind(ln_Centroid_Mode, ln_Bus) ~ X10_PropComm+ X12_LUEntropy+ X14_PBN+ X22_EmpAccess+ X23_C_LOS+ X24_O_Bus_LOS+X29_PropOS+ X30_PropBach+ X34_censored_PropFTE+ Population_surrogate+ DestScore_surrogate, data =Melb.Trambus.noFTZ)
-summary(Melb.Trambus.noFTZ.MMLR.S6)
-Anova(Melb.Trambus.noFTZ.MMLR.S6)
+#pedconnect
+Melb.Trambus.noFTZ.MMLR.6<-lm(cbind(ln_Centroid_Mode, ln_Bus) ~ X10_PropComm+ X12_LUEntropy+ X14_PBN+X22_EmpAccess+ X23_C_LOS+ X24_O_Bus_LOS+ X26_O_Train_LOS+ X29_PropOS+ X30_PropBach+ X34_censored_PropFTE+ DestScore_surrogate + ln_Pop, data =Melb.Trambus.noFTZ)
+summary(Melb.Trambus.noFTZ.MMLR.6)
+Anova(Melb.Trambus.noFTZ.MMLR.6)
 
-#remove proportion commercial
-Melb.Trambus.noFTZ.MMLR.S7<-lm(cbind(ln_Centroid_Mode, ln_Bus) ~  X12_LUEntropy+ X14_PBN+ X22_EmpAccess+ X23_C_LOS+ X24_O_Bus_LOS+X29_PropOS+ X30_PropBach+ X34_censored_PropFTE+ Population_surrogate+ DestScore_surrogate, data =Melb.Trambus.noFTZ)
-summary(Melb.Trambus.noFTZ.MMLR.S7)
-Anova(Melb.Trambus.noFTZ.MMLR.S7)
+#destscore
+Melb.Trambus.noFTZ.MMLR.7<-lm(cbind(ln_Centroid_Mode, ln_Bus) ~ X10_PropComm+ X12_LUEntropy+ X14_PBN+X22_EmpAccess+ X23_C_LOS+ X24_O_Bus_LOS+ X26_O_Train_LOS+ X29_PropOS+ X30_PropBach+ X34_censored_PropFTE + ln_Pop, data =Melb.Trambus.noFTZ)
+summary(Melb.Trambus.noFTZ.MMLR.7)
+Anova(Melb.Trambus.noFTZ.MMLR.7)
 
-#remove PBN
-Melb.Trambus.noFTZ.MMLR.S8<-lm(cbind(ln_Centroid_Mode, ln_Bus) ~  X12_LUEntropy+ X22_EmpAccess+ X23_C_LOS+ X24_O_Bus_LOS+X29_PropOS+ X30_PropBach+ X34_censored_PropFTE+ Population_surrogate+ DestScore_surrogate, data =Melb.Trambus.noFTZ)
-summary(Melb.Trambus.noFTZ.MMLR.S8)
-Anova(Melb.Trambus.noFTZ.MMLR.S8)
+#PBN
+Melb.Trambus.noFTZ.MMLR.8<-lm(cbind(ln_Centroid_Mode, ln_Bus) ~ X10_PropComm+ X12_LUEntropy+ X14_PBN+X22_EmpAccess+ X23_C_LOS+ X24_O_Bus_LOS+ X26_O_Train_LOS+  X30_PropBach+ X34_censored_PropFTE + ln_Pop, data =Melb.Trambus.noFTZ)
+summary(Melb.Trambus.noFTZ.MMLR.8)
+Anova(Melb.Trambus.noFTZ.MMLR.8)
 
-#remove Prop OS
-Melb.Trambus.noFTZ.MMLR.S9<-lm(cbind(ln_Centroid_Mode, ln_Bus) ~  X12_LUEntropy+ X22_EmpAccess+ X23_C_LOS+ X24_O_Bus_LOS+ X30_PropBach+ X34_censored_PropFTE+ Population_surrogate+ DestScore_surrogate, data =Melb.Trambus.noFTZ)
-summary(Melb.Trambus.noFTZ.MMLR.S9)
-Anova(Melb.Trambus.noFTZ.MMLR.S9)
+#propcomm
+Melb.Trambus.noFTZ.MMLR.9<-lm(cbind(ln_Centroid_Mode, ln_Bus) ~ X10_PropComm+ X22_EmpAccess+ X23_C_LOS+ X24_O_Bus_LOS+ X26_O_Train_LOS+  X30_PropBach+ X34_censored_PropFTE + ln_Pop, data =Melb.Trambus.noFTZ)
+summary(Melb.Trambus.noFTZ.MMLR.9)
+Anova(Melb.Trambus.noFTZ.MMLR.9)
+#makes a lot of sense
 
-#remove population
-Melb.Trambus.noFTZ.MMLR.S10<-lm(cbind(ln_Centroid_Mode, ln_Bus) ~  X12_LUEntropy+ X22_EmpAccess+ X23_C_LOS+ X24_O_Bus_LOS +X30_PropBach+ X34_censored_PropFTE+ DestScore_surrogate, data =Melb.Trambus.noFTZ)
-summary(Melb.Trambus.noFTZ.MMLR.S10)
-Anova(Melb.Trambus.noFTZ.MMLR.S10)
-
-#run diagnostics
-par(mfrow=c(2,2))
-plot(lm(ln_Centroid_Mode ~  X12_LUEntropy+ X22_EmpAccess+ X23_C_LOS+ X24_O_Bus_LOS +X30_PropBach+ X34_censored_PropFTE+ DestScore_surrogate, data =Melb.Trambus.noFTZ))
-#remove 249-tram
-
-plot(lm(ln_Bus ~  X12_LUEntropy+ X22_EmpAccess+ X23_C_LOS+ X24_O_Bus_LOS +X30_PropBach+ X34_censored_PropFTE+ DestScore_surrogate, data =Melb.Trambus.noFTZ))
+#diagnostics
+plot(lm(ln_Centroid_Mode ~ X10_PropComm+ X22_EmpAccess+ X23_C_LOS+ X24_O_Bus_LOS+ X26_O_Train_LOS+  X30_PropBach+ X34_censored_PropFTE + ln_Pop, data =Melb.Trambus.noFTZ))
+#influential outlier: 249
+plot(lm(ln_Bus ~ X10_PropComm+ X22_EmpAccess+ X23_C_LOS+ X24_O_Bus_LOS+ X26_O_Train_LOS+  X30_PropBach+ X34_censored_PropFTE + ln_Pop, data =Melb.Trambus.noFTZ))
+#looks ok
 
 which(rownames(Melb.Trambus.noFTZ) == "249-tram") #151
 
-#remove influential outlier
+#remove potentially influential outliers (just the ones close to cook's distance)
 Melb.Trambus.noFTZ.rd2 <- Melb.Trambus.noFTZ[-c(151),]
 
-#rd 2 maximally adjusted
-Melb.Trambus.noFTZ.MMLR.S2.1<-lm(cbind(ln_Centroid_Mode, ln_Bus) ~ X10_PropComm+ X12_LUEntropy+ X13_PedConnect+ X14_PBN+ X16_ACDist+ X17_ACCount+ X22_EmpAccess+ X23_C_LOS+ X24_O_Bus_LOS+ X26_O_Train_LOS+ X29_PropOS+ X30_PropBach+ X34_censored_PropFTE+ X35_censored_MeanSize+ EmpDen_surrogate	+ Population_surrogate+ DestScore_surrogate, data =Melb.Trambus.noFTZ.rd2)
-summary(Melb.Trambus.noFTZ.MMLR.S2.1)
-Anova(Melb.Trambus.noFTZ.MMLR.S2.1)
+#rerun maximally adjusted model
+Melb.Trambus.noFTZ.MMLR.2.1<-lm(cbind(ln_Centroid_Mode, ln_Bus) ~ X10_PropComm+ X12_LUEntropy+ X13_PedConnect+ X14_PBN+ X16_ACDist+ X17_ACCount+ X22_EmpAccess+ X23_C_LOS+ X24_O_Bus_LOS+ X26_O_Train_LOS+ X29_PropOS+ X30_PropBach+ X34_censored_PropFTE+ X35_censored_MeanSize+ DestScore_surrogate +ln_Emp + ln_Pop, data =Melb.Trambus.noFTZ.rd2)
+summary(Melb.Trambus.noFTZ.MMLR.2.1)
+Anova(Melb.Trambus.noFTZ.MMLR.2.1)
 
-#remove AC Dist
-Melb.Trambus.noFTZ.MMLR.S2.2<-lm(cbind(ln_Centroid_Mode, ln_Bus) ~ X10_PropComm+ X12_LUEntropy+ X13_PedConnect+ X14_PBN+ X17_ACCount+ X22_EmpAccess+ X23_C_LOS+ X24_O_Bus_LOS+ X26_O_Train_LOS+ X29_PropOS+ X30_PropBach+ X34_censored_PropFTE+ X35_censored_MeanSize+ EmpDen_surrogate	+ Population_surrogate+ DestScore_surrogate, data =Melb.Trambus.noFTZ.rd2)
-summary(Melb.Trambus.noFTZ.MMLR.S2.2)
-Anova(Melb.Trambus.noFTZ.MMLR.S2.2)
+#ln_Emp
+Melb.Trambus.noFTZ.MMLR.2.2<-lm(cbind(ln_Centroid_Mode, ln_Bus) ~ X10_PropComm+ X12_LUEntropy+ X13_PedConnect+ X14_PBN+ X16_ACDist+ X17_ACCount+ X22_EmpAccess+ X23_C_LOS+ X24_O_Bus_LOS+ X26_O_Train_LOS+ X29_PropOS+ X30_PropBach+ X34_censored_PropFTE+ X35_censored_MeanSize+ DestScore_surrogate + ln_Pop, data =Melb.Trambus.noFTZ.rd2)
+summary(Melb.Trambus.noFTZ.MMLR.2.2)
+Anova(Melb.Trambus.noFTZ.MMLR.2.2)
 
-#remove AC Count
-Melb.Trambus.noFTZ.MMLR.S2.3<-lm(cbind(ln_Centroid_Mode, ln_Bus) ~ X10_PropComm+ X12_LUEntropy+ X13_PedConnect+ X14_PBN+ X22_EmpAccess+ X23_C_LOS+ X24_O_Bus_LOS+ X26_O_Train_LOS+ X29_PropOS+ X30_PropBach+ X34_censored_PropFTE+ X35_censored_MeanSize+ EmpDen_surrogate	+ Population_surrogate+ DestScore_surrogate, data =Melb.Trambus.noFTZ.rd2)
-summary(Melb.Trambus.noFTZ.MMLR.S2.3)
-Anova(Melb.Trambus.noFTZ.MMLR.S2.3)
+#ACDIst
+Melb.Trambus.noFTZ.MMLR.2.3<-lm(cbind(ln_Centroid_Mode, ln_Bus) ~ X10_PropComm+ X12_LUEntropy+ X13_PedConnect+ X14_PBN+  X17_ACCount+ X22_EmpAccess+ X23_C_LOS+ X24_O_Bus_LOS+ X26_O_Train_LOS+ X29_PropOS+ X30_PropBach+ X34_censored_PropFTE+ X35_censored_MeanSize+ DestScore_surrogate + ln_Pop, data =Melb.Trambus.noFTZ.rd2)
+summary(Melb.Trambus.noFTZ.MMLR.2.3)
+Anova(Melb.Trambus.noFTZ.MMLR.2.3)
 
-#remove pedconnect
-Melb.Trambus.noFTZ.MMLR.S2.4<-lm(cbind(ln_Centroid_Mode, ln_Bus) ~ X10_PropComm+ X12_LUEntropy+ X14_PBN+ X22_EmpAccess+ X23_C_LOS+ X24_O_Bus_LOS+ X26_O_Train_LOS+ X29_PropOS+ X30_PropBach+ X34_censored_PropFTE+ X35_censored_MeanSize+ EmpDen_surrogate	+ Population_surrogate+ DestScore_surrogate, data =Melb.Trambus.noFTZ.rd2)
-summary(Melb.Trambus.noFTZ.MMLR.S2.4)
-Anova(Melb.Trambus.noFTZ.MMLR.S2.4)
+#AC Count
+Melb.Trambus.noFTZ.MMLR.2.4<-lm(cbind(ln_Centroid_Mode, ln_Bus) ~ X10_PropComm+ X12_LUEntropy+ X13_PedConnect+ X14_PBN+ X22_EmpAccess+ X23_C_LOS+ X24_O_Bus_LOS+ X26_O_Train_LOS+ X29_PropOS+ X30_PropBach+ X34_censored_PropFTE+ X35_censored_MeanSize+ DestScore_surrogate + ln_Pop, data =Melb.Trambus.noFTZ.rd2)
+summary(Melb.Trambus.noFTZ.MMLR.2.4)
+Anova(Melb.Trambus.noFTZ.MMLR.2.4)
 
-#remove Mean size
-Melb.Trambus.noFTZ.MMLR.S2.5<-lm(cbind(ln_Centroid_Mode, ln_Bus) ~ X10_PropComm+ X12_LUEntropy+ X14_PBN+ X22_EmpAccess+ X23_C_LOS+ X24_O_Bus_LOS+ X26_O_Train_LOS+ X29_PropOS+ X30_PropBach+ X34_censored_PropFTE+ EmpDen_surrogate	+ Population_surrogate+ DestScore_surrogate, data =Melb.Trambus.noFTZ.rd2)
-summary(Melb.Trambus.noFTZ.MMLR.S2.5)
-Anova(Melb.Trambus.noFTZ.MMLR.S2.5)
+#pedconnect
+Melb.Trambus.noFTZ.MMLR.2.5<-lm(cbind(ln_Centroid_Mode, ln_Bus) ~ X10_PropComm+ X12_LUEntropy+ X14_PBN+ X22_EmpAccess+ X23_C_LOS+ X24_O_Bus_LOS+ X26_O_Train_LOS+ X29_PropOS+ X30_PropBach+ X34_censored_PropFTE+ X35_censored_MeanSize+ DestScore_surrogate + ln_Pop, data =Melb.Trambus.noFTZ.rd2)
+summary(Melb.Trambus.noFTZ.MMLR.2.5)
+Anova(Melb.Trambus.noFTZ.MMLR.2.5)
 
-#remove destscore
-Melb.Trambus.noFTZ.MMLR.S2.6<-lm(cbind(ln_Centroid_Mode, ln_Bus) ~ X10_PropComm+ X12_LUEntropy+ X14_PBN+ X22_EmpAccess+ X23_C_LOS+ X24_O_Bus_LOS+ X26_O_Train_LOS+ X29_PropOS+ X30_PropBach+ X34_censored_PropFTE+ Population_surrogate, data =Melb.Trambus.noFTZ.rd2)
-summary(Melb.Trambus.noFTZ.MMLR.S2.6)
-Anova(Melb.Trambus.noFTZ.MMLR.S2.6)
+#meansize
+Melb.Trambus.noFTZ.MMLR.2.6<-lm(cbind(ln_Centroid_Mode, ln_Bus) ~ X10_PropComm+ X12_LUEntropy+ X14_PBN+ X22_EmpAccess+ X23_C_LOS+ X24_O_Bus_LOS+ X26_O_Train_LOS+ X29_PropOS+ X30_PropBach+ X34_censored_PropFTE+ DestScore_surrogate + ln_Pop, data =Melb.Trambus.noFTZ.rd2)
+summary(Melb.Trambus.noFTZ.MMLR.2.6)
+Anova(Melb.Trambus.noFTZ.MMLR.2.6)
 
-#remove PBN
-Melb.Trambus.noFTZ.MMLR.S2.7<-lm(cbind(ln_Centroid_Mode, ln_Bus) ~ X10_PropComm+ X12_LUEntropy+ X22_EmpAccess+ X23_C_LOS+ X24_O_Bus_LOS+ X26_O_Train_LOS+ X29_PropOS+ X30_PropBach+ X34_censored_PropFTE+ Population_surrogate, data =Melb.Trambus.noFTZ.rd2)
-summary(Melb.Trambus.noFTZ.MMLR.S2.7)
-Anova(Melb.Trambus.noFTZ.MMLR.S2.7)
+#destscore
+Melb.Trambus.noFTZ.MMLR.2.7<-lm(cbind(ln_Centroid_Mode, ln_Bus) ~ X10_PropComm+ X12_LUEntropy+ X14_PBN+ X22_EmpAccess+ X23_C_LOS+ X24_O_Bus_LOS+ X26_O_Train_LOS+ X29_PropOS+ X30_PropBach+ X34_censored_PropFTE+ ln_Pop, data =Melb.Trambus.noFTZ.rd2)
+summary(Melb.Trambus.noFTZ.MMLR.2.7)
+Anova(Melb.Trambus.noFTZ.MMLR.2.7)
 
-#remove Prop comm
-Melb.Trambus.noFTZ.MMLR.S2.8<-lm(cbind(ln_Centroid_Mode, ln_Bus) ~  X12_LUEntropy+ X22_EmpAccess+ X23_C_LOS+ X24_O_Bus_LOS+ X26_O_Train_LOS+ X29_PropOS+ X30_PropBach+ X34_censored_PropFTE+ Population_surrogate, data =Melb.Trambus.noFTZ.rd2)
-summary(Melb.Trambus.noFTZ.MMLR.S2.8)
-Anova(Melb.Trambus.noFTZ.MMLR.S2.8)
+#PBN
+Melb.Trambus.noFTZ.MMLR.2.8<-lm(cbind(ln_Centroid_Mode, ln_Bus) ~ X10_PropComm+ X12_LUEntropy+ X22_EmpAccess+ X23_C_LOS+ X24_O_Bus_LOS+ X26_O_Train_LOS+ X29_PropOS+ X30_PropBach+ X34_censored_PropFTE+ ln_Pop, data =Melb.Trambus.noFTZ.rd2)
+summary(Melb.Trambus.noFTZ.MMLR.2.8)
+Anova(Melb.Trambus.noFTZ.MMLR.2.8)
+#makes sense
+#diagnostics
 
-capture.output(Melb.Trambus.noFTZ.MMLR.S2.8,file="Trambus_MMLR_NoFTZ_surrogates.csv")
+plot(lm(ln_Bus~ X10_PropComm+ X12_LUEntropy+ X22_EmpAccess+ X23_C_LOS+ X24_O_Bus_LOS+ X26_O_Train_LOS+ X29_PropOS+ X30_PropBach+ X34_censored_PropFTE+ ln_Pop, data =Melb.Trambus.noFTZ.rd2))
+#shape does not fit assumptions. Try removing 258
+
+plot(lm(ln_Centroid_Mode~ X10_PropComm+ X12_LUEntropy+ X22_EmpAccess+ X23_C_LOS+ X24_O_Bus_LOS+ X26_O_Train_LOS+ X29_PropOS+ X30_PropBach+ X34_censored_PropFTE+ ln_Pop, data =Melb.Trambus.noFTZ.rd2))
+#investigate 276 - not influential but most outlying. Otherwise fits assumptions
+
+which(rownames(Melb.Trambus.noFTZ.rd2) == "258-tram") #151
+
+#remove potentially influential outliers (just the ones close to cook's distance)
+Melb.Trambus.noFTZ.rd3 <- Melb.Trambus.noFTZ.rd2[-c(151),]
+
+#maximally adjusted model
+Melb.Trambus.noFTZ.MMLR.3.1<-lm(cbind(ln_Centroid_Mode, ln_Bus) ~ X10_PropComm+ X12_LUEntropy+ X13_PedConnect+ X14_PBN+ X16_ACDist+ X17_ACCount+ X22_EmpAccess+ X23_C_LOS+ X24_O_Bus_LOS+ X26_O_Train_LOS+ X29_PropOS+ X30_PropBach+ X34_censored_PropFTE+ X35_censored_MeanSize+ DestScore_surrogate +ln_Emp + ln_Pop, data =Melb.Trambus.noFTZ.rd3)
+summary(Melb.Trambus.noFTZ.MMLR.3.1)
+Anova(Melb.Trambus.noFTZ.MMLR.3.1)
+
+#ACDist
+Melb.Trambus.noFTZ.MMLR.3.2<-lm(cbind(ln_Centroid_Mode, ln_Bus) ~ X10_PropComm+ X12_LUEntropy+ X13_PedConnect+ X14_PBN+ X17_ACCount+ X22_EmpAccess+ X23_C_LOS+ X24_O_Bus_LOS+ X26_O_Train_LOS+ X29_PropOS+ X30_PropBach+ X34_censored_PropFTE+ X35_censored_MeanSize+ DestScore_surrogate +ln_Emp + ln_Pop, data =Melb.Trambus.noFTZ.rd3)
+summary(Melb.Trambus.noFTZ.MMLR.3.2)
+Anova(Melb.Trambus.noFTZ.MMLR.3.2)
+
+
+#ln_Emp
+Melb.Trambus.noFTZ.MMLR.3.3<-lm(cbind(ln_Centroid_Mode, ln_Bus) ~ X10_PropComm+ X12_LUEntropy+ X13_PedConnect+ X14_PBN+ X17_ACCount+ X22_EmpAccess+ X23_C_LOS+ X24_O_Bus_LOS+ X26_O_Train_LOS+ X29_PropOS+ X30_PropBach+ X34_censored_PropFTE+ X35_censored_MeanSize+ DestScore_surrogate +ln_Pop, data =Melb.Trambus.noFTZ.rd3)
+summary(Melb.Trambus.noFTZ.MMLR.3.3)
+Anova(Melb.Trambus.noFTZ.MMLR.3.3)
+
+#ACCount
+Melb.Trambus.noFTZ.MMLR.3.4<-lm(cbind(ln_Centroid_Mode, ln_Bus) ~ X10_PropComm+ X12_LUEntropy+ X13_PedConnect+ X14_PBN+ X22_EmpAccess+ X23_C_LOS+ X24_O_Bus_LOS+ X26_O_Train_LOS+ X29_PropOS+ X30_PropBach+ X34_censored_PropFTE+ X35_censored_MeanSize+ DestScore_surrogate +ln_Pop, data =Melb.Trambus.noFTZ.rd3)
+summary(Melb.Trambus.noFTZ.MMLR.3.4)
+Anova(Melb.Trambus.noFTZ.MMLR.3.4)
+
+#meansize
+Melb.Trambus.noFTZ.MMLR.3.5<-lm(cbind(ln_Centroid_Mode, ln_Bus) ~ X10_PropComm+ X12_LUEntropy+ X13_PedConnect+ X14_PBN+ X22_EmpAccess+ X23_C_LOS+ X24_O_Bus_LOS+ X26_O_Train_LOS+ X29_PropOS+ X30_PropBach+ X34_censored_PropFTE+ DestScore_surrogate +ln_Pop, data =Melb.Trambus.noFTZ.rd3)
+summary(Melb.Trambus.noFTZ.MMLR.3.5)
+Anova(Melb.Trambus.noFTZ.MMLR.3.5)
+
+#pedconnect
+Melb.Trambus.noFTZ.MMLR.3.6<-lm(cbind(ln_Centroid_Mode, ln_Bus) ~ X10_PropComm+ X12_LUEntropy+  X14_PBN+ X22_EmpAccess+ X23_C_LOS+ X24_O_Bus_LOS+ X26_O_Train_LOS+ X29_PropOS+ X30_PropBach+ X34_censored_PropFTE+ DestScore_surrogate +ln_Pop, data =Melb.Trambus.noFTZ.rd3)
+summary(Melb.Trambus.noFTZ.MMLR.3.6)
+Anova(Melb.Trambus.noFTZ.MMLR.3.6)
+
+#destscore
+Melb.Trambus.noFTZ.MMLR.3.7<-lm(cbind(ln_Centroid_Mode, ln_Bus) ~ X10_PropComm+ X12_LUEntropy+  X14_PBN+ X22_EmpAccess+ X23_C_LOS+ X24_O_Bus_LOS+ X26_O_Train_LOS+ X29_PropOS+ X30_PropBach+ X34_censored_PropFTE+ln_Pop, data =Melb.Trambus.noFTZ.rd3)
+summary(Melb.Trambus.noFTZ.MMLR.3.7)
+Anova(Melb.Trambus.noFTZ.MMLR.3.7)
+
+#PBN
+Melb.Trambus.noFTZ.MMLR.3.8<-lm(cbind(ln_Centroid_Mode, ln_Bus) ~ X10_PropComm+ X12_LUEntropy+  X22_EmpAccess+ X23_C_LOS+ X24_O_Bus_LOS+ X26_O_Train_LOS+ X29_PropOS+ X30_PropBach+ X34_censored_PropFTE+ln_Pop, data =Melb.Trambus.noFTZ.rd3)
+summary(Melb.Trambus.noFTZ.MMLR.3.8)
+Anova(Melb.Trambus.noFTZ.MMLR.3.8)
+#makes sense
 
 #diagnostics
-plot(lm(ln_Centroid_Mode ~  X12_LUEntropy+ X22_EmpAccess+ X23_C_LOS+ X24_O_Bus_LOS+ X26_O_Train_LOS+ X29_PropOS+ X30_PropBach+ X34_censored_PropFTE+ Population_surrogate, data =Melb.Trambus.noFTZ.rd2))
+plot(lm(ln_Bus~X10_PropComm+ X12_LUEntropy+  X22_EmpAccess+ X23_C_LOS+ X24_O_Bus_LOS+ X26_O_Train_LOS+ X29_PropOS+ X30_PropBach+ X34_censored_PropFTE+ln_Pop, data =Melb.Trambus.noFTZ.rd3))
+#still does not meet linearitty assumptions.  main outlier is 2198
 
-plot(lm(ln_Bus ~  X12_LUEntropy+ X22_EmpAccess+ X23_C_LOS+ X24_O_Bus_LOS+ X26_O_Train_LOS+ X29_PropOS+ X30_PropBach+ X34_censored_PropFTE+ Population_surrogate, data =Melb.Trambus.noFTZ.rd2))
+plot(lm(ln_Centroid_Mode~X10_PropComm+ X12_LUEntropy+  X22_EmpAccess+ X23_C_LOS+ X24_O_Bus_LOS+ X26_O_Train_LOS+ X29_PropOS+ X30_PropBach+ X34_censored_PropFTE+ln_Pop, data =Melb.Trambus.noFTZ.rd3))
+#meets assumptions
 
-#see what happens if 258 and 276 removed
-#no substantive change
+#try removing 2198
+which(rownames(Melb.Trambus.noFTZ.rd3) == "2198-tram") #148
+
+#remove potentially influential outliers (just the ones close to cook's distance)
+Melb.Trambus.noFTZ.rd4 <- Melb.Trambus.noFTZ.rd3[-c(148),]
+
+#maximally adjusted model
+Melb.Trambus.noFTZ.MMLR.4.1<-lm(cbind(ln_Centroid_Mode, ln_Bus) ~ X10_PropComm+ X12_LUEntropy+ X13_PedConnect+ X14_PBN+ X16_ACDist+ X17_ACCount+ X22_EmpAccess+ X23_C_LOS+ X24_O_Bus_LOS+ X26_O_Train_LOS+ X29_PropOS+ X30_PropBach+ X34_censored_PropFTE+ X35_censored_MeanSize+ DestScore_surrogate +ln_Emp + ln_Pop, data =Melb.Trambus.noFTZ.rd4)
+summary(Melb.Trambus.noFTZ.MMLR.4.1)
+Anova(Melb.Trambus.noFTZ.MMLR.4.1)
+
+#ACDist
+Melb.Trambus.noFTZ.MMLR.4.2<-lm(cbind(ln_Centroid_Mode, ln_Bus) ~ X10_PropComm+ X12_LUEntropy+ X13_PedConnect+ X14_PBN+ X17_ACCount+ X22_EmpAccess+ X23_C_LOS+ X24_O_Bus_LOS+ X26_O_Train_LOS+ X29_PropOS+ X30_PropBach+ X34_censored_PropFTE+ X35_censored_MeanSize+ DestScore_surrogate +ln_Emp + ln_Pop, data =Melb.Trambus.noFTZ.rd4)
+summary(Melb.Trambus.noFTZ.MMLR.4.2)
+Anova(Melb.Trambus.noFTZ.MMLR.4.2)
+
+#ln_Emp
+Melb.Trambus.noFTZ.MMLR.4.3<-lm(cbind(ln_Centroid_Mode, ln_Bus) ~ X10_PropComm+ X12_LUEntropy+ X13_PedConnect+ X14_PBN+ X17_ACCount+ X22_EmpAccess+ X23_C_LOS+ X24_O_Bus_LOS+ X26_O_Train_LOS+ X29_PropOS+ X30_PropBach+ X34_censored_PropFTE+ X35_censored_MeanSize+ DestScore_surrogate +ln_Pop, data =Melb.Trambus.noFTZ.rd4)
+summary(Melb.Trambus.noFTZ.MMLR.4.3)
+Anova(Melb.Trambus.noFTZ.MMLR.4.3)
+
+#ACCount
+Melb.Trambus.noFTZ.MMLR.4.4<-lm(cbind(ln_Centroid_Mode, ln_Bus) ~ X10_PropComm+ X12_LUEntropy+ X13_PedConnect+ X14_PBN+ X22_EmpAccess+ X23_C_LOS+ X24_O_Bus_LOS+ X26_O_Train_LOS+ X29_PropOS+ X30_PropBach+ X34_censored_PropFTE+ X35_censored_MeanSize+ DestScore_surrogate +ln_Pop, data =Melb.Trambus.noFTZ.rd4)
+summary(Melb.Trambus.noFTZ.MMLR.4.4)
+Anova(Melb.Trambus.noFTZ.MMLR.4.4)
+
+#meansize
+Melb.Trambus.noFTZ.MMLR.4.5<-lm(cbind(ln_Centroid_Mode, ln_Bus) ~ X10_PropComm+ X12_LUEntropy+ X13_PedConnect+ X14_PBN+ X22_EmpAccess+ X23_C_LOS+ X24_O_Bus_LOS+ X26_O_Train_LOS+ X29_PropOS+ X30_PropBach+ X34_censored_PropFTE+ DestScore_surrogate +ln_Pop, data =Melb.Trambus.noFTZ.rd4)
+summary(Melb.Trambus.noFTZ.MMLR.4.5)
+Anova(Melb.Trambus.noFTZ.MMLR.4.5)
+
+#pedconnect
+Melb.Trambus.noFTZ.MMLR.4.6<-lm(cbind(ln_Centroid_Mode, ln_Bus) ~ X10_PropComm+ X12_LUEntropy+ X14_PBN+ X22_EmpAccess+ X23_C_LOS+ X24_O_Bus_LOS+ X26_O_Train_LOS+ X29_PropOS+ X30_PropBach+ X34_censored_PropFTE+ DestScore_surrogate +ln_Pop, data =Melb.Trambus.noFTZ.rd4)
+summary(Melb.Trambus.noFTZ.MMLR.4.6)
+Anova(Melb.Trambus.noFTZ.MMLR.4.6)
+
+#Destscore
+Melb.Trambus.noFTZ.MMLR.4.7<-lm(cbind(ln_Centroid_Mode, ln_Bus) ~ X10_PropComm+ X12_LUEntropy+ X14_PBN+ X22_EmpAccess+ X23_C_LOS+ X24_O_Bus_LOS+ X26_O_Train_LOS+ X29_PropOS+ X30_PropBach+ X34_censored_PropFTE +ln_Pop, data =Melb.Trambus.noFTZ.rd4)
+summary(Melb.Trambus.noFTZ.MMLR.4.7)
+Anova(Melb.Trambus.noFTZ.MMLR.4.7)
+
+#PBN
+Melb.Trambus.noFTZ.MMLR.4.8<-lm(cbind(ln_Centroid_Mode, ln_Bus) ~ X10_PropComm+ X12_LUEntropy+ X22_EmpAccess+ X23_C_LOS+ X24_O_Bus_LOS+ X26_O_Train_LOS+ X29_PropOS+ X30_PropBach+ X34_censored_PropFTE +ln_Pop, data =Melb.Trambus.noFTZ.rd4)
+summary(Melb.Trambus.noFTZ.MMLR.4.8)
+Anova(Melb.Trambus.noFTZ.MMLR.4.8)
+#makes sense, resembles all prior solutions
+
+#diagnostics
+plot(lm(ln_Bus ~ X10_PropComm+ X12_LUEntropy+ X22_EmpAccess+ X23_C_LOS+ X24_O_Bus_LOS+ X26_O_Train_LOS+ X29_PropOS+ X30_PropBach+ X34_censored_PropFTE +ln_Pop, data =Melb.Trambus.noFTZ.rd4))
+
+#fits assumptions much better, but 260 still impacting shape (investigate ,but accept solutio)
+
+plot(lm(ln_Centroid_Mode ~ X10_PropComm+ X12_LUEntropy+ X22_EmpAccess+ X23_C_LOS+ X24_O_Bus_LOS+ X26_O_Train_LOS+ X29_PropOS+ X30_PropBach+ X34_censored_PropFTE +ln_Pop, data =Melb.Trambus.noFTZ.rd4))
+
+#could see if taking 260 out impacts the mix of variables
+
+capture.output(summary(Melb.Trambus.noFTZ.MMLR.4.8), file = "Melb.Trambus.noFTZ.MMLR.4.8.txt")
+
+MMLR.trambus.tram<-lm(ln_Centroid_Mode ~ X10_PropComm+ X12_LUEntropy+ X22_EmpAccess+ X23_C_LOS+ X24_O_Bus_LOS+ X26_O_Train_LOS+ X29_PropOS+ X30_PropBach+ X34_censored_PropFTE +ln_Pop, data =Melb.Trambus.noFTZ.rd4)
+
+MMLR.trambus.bus<-lm(ln_Bus ~ X10_PropComm+ X12_LUEntropy+ X22_EmpAccess+ X23_C_LOS+ X24_O_Bus_LOS+ X26_O_Train_LOS+ X29_PropOS+ X30_PropBach+ X34_censored_PropFTE +ln_Pop, data =Melb.Trambus.noFTZ.rd4)
+
+MMLR.trambus.tram<-lm.beta(MMLR.trambus.tram)
+MMLR.trambus.bus<-lm.beta(MMLR.trambus.bus)
+
+options(scipen = 999)
+capture.output(summary(MMLR.trambus.bus), file = "MMLR.trambus.bus.txt")
+capture.output(summary(MMLR.trambus.tram), file = "MMLR.trambus.tram.txt")
 
 #Trainbus
+
+Melb.Trainbus<-mutate(Melb.Trainbus,
+                  ln_Pop = log(Population_surrogate),
+                  ln_Emp = log(EmpDen_surrogate),)
+
+row.names(Melb.Trainbus) <- Melb.Trainbus[,c(2)]
 #step 3 Check for multicolinearity
 
-Melb.Trainbus.VIF<-vif(lm(ln_Centroid_Mode ~ X10_PropComm+X11_Balance+ X12_LUEntropy+ X13_PedConnect+ X14_PBN+ X15_Parkiteer + X16_ACDist+ X19_Parking +X17_ACCount+ X19_Parking+ X21_PropRural + X22_EmpAccess+ X23_C_LOS+ X24_O_Bus_LOS+ X25_O_Tram_LOS+ X29_PropOS+ X30_PropBach+ X34_censored_PropFTE+ X35_censored_MeanSize+ EmpDen_surrogate	+ Population_surrogate+ DestScore_surrogate, data =Melb.Trainbus))
-#removed FTZ, urban overlapping level of service to get rid of singularity
+Melb.Trainbus.VIF<-vif(lm(ln_Centroid_Mode ~ X10_PropComm+X11_Balance+ X12_LUEntropy+ X13_PedConnect+ X14_PBN+ X15_Parkiteer + X16_ACDist+ X17_ACCount+ X19_Parking+ X21_PropRural + X22_EmpAccess+ X23_C_LOS+ X24_O_Bus_LOS+ X25_O_Tram_LOS+ X29_PropOS+ X30_PropBach+ X34_censored_PropFTE+ X35_censored_MeanSize+ DestScore_surrogate +ln_Pop , data =Melb.Trainbus))
+#removed FTZ, overlapping level of service to get rid of singularity
+#removed ln_Emp, ln_Urban due to collinearity
 Melb.Trainbus.VIF
 #no colinearty
 
 #step 4 Simple correlations
-Corrdata.Trainbus<-Melb.Trainbus[,c(39,40,10,11,12,13,14,15,16,17,19, 21,22,23,24,25,29,30,34,35, 36, 37, 38)]
+Corrdata.Trainbus<-Melb.Trainbus[,c(39,40,10,11,12,13,14,15,16,17,19, 21,22,23,24,25,29,30,34,35,38, 41)]
 
 #Option 1 for Correlation matrices with p-values
 Corrdata.Trainbus<-rcorr(as.matrix(Corrdata.Trainbus))
@@ -249,8 +380,7 @@ capture.output(Corrdata.Trainbus,file="Corrdata.Trainbus.csv")
 #X25_O_Tram_LOS
 #X30_PropBach
 #X35_censored_MeanSize
-#EmpDen_surrogate
-#Population_surrogate
+#ln_Pop
 
 #ln_Tram
 #X21_PropRural
@@ -262,204 +392,203 @@ capture.output(Corrdata.Trainbus,file="Corrdata.Trainbus.csv")
 
 #Step 4 maximally adjusted model
 
-Melb.Trainbus.MMLR.1<-lm(cbind(ln_Centroid_Mode, ln_Bus) ~ X10_PropComm+X11_Balance+ X12_LUEntropy+ X13_PedConnect+ X14_PBN+ X15_Parkiteer + X16_ACDist+ X19_Parking +X17_ACCount+ X22_EmpAccess+ X23_C_LOS+ X24_O_Bus_LOS+ X29_PropOS+ X30_PropBach+ X34_censored_PropFTE+ EmpDen_surrogate	+ Population_surrogate+ DestScore_surrogate, data =Melb.Trainbus)
+Melb.Trainbus.MMLR.1<-lm(cbind(ln_Centroid_Mode, ln_Bus) ~ X10_PropComm+X11_Balance+ X12_LUEntropy+ X13_PedConnect+ X14_PBN+ X15_Parkiteer + X16_ACDist+ X19_Parking +X17_ACCount+ X22_EmpAccess+ X23_C_LOS+ X24_O_Bus_LOS+ X29_PropOS+ X30_PropBach+ X34_censored_PropFTE+ ln_Pop+ DestScore_surrogate, data =Melb.Trainbus)
 summary(Melb.Trainbus.MMLR.1)
 Anova(Melb.Trainbus.MMLR.1)
 
-#reove population surrogate
-Melb.Trainbus.MMLR.2<-lm(cbind(ln_Centroid_Mode, ln_Bus) ~ X10_PropComm+X11_Balance+ X12_LUEntropy+ X13_PedConnect+ X14_PBN+ X15_Parkiteer + X16_ACDist+ X19_Parking +X17_ACCount+ X22_EmpAccess+ X23_C_LOS+ X24_O_Bus_LOS+ X29_PropOS+ X30_PropBach+ X34_censored_PropFTE+ EmpDen_surrogate+ DestScore_surrogate, data =Melb.Trainbus)
+Melb.Trainbus.MMLR.1<-lm(cbind(ln_Centroid_Mode, ln_Bus) ~ X10_PropComm+X11_Balance+ X12_LUEntropy+ X13_PedConnect+ X14_PBN+ X15_Parkiteer + X16_ACDist+ X19_Parking +X17_ACCount+ X22_EmpAccess+ X23_C_LOS+ X24_O_Bus_LOS+ X29_PropOS+ X30_PropBach+ X34_censored_PropFTE+ ln_Pop+ DestScore_surrogate, data =Melb.Trainbus)
+summary(Melb.Trainbus.MMLR.1)
+Anova(Melb.Trainbus.MMLR.1)
+
+#remove LUEntropy
+Melb.Trainbus.MMLR.2<-lm(cbind(ln_Centroid_Mode, ln_Bus) ~ X10_PropComm+X11_Balance+ X13_PedConnect+ X14_PBN+ X15_Parkiteer + X16_ACDist+ X19_Parking +X17_ACCount+ X22_EmpAccess+ X23_C_LOS+ X24_O_Bus_LOS+ X29_PropOS+ X30_PropBach+ X34_censored_PropFTE+ ln_Pop+ DestScore_surrogate, data =Melb.Trainbus)
 summary(Melb.Trainbus.MMLR.2)
 Anova(Melb.Trainbus.MMLR.2)
 
-#remove employment density surrogate
-Melb.Trainbus.MMLR.3<-lm(cbind(ln_Centroid_Mode, ln_Bus) ~ X10_PropComm+X11_Balance+ X12_LUEntropy+ X13_PedConnect+ X14_PBN+ X15_Parkiteer + X16_ACDist +X17_ACCount+ X19_Parking+ X22_EmpAccess+ X23_C_LOS+ X24_O_Bus_LOS+ X29_PropOS+ X30_PropBach+ X34_censored_PropFTE+DestScore_surrogate, data =Melb.Trainbus)
+#remove propFTE
+Melb.Trainbus.MMLR.3<-lm(cbind(ln_Centroid_Mode, ln_Bus) ~ X10_PropComm+X11_Balance+ X13_PedConnect+ X14_PBN+ X15_Parkiteer + X16_ACDist+ X19_Parking +X17_ACCount+ X22_EmpAccess+ X23_C_LOS+ X24_O_Bus_LOS+ X29_PropOS+ X30_PropBach+ ln_Pop+ DestScore_surrogate, data =Melb.Trainbus)
 summary(Melb.Trainbus.MMLR.3)
 Anova(Melb.Trainbus.MMLR.3)
 
-#remove propFTE
-Melb.Trainbus.MMLR.4<-lm(cbind(ln_Centroid_Mode, ln_Bus) ~ X10_PropComm+X11_Balance+ X12_LUEntropy+ X13_PedConnect+ X14_PBN+ X15_Parkiteer + X16_ACDist +X17_ACCount+ X19_Parking+ X22_EmpAccess+ X23_C_LOS+ X24_O_Bus_LOS+ X29_PropOS+ X30_PropBach+DestScore_surrogate, data =Melb.Trainbus)
+#remove propcommercial
+Melb.Trainbus.MMLR.4<-lm(cbind(ln_Centroid_Mode, ln_Bus) ~ X11_Balance+ X13_PedConnect+ X14_PBN+ X15_Parkiteer + X16_ACDist+ X19_Parking +X17_ACCount+ X22_EmpAccess+ X23_C_LOS+ X24_O_Bus_LOS+ X29_PropOS+ X30_PropBach+ ln_Pop+ DestScore_surrogate, data =Melb.Trainbus)
 summary(Melb.Trainbus.MMLR.4)
 Anova(Melb.Trainbus.MMLR.4)
 
-#remove LUEntropy
-Melb.Trainbus.MMLR.5<-lm(cbind(ln_Centroid_Mode, ln_Bus) ~ X10_PropComm+X11_Balance+ X13_PedConnect+ X14_PBN+ X15_Parkiteer + X16_ACDist+ X17_ACCount+ X19_Parking+ X22_EmpAccess+ X23_C_LOS+ X24_O_Bus_LOS+ X29_PropOS+ X30_PropBach+DestScore_surrogate, data =Melb.Trainbus)
+#removeEmpAccess
+Melb.Trainbus.MMLR.5<-lm(cbind(ln_Centroid_Mode, ln_Bus) ~ X11_Balance+ X13_PedConnect+ X14_PBN+ X15_Parkiteer + X16_ACDist+ X19_Parking +X17_ACCount+ X23_C_LOS+ X24_O_Bus_LOS+ X29_PropOS+ X30_PropBach+ ln_Pop+ DestScore_surrogate, data =Melb.Trainbus)
 summary(Melb.Trainbus.MMLR.5)
 Anova(Melb.Trainbus.MMLR.5)
 
-#remove prop comm
-Melb.Trainbus.MMLR.6<-lm(cbind(ln_Centroid_Mode, ln_Bus) ~ X11_Balance+ X13_PedConnect+ X14_PBN+ X15_Parkiteer + X16_ACDist+ X17_ACCount+ X19_Parking+ X22_EmpAccess+ X23_C_LOS+ X24_O_Bus_LOS+ X29_PropOS+ X30_PropBach+DestScore_surrogate, data =Melb.Trainbus)
+#remove PropOS
+Melb.Trainbus.MMLR.6<-lm(cbind(ln_Centroid_Mode, ln_Bus) ~ X11_Balance+ X13_PedConnect+ X14_PBN+ X15_Parkiteer + X16_ACDist+ X19_Parking +X17_ACCount+ X23_C_LOS+ X24_O_Bus_LOS+ X30_PropBach+ ln_Pop+ DestScore_surrogate, data =Melb.Trainbus)
 summary(Melb.Trainbus.MMLR.6)
 Anova(Melb.Trainbus.MMLR.6)
 
-#remove employment accesss
-Melb.Trainbus.MMLR.7<-lm(cbind(ln_Centroid_Mode, ln_Bus) ~ X11_Balance+ X13_PedConnect+ X14_PBN+ X15_Parkiteer + X16_ACDist+ X17_ACCount+ X19_Parking+ X23_C_LOS+ X24_O_Bus_LOS+ X29_PropOS+ X30_PropBach+DestScore_surrogate, data =Melb.Trainbus)
+#remove DestScore
+Melb.Trainbus.MMLR.7<-lm(cbind(ln_Centroid_Mode, ln_Bus) ~ X11_Balance+ X13_PedConnect+ X14_PBN+ X15_Parkiteer + X16_ACDist+ X19_Parking +X17_ACCount+ X23_C_LOS+ X24_O_Bus_LOS+ X30_PropBach+ ln_Pop, data =Melb.Trainbus)
 summary(Melb.Trainbus.MMLR.7)
 Anova(Melb.Trainbus.MMLR.7)
 
 #remove pedconnect
-Melb.Trainbus.MMLR.8<-lm(cbind(ln_Centroid_Mode, ln_Bus) ~ X11_Balance+ X14_PBN+ X15_Parkiteer + X16_ACDist+ X17_ACCount+ X19_Parking+ X23_C_LOS+ X24_O_Bus_LOS+ X29_PropOS+ X30_PropBach+DestScore_surrogate, data =Melb.Trainbus)
+Melb.Trainbus.MMLR.8<-lm(cbind(ln_Centroid_Mode, ln_Bus) ~ X11_Balance+ X14_PBN+ X15_Parkiteer + X16_ACDist+ X19_Parking +X17_ACCount+ X23_C_LOS+ X24_O_Bus_LOS+ X30_PropBach+ ln_Pop, data =Melb.Trainbus)
 summary(Melb.Trainbus.MMLR.8)
 Anova(Melb.Trainbus.MMLR.8)
 
-#remove propOS
-Melb.Trainbus.MMLR.9<-lm(cbind(ln_Centroid_Mode, ln_Bus) ~ X11_Balance+ X14_PBN+ X15_Parkiteer + X16_ACDist+ X19_Parking +X17_ACCount+ X23_C_LOS+ X24_O_Bus_LOS+ X30_PropBach+DestScore_surrogate, data =Melb.Trainbus)
+#remove ln_Pop
+Melb.Trainbus.MMLR.9<-lm(cbind(ln_Centroid_Mode, ln_Bus) ~ X11_Balance+ X14_PBN+ X15_Parkiteer + X16_ACDist+ X19_Parking +X17_ACCount+ X23_C_LOS+ X24_O_Bus_LOS+ X30_PropBach, data =Melb.Trainbus)
 summary(Melb.Trainbus.MMLR.9)
 Anova(Melb.Trainbus.MMLR.9)
 
 #remove parking
-Melb.Trainbus.MMLR.10<-lm(cbind(ln_Centroid_Mode, ln_Bus) ~ X11_Balance+ X14_PBN+ X15_Parkiteer + X16_ACDist+X17_ACCount+ X23_C_LOS+ X24_O_Bus_LOS+ X30_PropBach+DestScore_surrogate, data =Melb.Trainbus)
+Melb.Trainbus.MMLR.10<-lm(cbind(ln_Centroid_Mode, ln_Bus) ~ X11_Balance+ X14_PBN+ X15_Parkiteer + X16_ACDist+  +X17_ACCount+ X23_C_LOS+ X24_O_Bus_LOS+ X30_PropBach, data =Melb.Trainbus)
 summary(Melb.Trainbus.MMLR.10)
 Anova(Melb.Trainbus.MMLR.10)
 
-#remove destinationscore surrogate
-Melb.Trainbus.MMLR.11<-lm(cbind(ln_Centroid_Mode, ln_Bus) ~ X11_Balance+ X14_PBN+ X15_Parkiteer + X16_ACDist+X17_ACCount+ X23_C_LOS+ X24_O_Bus_LOS+ X30_PropBach, data =Melb.Trainbus)
-summary(Melb.Trainbus.MMLR.11)
-Anova(Melb.Trainbus.MMLR.11)
-
 #diagnostics
-plot(lm(ln_Bus ~ X11_Balance+ X14_PBN+ X15_Parkiteer + X16_ACDist+X17_ACCount+ X23_C_LOS+ X24_O_Bus_LOS+ X30_PropBach, data =Melb.Trainbus))
-#outlier: 572-train
+par(mfrow=c(2,2))
+plot(lm(ln_Bus ~ X11_Balance+ X14_PBN+ X15_Parkiteer + X16_ACDist+  +X17_ACCount+ X23_C_LOS+ X24_O_Bus_LOS+ X30_PropBach, data =Melb.Trainbus))
 
-plot(lm(ln_Centroid_Mode ~ X11_Balance+ X14_PBN+ X15_Parkiteer + X16_ACDist+X17_ACCount+ X23_C_LOS+ X24_O_Bus_LOS+ X30_PropBach, data =Melb.Trainbus))
+#outlier (not influential): 572, 451
 
-#636 not past cook's distance; but far outlying on the curves
+plot(lm(ln_Centroid_Mode ~ X11_Balance+ X14_PBN+ X15_Parkiteer + X16_ACDist+  +X17_ACCount+ X23_C_LOS+ X24_O_Bus_LOS+ X30_PropBach, data =Melb.Trainbus))
+
+#outlier (not influential): rows 553, 636, 632
 which(rownames(Melb.Trainbus) == "572-train") #14
+which(rownames(Melb.Trainbus) == "451-train") #15
+which(rownames(Melb.Trainbus) == "553-train") #37
 which(rownames(Melb.Trainbus) == "636-train") #1
+which(rownames(Melb.Trainbus) == "632-train") #2
 
-#remove influential outlier
-Melb.Trainbus.rd2 <- Melb.Trainbus[-c(1, 14),]
+#remove potentially influential outliers (just the ones close to cook's distance)
+Melb.Trainbus.rd2 <- Melb.Trainbus[-c(1, 14, 15),]
 
 #rerun maximally adjusted
-Melb.Trainbus.MMLR.2.1<-lm(cbind(ln_Centroid_Mode, ln_Bus) ~ X10_PropComm+X11_Balance+ X12_LUEntropy+ X13_PedConnect+ X14_PBN+ X15_Parkiteer + X16_ACDist+ X19_Parking +X17_ACCount+ X22_EmpAccess+ X23_C_LOS+ X24_O_Bus_LOS+ X29_PropOS+ X30_PropBach+ X34_censored_PropFTE+ EmpDen_surrogate	+ Population_surrogate+ DestScore_surrogate, data =Melb.Trainbus.rd2)
+Melb.Trainbus.MMLR.2.1<-lm(cbind(ln_Centroid_Mode, ln_Bus) ~ X10_PropComm+X11_Balance+ X12_LUEntropy+ X13_PedConnect+ X14_PBN+ X15_Parkiteer + X16_ACDist+ X19_Parking +X17_ACCount+ X22_EmpAccess+ X23_C_LOS+ X24_O_Bus_LOS+ X29_PropOS+ X30_PropBach+ X34_censored_PropFTE+ ln_Pop+ DestScore_surrogate, data =Melb.Trainbus.rd2)
 summary(Melb.Trainbus.MMLR.2.1)
 Anova(Melb.Trainbus.MMLR.2.1)
 
-#remove LU Entropy
-Melb.Trainbus.MMLR.2.2<-lm(cbind(ln_Centroid_Mode, ln_Bus) ~ X10_PropComm+X11_Balance+ X13_PedConnect+ X14_PBN+ X15_Parkiteer + X16_ACDist+ X19_Parking +X17_ACCount+ X22_EmpAccess+ X23_C_LOS+ X24_O_Bus_LOS+ X29_PropOS+ X30_PropBach+ X34_censored_PropFTE+ EmpDen_surrogate	+ Population_surrogate+ DestScore_surrogate, data =Melb.Trainbus.rd2)
+#remove LUEntropy
+Melb.Trainbus.MMLR.2.2<-lm(cbind(ln_Centroid_Mode, ln_Bus) ~ X10_PropComm+X11_Balance+ X13_PedConnect+ X14_PBN+ X15_Parkiteer + X16_ACDist+ X19_Parking +X17_ACCount+ X22_EmpAccess+ X23_C_LOS+ X24_O_Bus_LOS+ X29_PropOS+ X30_PropBach+ X34_censored_PropFTE+ ln_Pop+ DestScore_surrogate, data =Melb.Trainbus.rd2)
 summary(Melb.Trainbus.MMLR.2.2)
 Anova(Melb.Trainbus.MMLR.2.2)
 
 #remove destscore
-Melb.Trainbus.MMLR.2.3<-lm(cbind(ln_Centroid_Mode, ln_Bus) ~ X10_PropComm+X11_Balance+ X13_PedConnect+ X14_PBN+ X15_Parkiteer + X16_ACDist+ X19_Parking +X17_ACCount+ X22_EmpAccess+ X23_C_LOS+ X24_O_Bus_LOS+ X29_PropOS+ X30_PropBach+ X34_censored_PropFTE+ EmpDen_surrogate	+ Population_surrogate, data =Melb.Trainbus.rd2)
+Melb.Trainbus.MMLR.2.3<-lm(cbind(ln_Centroid_Mode, ln_Bus) ~ X10_PropComm+X11_Balance+ X13_PedConnect+ X14_PBN+ X15_Parkiteer + X16_ACDist+ X19_Parking +X17_ACCount+ X22_EmpAccess+ X23_C_LOS+ X24_O_Bus_LOS+ X29_PropOS+ X30_PropBach+ X34_censored_PropFTE+ ln_Pop, data =Melb.Trainbus.rd2)
 summary(Melb.Trainbus.MMLR.2.3)
 Anova(Melb.Trainbus.MMLR.2.3)
 
-#remove pop surrogate
-Melb.Trainbus.MMLR.2.4<-lm(cbind(ln_Centroid_Mode, ln_Bus) ~ X10_PropComm+X11_Balance+ X13_PedConnect+ X14_PBN+ X15_Parkiteer + X16_ACDist+ X19_Parking +X17_ACCount+ X22_EmpAccess+ X23_C_LOS+ X24_O_Bus_LOS+ X29_PropOS+ X30_PropBach+ X34_censored_PropFTE+ EmpDen_surrogate, data =Melb.Trainbus.rd2)
+#propFTE
+Melb.Trainbus.MMLR.2.4<-lm(cbind(ln_Centroid_Mode, ln_Bus) ~ X10_PropComm+X11_Balance+ X13_PedConnect+ X14_PBN+ X15_Parkiteer + X16_ACDist+ X19_Parking +X17_ACCount+ X22_EmpAccess+ X23_C_LOS+ X24_O_Bus_LOS+ X29_PropOS+ X30_PropBach +ln_Pop, data =Melb.Trainbus.rd2)
 summary(Melb.Trainbus.MMLR.2.4)
 Anova(Melb.Trainbus.MMLR.2.4)
 
-#remove employment density
-Melb.Trainbus.MMLR.2.5<-lm(cbind(ln_Centroid_Mode, ln_Bus) ~ X10_PropComm+X11_Balance+ X13_PedConnect+ X14_PBN+ X15_Parkiteer + X16_ACDist+ X19_Parking +X17_ACCount+ X22_EmpAccess+ X23_C_LOS+ X24_O_Bus_LOS+ X29_PropOS+ X30_PropBach+ X34_censored_PropFTE, data =Melb.Trainbus.rd2)
+#remove lnPop
+Melb.Trainbus.MMLR.2.5<-lm(cbind(ln_Centroid_Mode, ln_Bus) ~ X10_PropComm+X11_Balance+ X13_PedConnect+ X14_PBN+ X15_Parkiteer + X16_ACDist+ X19_Parking +X17_ACCount+ X22_EmpAccess+ X23_C_LOS+ X24_O_Bus_LOS+ X29_PropOS+ X30_PropBach, data =Melb.Trainbus.rd2)
 summary(Melb.Trainbus.MMLR.2.5)
 Anova(Melb.Trainbus.MMLR.2.5)
 
-#remove ped connect
-Melb.Trainbus.MMLR.2.6<-lm(cbind(ln_Centroid_Mode, ln_Bus) ~ X10_PropComm+X11_Balance+ X14_PBN+ X15_Parkiteer + X16_ACDist+ X19_Parking +X17_ACCount+ X22_EmpAccess+ X23_C_LOS+ X24_O_Bus_LOS+ X29_PropOS+ X30_PropBach+ X34_censored_PropFTE, data =Melb.Trainbus.rd2)
+#pedconnect
+Melb.Trainbus.MMLR.2.6<-lm(cbind(ln_Centroid_Mode, ln_Bus) ~ X10_PropComm+X11_Balance+ X14_PBN+ X15_Parkiteer + X16_ACDist+ X19_Parking +X17_ACCount+ X22_EmpAccess+ X23_C_LOS+ X24_O_Bus_LOS+ X29_PropOS+ X30_PropBach, data =Melb.Trainbus.rd2)
 summary(Melb.Trainbus.MMLR.2.6)
 Anova(Melb.Trainbus.MMLR.2.6)
 
-#remove propFTE
-Melb.Trainbus.MMLR.2.7<-lm(cbind(ln_Centroid_Mode, ln_Bus) ~ X10_PropComm+X11_Balance+ X14_PBN+ X15_Parkiteer + X16_ACDist+ X19_Parking +X17_ACCount+ X22_EmpAccess+ X23_C_LOS+ X24_O_Bus_LOS+ X29_PropOS+ X30_PropBach, data =Melb.Trainbus.rd2)
+#propcomm
+Melb.Trainbus.MMLR.2.7<-lm(cbind(ln_Centroid_Mode, ln_Bus) ~ X11_Balance+ X14_PBN+ X15_Parkiteer + X16_ACDist+ X19_Parking +X17_ACCount+ X22_EmpAccess+ X23_C_LOS+ X24_O_Bus_LOS+ X29_PropOS+ X30_PropBach, data =Melb.Trainbus.rd2)
 summary(Melb.Trainbus.MMLR.2.7)
 Anova(Melb.Trainbus.MMLR.2.7)
 
-#remove prop comm
-Melb.Trainbus.MMLR.2.8<-lm(cbind(ln_Centroid_Mode, ln_Bus) ~ X11_Balance+ X14_PBN+ X15_Parkiteer + X16_ACDist+ X19_Parking +X17_ACCount+ X22_EmpAccess+ X23_C_LOS+ X24_O_Bus_LOS+ X29_PropOS+ X30_PropBach, data =Melb.Trainbus.rd2)
+#empaccess
+Melb.Trainbus.MMLR.2.8<-lm(cbind(ln_Centroid_Mode, ln_Bus) ~ X11_Balance+ X14_PBN+ X15_Parkiteer + X16_ACDist+ X19_Parking +X17_ACCount+ X23_C_LOS+ X24_O_Bus_LOS+ X29_PropOS+ X30_PropBach, data =Melb.Trainbus.rd2)
 summary(Melb.Trainbus.MMLR.2.8)
 Anova(Melb.Trainbus.MMLR.2.8)
 
-#remove propOS
-Melb.Trainbus.MMLR.2.9<-lm(cbind(ln_Centroid_Mode, ln_Bus) ~ X11_Balance+ X14_PBN+ X15_Parkiteer + X16_ACDist+ X19_Parking +X17_ACCount+ X22_EmpAccess+ X23_C_LOS+ X24_O_Bus_LOS+ X30_PropBach, data =Melb.Trainbus.rd2)
+#propOS
+Melb.Trainbus.MMLR.2.9<-lm(cbind(ln_Centroid_Mode, ln_Bus) ~ X11_Balance+ X14_PBN+ X15_Parkiteer + X16_ACDist+ X19_Parking +X17_ACCount+ X23_C_LOS+ X24_O_Bus_LOS+ X30_PropBach, data =Melb.Trainbus.rd2)
 summary(Melb.Trainbus.MMLR.2.9)
 Anova(Melb.Trainbus.MMLR.2.9)
 
-#remove empaccess
-Melb.Trainbus.MMLR.2.10<-lm(cbind(ln_Centroid_Mode, ln_Bus) ~ X11_Balance+ X14_PBN+ X15_Parkiteer + X16_ACDist+ X19_Parking +X17_ACCount+ X23_C_LOS+ X24_O_Bus_LOS+ X30_PropBach, data =Melb.Trainbus.rd2)
+#parking
+Melb.Trainbus.MMLR.2.10<-lm(cbind(ln_Centroid_Mode, ln_Bus) ~ X11_Balance+ X14_PBN+ X15_Parkiteer + X16_ACDist +X17_ACCount+ X23_C_LOS+ X24_O_Bus_LOS+ X30_PropBach, data =Melb.Trainbus.rd2)
 summary(Melb.Trainbus.MMLR.2.10)
 Anova(Melb.Trainbus.MMLR.2.10)
-
-#remove parking
-Melb.Trainbus.MMLR.2.11<-lm(cbind(ln_Centroid_Mode, ln_Bus) ~ X11_Balance+ X14_PBN+ X15_Parkiteer + X16_ACDist +X17_ACCount+ X23_C_LOS+ X24_O_Bus_LOS+ X30_PropBach, data =Melb.Trainbus.rd2)
-summary(Melb.Trainbus.MMLR.2.11)
-Anova(Melb.Trainbus.MMLR.2.11)
+#LOOKS GOOOD!!! MAKES SENSE!!
 
 #diagnostics
-plot(lm(ln_Centroid_Mode ~ X11_Balance+ X14_PBN+ X15_Parkiteer + X16_ACDist +X17_ACCount+ X23_C_LOS+ X24_O_Bus_LOS+ X30_PropBach, data =Melb.Trainbus.rd2))
-#affectig shape (assumptions): 615-train, 632
-
 plot(lm(ln_Bus ~ X11_Balance+ X14_PBN+ X15_Parkiteer + X16_ACDist +X17_ACCount+ X23_C_LOS+ X24_O_Bus_LOS+ X30_PropBach, data =Melb.Trainbus.rd2))
-#affecting shape (assumptions): 451 train
+#conforms with expected patterns, investigate 455, 553 and 547 but not influential
 
-#636 not past cook's distance; but far outlying on the curves
-which(rownames(Melb.Trainbus.rd2) == "615-train") #2
+plot(lm(ln_Centroid_Mode ~ X11_Balance+ X14_PBN+ X15_Parkiteer + X16_ACDist +X17_ACCount+ X23_C_LOS+ X24_O_Bus_LOS+ X30_PropBach, data =Melb.Trainbus.rd2))
+#remove 615 and 632
+
+
 which(rownames(Melb.Trainbus.rd2) == "632-train") #1
-which(rownames(Melb.Trainbus.rd2) == "451-train") #13
+which(rownames(Melb.Trainbus.rd2) == "615-train") #2
 
-#remove influential outlier
-Melb.Trainbus.rd3 <- Melb.Trainbus.rd2[-c(1, 2, 13),]
+#remove potentially influential outliers (just the ones close to cook's distance)
+Melb.Trainbus.rd3 <- Melb.Trainbus.rd2[-c(1, 2),]
 
-Melb.Trainbus.MMLR.3.1<-lm(cbind(ln_Centroid_Mode, ln_Bus) ~ X10_PropComm+X11_Balance+ X12_LUEntropy+ X13_PedConnect+ X14_PBN+ X15_Parkiteer + X16_ACDist+ X19_Parking +X17_ACCount+ X22_EmpAccess+ X23_C_LOS+ X24_O_Bus_LOS+ X29_PropOS+ X30_PropBach+ X34_censored_PropFTE+ EmpDen_surrogate	+ Population_surrogate+ DestScore_surrogate, data =Melb.Trainbus.rd3)
+Melb.Trainbus.MMLR.3.1<-lm(cbind(ln_Centroid_Mode, ln_Bus) ~ X10_PropComm+X11_Balance+ X12_LUEntropy+ X13_PedConnect+ X14_PBN+ X15_Parkiteer + X16_ACDist+ X19_Parking +X17_ACCount+ X22_EmpAccess+ X23_C_LOS+ X24_O_Bus_LOS+ X29_PropOS+ X30_PropBach+ X34_censored_PropFTE+ ln_Pop+ DestScore_surrogate, data =Melb.Trainbus.rd3)
 summary(Melb.Trainbus.MMLR.3.1)
 Anova(Melb.Trainbus.MMLR.3.1)
 
-#remove dest score
-Melb.Trainbus.MMLR.3.2<-lm(cbind(ln_Centroid_Mode, ln_Bus) ~ X10_PropComm+X11_Balance+ X12_LUEntropy+ X13_PedConnect+ X14_PBN+ X15_Parkiteer + X16_ACDist+ X19_Parking +X17_ACCount+ X22_EmpAccess+ X23_C_LOS+ X24_O_Bus_LOS+ X29_PropOS+ X30_PropBach+ X34_censored_PropFTE+ EmpDen_surrogate	+ Population_surrogate, data =Melb.Trainbus.rd3)
+#remove destscore surrogate
+Melb.Trainbus.MMLR.3.2<-lm(cbind(ln_Centroid_Mode, ln_Bus) ~ X10_PropComm+X11_Balance+ X12_LUEntropy+ X13_PedConnect+ X14_PBN+ X15_Parkiteer + X16_ACDist+ X19_Parking +X17_ACCount+ X22_EmpAccess+ X23_C_LOS+ X24_O_Bus_LOS+ X29_PropOS+ X30_PropBach+ X34_censored_PropFTE+ ln_Pop, data =Melb.Trainbus.rd3)
 summary(Melb.Trainbus.MMLR.3.2)
 Anova(Melb.Trainbus.MMLR.3.2)
 
-#remove pop
-Melb.Trainbus.MMLR.3.3<-lm(cbind(ln_Centroid_Mode, ln_Bus) ~ X10_PropComm+X11_Balance+ X12_LUEntropy+ X13_PedConnect+ X14_PBN+ X15_Parkiteer + X16_ACDist+ X19_Parking +X17_ACCount+ X22_EmpAccess+ X23_C_LOS+ X24_O_Bus_LOS+ X29_PropOS+ X30_PropBach+ X34_censored_PropFTE+ EmpDen_surrogate, data =Melb.Trainbus.rd3)
+#propFTE
+Melb.Trainbus.MMLR.3.3<-lm(cbind(ln_Centroid_Mode, ln_Bus) ~ X10_PropComm+X11_Balance+ X12_LUEntropy+ X13_PedConnect+ X14_PBN+ X15_Parkiteer + X16_ACDist+ X19_Parking +X17_ACCount+ X22_EmpAccess+ X23_C_LOS+ X24_O_Bus_LOS+ X29_PropOS+ X30_PropBach+ ln_Pop, data =Melb.Trainbus.rd3)
 summary(Melb.Trainbus.MMLR.3.3)
 Anova(Melb.Trainbus.MMLR.3.3)
 
-#remove empden
-Melb.Trainbus.MMLR.3.4<-lm(cbind(ln_Centroid_Mode, ln_Bus) ~ X10_PropComm+X11_Balance+ X12_LUEntropy+ X13_PedConnect+ X14_PBN+ X15_Parkiteer + X16_ACDist+ X19_Parking +X17_ACCount+ X22_EmpAccess+ X23_C_LOS+ X24_O_Bus_LOS+ X29_PropOS+ X30_PropBach+ X34_censored_PropFTE, data =Melb.Trainbus.rd3)
+#propBach
+Melb.Trainbus.MMLR.3.4<-lm(cbind(ln_Centroid_Mode, ln_Bus) ~ X10_PropComm+X11_Balance+ X12_LUEntropy+ X13_PedConnect+ X14_PBN+ X15_Parkiteer + X16_ACDist+ X19_Parking +X17_ACCount+ X22_EmpAccess+ X23_C_LOS+ X24_O_Bus_LOS+ X29_PropOS+ ln_Pop, data =Melb.Trainbus.rd3)
 summary(Melb.Trainbus.MMLR.3.4)
 Anova(Melb.Trainbus.MMLR.3.4)
 
-#remove prop bachelors
-Melb.Trainbus.MMLR.3.5<-lm(cbind(ln_Centroid_Mode, ln_Bus) ~ X10_PropComm+X11_Balance+ X12_LUEntropy+ X13_PedConnect+ X14_PBN+ X15_Parkiteer + X16_ACDist+ X19_Parking +X17_ACCount+ X22_EmpAccess+ X23_C_LOS+ X24_O_Bus_LOS+ X29_PropOS+ X34_censored_PropFTE, data =Melb.Trainbus.rd3)
+#LUEntropy
+Melb.Trainbus.MMLR.3.5<-lm(cbind(ln_Centroid_Mode, ln_Bus) ~ X10_PropComm+X11_Balance+  X13_PedConnect+ X14_PBN+ X15_Parkiteer + X16_ACDist+ X19_Parking +X17_ACCount+ X22_EmpAccess+ X23_C_LOS+ X24_O_Bus_LOS+ X29_PropOS+ ln_Pop, data =Melb.Trainbus.rd3)
 summary(Melb.Trainbus.MMLR.3.5)
 Anova(Melb.Trainbus.MMLR.3.5)
 
-#prop FTE
-Melb.Trainbus.MMLR.3.6<-lm(cbind(ln_Centroid_Mode, ln_Bus) ~ X10_PropComm+X11_Balance+ X12_LUEntropy+ X13_PedConnect+ X14_PBN+ X15_Parkiteer + X16_ACDist+ X19_Parking +X17_ACCount+ X22_EmpAccess+ X23_C_LOS+ X24_O_Bus_LOS+ X29_PropOS, data =Melb.Trainbus.rd3)
+#ACDist
+Melb.Trainbus.MMLR.3.6<-lm(cbind(ln_Centroid_Mode, ln_Bus) ~ X10_PropComm+X11_Balance+  X13_PedConnect+ X14_PBN+ X15_Parkiteer + X19_Parking +X17_ACCount+ X22_EmpAccess+ X23_C_LOS+ X24_O_Bus_LOS+ X29_PropOS+ ln_Pop, data =Melb.Trainbus.rd3)
 summary(Melb.Trainbus.MMLR.3.6)
 Anova(Melb.Trainbus.MMLR.3.6)
 
-#peconnect
-Melb.Trainbus.MMLR.3.7<-lm(cbind(ln_Centroid_Mode, ln_Bus) ~ X10_PropComm+X11_Balance+ X12_LUEntropy+ X14_PBN+ X15_Parkiteer + X16_ACDist+ X19_Parking +X17_ACCount+ X22_EmpAccess+ X23_C_LOS+ X24_O_Bus_LOS+ X29_PropOS, data =Melb.Trainbus.rd3)
+#propOS
+Melb.Trainbus.MMLR.3.7<-lm(cbind(ln_Centroid_Mode, ln_Bus) ~ X10_PropComm+X11_Balance+  X13_PedConnect+ X14_PBN+ X15_Parkiteer + X19_Parking +X17_ACCount+ X22_EmpAccess+ X23_C_LOS+ X24_O_Bus_LOS+ ln_Pop, data =Melb.Trainbus.rd3)
 summary(Melb.Trainbus.MMLR.3.7)
 Anova(Melb.Trainbus.MMLR.3.7)
 
-#prop OS
-Melb.Trainbus.MMLR.3.8<-lm(cbind(ln_Centroid_Mode, ln_Bus) ~ X10_PropComm+X11_Balance+ X12_LUEntropy+ X14_PBN+ X15_Parkiteer + X16_ACDist+ X19_Parking +X17_ACCount+ X22_EmpAccess+ X23_C_LOS+ X24_O_Bus_LOS, data =Melb.Trainbus.rd3)
+#propComm
+Melb.Trainbus.MMLR.3.8<-lm(cbind(ln_Centroid_Mode, ln_Bus) ~ X11_Balance+  X13_PedConnect+ X14_PBN+ X15_Parkiteer + X19_Parking +X17_ACCount+ X22_EmpAccess+ X23_C_LOS+ X24_O_Bus_LOS+ ln_Pop, data =Melb.Trainbus.rd3)
 summary(Melb.Trainbus.MMLR.3.8)
 Anova(Melb.Trainbus.MMLR.3.8)
 
-#prop comm
-Melb.Trainbus.MMLR.3.9<-lm(cbind(ln_Centroid_Mode, ln_Bus) ~ X11_Balance+ X12_LUEntropy+ X14_PBN+ X15_Parkiteer + X16_ACDist+ X19_Parking +X17_ACCount+ X22_EmpAccess+ X23_C_LOS+ X24_O_Bus_LOS, data =Melb.Trainbus.rd3)
+#pedconnect
+Melb.Trainbus.MMLR.3.9<-lm(cbind(ln_Centroid_Mode, ln_Bus) ~ X11_Balance+ X14_PBN+ X15_Parkiteer + X19_Parking +X17_ACCount+ X22_EmpAccess+ X23_C_LOS+ X24_O_Bus_LOS+ ln_Pop, data =Melb.Trainbus.rd3)
 summary(Melb.Trainbus.MMLR.3.9)
 Anova(Melb.Trainbus.MMLR.3.9)
-
-#LUEntropy
-Melb.Trainbus.MMLR.3.10<-lm(cbind(ln_Centroid_Mode, ln_Bus) ~ X11_Balance+ X14_PBN+ X15_Parkiteer + X16_ACDist+ X19_Parking +X17_ACCount+ X22_EmpAccess+ X23_C_LOS+ X24_O_Bus_LOS, data =Melb.Trainbus.rd3)
-summary(Melb.Trainbus.MMLR.3.10)
-Anova(Melb.Trainbus.MMLR.3.10)
-
-#ACCount
-Melb.Trainbus.MMLR.3.11<-lm(cbind(ln_Centroid_Mode, ln_Bus) ~ X11_Balance+ X14_PBN+ X15_Parkiteer + X16_ACDist+ X19_Parking + X22_EmpAccess+ X23_C_LOS+ X24_O_Bus_LOS, data =Melb.Trainbus.rd3)
-summary(Melb.Trainbus.MMLR.3.11)
-Anova(Melb.Trainbus.MMLR.3.11)
-
-#Balance
-Melb.Trainbus.MMLR.3.12<-lm(cbind(ln_Centroid_Mode, ln_Bus) ~X14_PBN+ X15_Parkiteer + X16_ACDist+ X19_Parking + X22_EmpAccess+ X23_C_LOS+ X24_O_Bus_LOS, data =Melb.Trainbus.rd3)
-summary(Melb.Trainbus.MMLR.3.12)
-Anova(Melb.Trainbus.MMLR.3.12)
+#ALso makes sense; notice that density and access to employment are now significant. This is important
 
 #diagnostics
-plot(lm(ln_Bus ~ X14_PBN+ X15_Parkiteer + X16_ACDist+ X19_Parking + X22_EmpAccess+ X23_C_LOS+ X24_O_Bus_LOS, data =Melb.Trainbus.rd3))
-#explore 493 (well of the normal QQ plot) #checked, removing reduces explanatory power
-#looks ok so if unchanged revert to this solution (and be sure to plot)
-plot(lm(ln_Centroid_Mode~ X14_PBN+ X15_Parkiteer + X16_ACDist+ X19_Parking + X22_EmpAccess+ X23_C_LOS+ X24_O_Bus_LOS, data =Melb.Trainbus.rd3))
+plot(lm(ln_Bus ~ X11_Balance+ X14_PBN+ X15_Parkiteer + X19_Parking +X17_ACCount+ X22_EmpAccess+ X23_C_LOS+ X24_O_Bus_LOS+ ln_Pop, data =Melb.Trainbus.rd3))
+#outliers, but not influential: 455, 638, 547
+
+plot(lm(ln_Centroid_Mode ~ X11_Balance+ X14_PBN+ X15_Parkiteer + X19_Parking +X17_ACCount+ X22_EmpAccess+ X23_C_LOS+ X24_O_Bus_LOS+ ln_Pop, data =Melb.Trainbus.rd3))
+#outliers, but not infulential: 455, 531, 493
+
+capture.output(summary(Melb.Trainbus.MMLR.3.9), file = "Melb.Trainbus.MMLR.3.9.txt")
+
+MMLR.trainbus.train<-lm(ln_Centroid_Mode ~ X11_Balance+ X14_PBN+ X15_Parkiteer + X19_Parking +X17_ACCount+ X22_EmpAccess+ X23_C_LOS+ X24_O_Bus_LOS+ ln_Pop, data =Melb.Trainbus.rd3)
+
+MMLR.trainbus.bus<-lm(ln_Bus ~ X11_Balance+ X14_PBN+ X15_Parkiteer + X19_Parking +X17_ACCount+ X22_EmpAccess+ X23_C_LOS+ X24_O_Bus_LOS+ ln_Pop, data =Melb.Trainbus.rd3)
+
+MMLR.trainbus.train<-lm.beta(MMLR.trainbus.train)
+MMLR.trainbus.bus<-lm.beta(MMLR.trainbus.bus)
+
+options(scipen = 999)
+capture.output(summary(MMLR.trainbus.bus), file = "MMLR.trainbus.bus.txt")
+capture.output(summary(MMLR.trainbus.train), file = "MMLR.trainbus.train.txt")
