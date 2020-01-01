@@ -1,0 +1,39 @@
+
+Call:
+lm(formula = ln_Patronage ~ PropComm + Balance + LUEntropy + 
+    PedConnect + DestScore + FTZ + ACDist + ACCount + Parking + 
+    Parkiteer + EmpAccess + C_LOS + O_Bus_LOS + O_Tram_LOS + 
+    PropOS + PropBach + censored_MeanSize + ln_Pop, data = Clustersample.train.800.rd5)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-1.09221 -0.28057 -0.00306  0.27291  1.14689 
+
+Coefficients: (1 not defined because of singularities)
+                    Estimate Std. Error t value Pr(>|t|)    
+(Intercept)        4.490e+00  8.788e-01   5.109 8.16e-07 ***
+PropComm           2.196e-01  3.149e-01   0.697 0.486508    
+Balance            3.945e-01  5.393e-01   0.731 0.465486    
+LUEntropy          6.997e-02  3.126e-01   0.224 0.823150    
+PedConnect        -6.619e-04  1.028e-03  -0.644 0.520372    
+DestScore         -1.309e-02  3.135e-02  -0.417 0.676841    
+FTZ                       NA         NA      NA       NA    
+ACDist            -9.330e-03  4.180e-02  -0.223 0.823622    
+ACCount            2.737e-01  9.568e-02   2.861 0.004719 ** 
+Parking            3.821e+01  9.142e+00   4.179 4.55e-05 ***
+Parkiteer          3.816e-01  7.871e-02   4.848 2.67e-06 ***
+EmpAccess          1.121e-06  2.936e-07   3.820 0.000183 ***
+C_LOS              4.003e-03  6.212e-04   6.443 1.03e-09 ***
+O_Bus_LOS          4.032e-03  7.029e-04   5.736 4.01e-08 ***
+O_Tram_LOS         1.788e-03  1.319e-03   1.355 0.177003    
+PropOS            -9.689e-01  1.739e+00  -0.557 0.578123    
+PropBach          -2.376e-01  3.500e-01  -0.679 0.497995    
+censored_MeanSize -1.219e-02  1.365e-01  -0.089 0.928943    
+ln_Pop             2.676e-01  1.048e-01   2.553 0.011504 *  
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 0.4359 on 181 degrees of freedom
+Multiple R-squared:  0.6741,	Adjusted R-squared:  0.6435 
+F-statistic: 22.02 on 17 and 181 DF,  p-value: < 2.2e-16
+

@@ -1,0 +1,14 @@
+
+Call:
+lm(formula = ln_Patronage ~ PropComm + Balance + PedConnect + 
+    PBN + DestScore + FTZ + ACDist + ACCount + EmpAccess + C_LOS + 
+    PropOS + PropBach + censored_MeanSize + ln_Pop, data = Clustersample.tram.600)
+
+Coefficients:
+      (Intercept)           PropComm            Balance         PedConnect                PBN  
+        2.415e+00          1.765e+00         -1.410e+00         -6.822e-04          2.817e-01  
+        DestScore                FTZ             ACDist            ACCount          EmpAccess  
+        5.837e-02          4.989e-01         -1.049e-01          1.845e-03          7.328e-07  
+            C_LOS             PropOS           PropBach  censored_MeanSize             ln_Pop  
+        1.441e-02         -5.152e+00         -1.081e+00          7.522e-01          8.856e-02  
+

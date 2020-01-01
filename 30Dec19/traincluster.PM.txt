@@ -1,0 +1,31 @@
+
+Call:
+lm(formula = ln_Patronage ~ Balance + FTZ + ACDist + Parking + 
+    Parkiteer + EmpAccess + C_LOS + O_Bus_LOS + O_Tram_LOS + 
+    censored_MeanSize + ln_Pop, data = Clustersample.train.800)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-2.81882 -0.32425  0.03353  0.36908  1.69256 
+
+Coefficients:
+                    Estimate Std. Error t value Pr(>|t|)    
+(Intercept)        1.849e+00  1.057e+00   1.750 0.081594 .  
+Balance            1.481e+00  6.703e-01   2.210 0.028246 *  
+FTZ                1.651e+00  4.804e-01   3.437 0.000714 ***
+ACDist            -1.836e-01  4.275e-02  -4.294 2.74e-05 ***
+Parking            4.130e+01  1.338e+01   3.088 0.002303 ** 
+Parkiteer          5.600e-01  1.170e-01   4.788 3.28e-06 ***
+EmpAccess          1.311e-06  3.665e-07   3.578 0.000434 ***
+C_LOS              3.797e-03  8.710e-04   4.359 2.09e-05 ***
+O_Bus_LOS          4.009e-03  8.879e-04   4.516 1.08e-05 ***
+O_Tram_LOS         2.738e-03  8.882e-04   3.082 0.002344 ** 
+censored_MeanSize  4.139e-01  1.771e-01   2.337 0.020427 *  
+ln_Pop             4.380e-01  1.158e-01   3.782 0.000205 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 0.6631 on 200 degrees of freedom
+Multiple R-squared:  0.6871,	Adjusted R-squared:  0.6699 
+F-statistic: 39.93 on 11 and 200 DF,  p-value: < 2.2e-16
+

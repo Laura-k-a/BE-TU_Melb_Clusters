@@ -169,18 +169,8 @@ capture.output(Melb.800.SD.Cluster.Z.validate,file="SDClusterMembership.csv")
 
 
 #Refer to sampling script
-MMLR_Data<- read.csv("Melb.AllStops.Data.18Dec19.csv", header=TRUE, sep=",")
+MMLR_Data<- read.csv("Melb.AllStops.Data.1Jan20.csv", header=TRUE, sep=",")
 row.names(MMLR_Data) <- MMLR_Data[,c(2)]
-
-#transpose density and patronage
-
-MMLR_Data<-mutate(MMLR_Data,
-                  ln_Patronage= log(X19_Total_Pat),
-                  ln_Emp = log(X21_Empden),
-                  ln_Pop = log(X23_Popden),)
-
-MMLR_Data[MMLR_Data == -Inf] <- 0
-
 
 Clustersample.bus.400<- MMLR_Data[which (MMLR_Data$Mode=='bus'
                                                   & MMLR_Data$Sample=='Yes'),]
@@ -192,19 +182,19 @@ Clustersample.train.800<- MMLR_Data[which (MMLR_Data$Mode=='train'
                                            &MMLR_Data$Sample=='Yes'),]
 row.names(Clustersample.train.800) <- Clustersample.train.800[,c(2)]
 
-#Col headers: X26_PropComm+ + X28_Balance + X29_LUEntropy	+ X31_PedConnect +X32_PBN	+X33_DestScore X35_Parkiteer	+ X37_ACDist	+ X38_ACCount	+X 39._FTZ	+X40_Parking	+X41_PropUrban	+X42_PropRural	+X43_EmpAccess	+X44_C_LOS	+X45_O_Bus_LOS	+X46_O_Tram_LOS	+X47_O_Train_LOS	+X48_O_LOS	+X51_MedInc	+X52_PropOS	+X53_PropBach	+X49_censored_PropFTE	+X50_censored_MeanSize + ln_Emp + ln_Pop
+#Col headers: ln_Patronage + PropComm +	Balance +	LUEntropy	+ PedConnect+	PBN	+ DestScore	+ Parkiteer	+ ACDist	+ ACCount	+ FTZ	+ Parking	+ PropUrban	+ PropRural	+ EmpAccess	+ C_LOS	+ O_Bus_LOS	+ O_Tram_LOS	+ O_Train_LOS	+ O_LOS	MedInc +	PropOS +	PropBach	+ censored_PropFTE	+ censored_MeanSize	+ 	ln_Emp +	ln_Pop
 
 
 #Bus
 #step 3 Check for multicolinearity
-Bus.cluster.LM.VIF<-vif(lm(ln_Patronage ~ X26_PropComm+ + X28_Balance + X29_LUEntropy	+ X31_PedConnect +X32_PBN	+X33_DestScore+X35_Parkiteer+X37_ACDist	+ X38_ACCount	+X40_Parking	+X41_PropUrban	+X43_EmpAccess	+X44_C_LOS	+X45_O_Bus_LOS	+X46_O_Tram_LOS	+X47_O_Train_LOS	+X51_MedInc	+X52_PropOS	+X53_PropBach	+X49_censored_PropFTE	+X50_censored_MeanSize + ln_Pop, data =Clustersample.bus.400))
+Bus.cluster.LM.VIF<-vif(lm(ln_Patronage ~ PropComm +	Balance +	LUEntropy	+ PedConnect+	PBN	+ DestScore	+ Parkiteer	+ ACDist	+ ACCount	+ Parking	+ PropUrban	+ EmpAccess	+ C_LOS	+ O_Tram_LOS	+ O_Train_LOS	+ MedInc +	PropOS +	PropBach	+ censored_PropFTE	+ censored_MeanSize	+	ln_Pop, data =Clustersample.bus.400))
 #removed  rural, overlapping (total) level of service, FTZ to get rid of singularity
 Bus.cluster.LM.VIF
 #removed ln_Emp (high VIF >7)
 
 
 #step 4 Simple correlations
-Corrdata.buscluster<-Clustersample.bus.400[,c(64, 26, 28, 29, 31, 32, 33, 35, 37, 38, 40, 41, 43, 44, 45, 46, 47, 51, 52, 53, 54, 55, 66)]
+Corrdata.buscluster<-Clustersample.bus.400[,c(19:27, 29:30, 32:42, 49, 51)]
 
 #Option 1 for Correlation matrices with p-values
 Corrdata.buscluster<-rcorr(as.matrix(Corrdata.buscluster))
@@ -227,721 +217,230 @@ Corrdata.buscluster<-flattenCorrMatrix(Corrdata.buscluster$r,Corrdata.buscluster
 capture.output(Corrdata.buscluster,file="Corrdata.buscluster.csv")
 
 #not significant for ln_bus
-#X45_O_Bus_LOS
-#X51_MedInc
-#X49_censored_PropFTE
+#O_Bus_LOS
+#MedInc
+#censored_PropFTE
+
 
 #Step 4 maximally adjusted model
-Melb.buscluster.LM.1<-lm(ln_Patronage ~ X26_PropComm+ + X28_Balance + X29_LUEntropy	+ X31_PedConnect +X32_PBN	+X33_DestScore+X35_Parkiteer+X37_ACDist	+ X38_ACCount	+X40_Parking	+X41_PropUrban	+X43_EmpAccess	+X44_C_LOS	+X46_O_Tram_LOS	+X47_O_Train_LOS	+X52_PropOS	+X53_PropBach+X50_censored_MeanSize + ln_Pop, data = Clustersample.bus.400)
+Melb.buscluster.LM.1<-lm(ln_Patronage ~ PropComm +	Balance +	LUEntropy	+ PedConnect+	PBN	+ DestScore	+ Parkiteer	+ ACDist	+ ACCount	+ Parking	+ PropUrban	+ EmpAccess	+ C_LOS	+ O_Tram_LOS	+ O_Train_LOS +	PropOS +	PropBach	+ censored_MeanSize	+	ln_Pop, data =Clustersample.bus.400)
 summary(Melb.buscluster.LM.1)
 
-#remove balance
-Melb.buscluster.LM.2<-lm(ln_Patronage ~ X26_PropComm+ + X29_LUEntropy	+ X31_PedConnect +X32_PBN	+X33_DestScore+X35_Parkiteer+X37_ACDist	+ X38_ACCount	+X40_Parking	+X41_PropUrban	+X43_EmpAccess	+X44_C_LOS	+X46_O_Tram_LOS	+X47_O_Train_LOS	+X52_PropOS	+X53_PropBach+X50_censored_MeanSize + ln_Pop, data = Clustersample.bus.400)
-summary(Melb.buscluster.LM.2)
+capture.output(summary(Melb.buscluster.LM.1), file = "buscluster.MA.txt")
 
+#function for backward (starts with maximal model)
+Melb.buscluster.LM.1.regb<-step(Melb.buscluster.LM.1,
+                                  direction = "backward",
+                                  trace = 0) #don't print steps
+summary(Melb.buscluster.LM.1.regb)
 
-#tram LOS
-Melb.buscluster.LM.3<-lm(ln_Patronage ~ X26_PropComm+ + X29_LUEntropy	+ X31_PedConnect +X32_PBN	+X33_DestScore+X35_Parkiteer+X37_ACDist	+ X38_ACCount	+X40_Parking	+X41_PropUrban	+X43_EmpAccess	+X44_C_LOS+X47_O_Train_LOS	+X52_PropOS	+X53_PropBach+X50_censored_MeanSize + ln_Pop, data = Clustersample.bus.400)
-summary(Melb.buscluster.LM.3)
-Anova(Melb.buscluster.LM.3)
-
-#prop OS
-Melb.buscluster.LM.4<-lm(ln_Patronage ~ X26_PropComm+ + X29_LUEntropy	+ X31_PedConnect +X32_PBN	+X33_DestScore+X35_Parkiteer+X37_ACDist	+ X38_ACCount	+X40_Parking	+X41_PropUrban	+X43_EmpAccess	+X44_C_LOS+X47_O_Train_LOS	+X53_PropBach+X50_censored_MeanSize + ln_Pop, data = Clustersample.bus.400)
-summary(Melb.buscluster.LM.4)
-
-
-#trainOS
-Melb.buscluster.LM.5<-lm(ln_Patronage ~ X26_PropComm+ + X29_LUEntropy	+ X31_PedConnect +X32_PBN	+X33_DestScore+X35_Parkiteer+X37_ACDist	+ X38_ACCount	+X40_Parking	+X41_PropUrban	+X43_EmpAccess	+X44_C_LOS+X53_PropBach+X50_censored_MeanSize + ln_Pop, data = Clustersample.bus.400)
-summary(Melb.buscluster.LM.5)
-
-
-#propBach
-Melb.buscluster.LM.6<-lm(ln_Patronage ~ X26_PropComm + X29_LUEntropy	+ X31_PedConnect +X32_PBN	+X33_DestScore+X35_Parkiteer+X37_ACDist	+ X38_ACCount	+X40_Parking	+X41_PropUrban	+X43_EmpAccess	+X44_C_LOS+X50_censored_MeanSize + ln_Pop, data = Clustersample.bus.400)
-summary(Melb.buscluster.LM.6)
-Anova(Melb.buscluster.LM.6)
-
-#pedconnect
-Melb.buscluster.LM.7<-lm(ln_Patronage ~ X26_PropComm + X29_LUEntropy +X32_PBN	+X33_DestScore+X35_Parkiteer+X37_ACDist	+ X38_ACCount	+X40_Parking	+X41_PropUrban	+X43_EmpAccess	+X44_C_LOS+X50_censored_MeanSize + ln_Pop, data = Clustersample.bus.400)
-summary(Melb.buscluster.LM.7)
-
-
-#empAccess
-Melb.buscluster.LM.8<-lm(ln_Patronage ~ X26_PropComm + X29_LUEntropy +X32_PBN	+X33_DestScore+X35_Parkiteer+X37_ACDist	+ X38_ACCount	+X40_Parking	+X41_PropUrban	+X44_C_LOS+X50_censored_MeanSize + ln_Pop, data = Clustersample.bus.400)
-summary(Melb.buscluster.LM.8)
-
-
-#propComm
-Melb.buscluster.LM.9<-lm(ln_Patronage ~  + X29_LUEntropy +X32_PBN	+X33_DestScore+X35_Parkiteer+X37_ACDist	+ X38_ACCount	+X40_Parking	+X41_PropUrban	+X44_C_LOS+X50_censored_MeanSize + ln_Pop, data = Clustersample.bus.400)
-summary(Melb.buscluster.LM.9)
-
-
-#parkiteer
-Melb.buscluster.LM.10<-lm(ln_Patronage ~  + X29_LUEntropy +X32_PBN	+X33_DestScore+X37_ACDist	+ X38_ACCount	+X40_Parking	+X41_PropUrban	+X44_C_LOS+X50_censored_MeanSize + ln_Pop, data = Clustersample.bus.400)
-summary(Melb.buscluster.LM.10)
-
-
-#propurban
-Melb.buscluster.LM.11<-lm(ln_Patronage ~  + X29_LUEntropy +X32_PBN	+X33_DestScore+X37_ACDist	+ X38_ACCount	+X40_Parking	+X44_C_LOS+X50_censored_MeanSize + ln_Pop, data = Clustersample.bus.400)
-summary(Melb.buscluster.LM.11)
-
-
-#account
-Melb.buscluster.LM.12<-lm(ln_Patronage ~  + X29_LUEntropy +X32_PBN	+X33_DestScore+X37_ACDist	+	+X40_Parking	+X44_C_LOS+X50_censored_MeanSize + ln_Pop, data = Clustersample.bus.400)
-summary(Melb.buscluster.LM.12)
+capture.output(summary(Melb.buscluster.LM.1.regb), file = "buscluster.PM.txt")
 
 #diagnostics
-par(mfrow=c(2,2))
-plot(lm(ln_Patronage ~  X29_LUEntropy +X32_PBN	+X33_DestScore+X37_ACDist	+	+X40_Parking	+X44_C_LOS+X50_censored_MeanSize + ln_Pop, data = Clustersample.bus.400))
-#remove 1498 (outside cook's distance)
+plot(Melb.buscluster.LM.1.regb)
+#1498 is influential outlier
 
 which(rownames(Clustersample.bus.400) == "1498-bus") #212
-
-#remove potentially influential outliers (just the ones close to cook's distance)
 Clustersample.bus.400.rd2 <- Clustersample.bus.400[-c(212),]
 
-
-#rerun maximally adjusted model
-#Step 4 maximally adjusted model
-Melb.buscluster.LM.2.1<-lm(ln_Patronage ~ X26_PropComm+ + X28_Balance + X29_LUEntropy	+ X31_PedConnect +X32_PBN	+X33_DestScore+X35_Parkiteer+X37_ACDist	+ X38_ACCount	+X40_Parking	+X41_PropUrban	+X43_EmpAccess	+X44_C_LOS	+X46_O_Tram_LOS	+X47_O_Train_LOS	+X52_PropOS	+X53_PropBach+X50_censored_MeanSize + ln_Pop, data = Clustersample.bus.400.rd2)
+#rd 2 MA
+Melb.buscluster.LM.2.1<-lm(ln_Patronage ~ PropComm +	Balance +	LUEntropy	+ PedConnect+	PBN	+ DestScore	+ Parkiteer	+ ACDist	+ ACCount	+ Parking	+ PropUrban	+ EmpAccess	+ C_LOS	+ O_Tram_LOS	+ O_Train_LOS +	PropOS +	PropBach	+ censored_MeanSize	+	ln_Pop, data =Clustersample.bus.400.rd2)
 summary(Melb.buscluster.LM.2.1)
 
-#parkiteer
-Melb.buscluster.LM.2.2<-lm(ln_Patronage ~ X26_PropComm+ + X28_Balance + X29_LUEntropy	+ X31_PedConnect +X32_PBN	+X33_DestScore+X37_ACDist	+ X38_ACCount	+X40_Parking	+X41_PropUrban	+X43_EmpAccess	+X44_C_LOS	+X46_O_Tram_LOS	+X47_O_Train_LOS	+X52_PropOS	+X53_PropBach+X50_censored_MeanSize + ln_Pop, data = Clustersample.bus.400.rd2)
-summary(Melb.buscluster.LM.2.2)
+capture.output(summary(Melb.buscluster.LM.2.1), file = "buscluster.MA.rd.2.txt")
 
-#AC Dist
-Melb.buscluster.LM.2.3<-lm(ln_Patronage ~ X26_PropComm+ + X28_Balance + X29_LUEntropy	+ X31_PedConnect +X32_PBN	+X33_DestScore+ X38_ACCount	+X40_Parking	+X41_PropUrban	+X43_EmpAccess	+X44_C_LOS	+X46_O_Tram_LOS	+X47_O_Train_LOS	+X52_PropOS	+X53_PropBach+X50_censored_MeanSize + ln_Pop, data = Clustersample.bus.400.rd2)
-summary(Melb.buscluster.LM.2.3)
+#PM
+Melb.buscluster.LM.2.1.regb<-step(Melb.buscluster.LM.2.1,
+                                direction = "backward",
+                                trace = 0) #don't print steps
+summary(Melb.buscluster.LM.2.1.regb)
 
-#Train LOS
-Melb.buscluster.LM.2.4<-lm(ln_Patronage ~ X26_PropComm+ + X28_Balance + X29_LUEntropy	+ X31_PedConnect +X32_PBN	+X33_DestScore+ X38_ACCount	+X40_Parking	+X41_PropUrban	+X43_EmpAccess	+X44_C_LOS	+X46_O_Tram_LOS	+X52_PropOS	+X53_PropBach+X50_censored_MeanSize + ln_Pop, data = Clustersample.bus.400.rd2)
-summary(Melb.buscluster.LM.2.4)
+capture.output(summary(Melb.buscluster.LM.2.1.regb), file = "buscluster.PM.rd.2.txt")
 
-#parking
-Melb.buscluster.LM.2.5<-lm(ln_Patronage ~ X26_PropComm+ + X28_Balance + X29_LUEntropy	+ X31_PedConnect +X32_PBN	+X33_DestScore+ X38_ACCount	+X41_PropUrban	+X43_EmpAccess	+X44_C_LOS	+X46_O_Tram_LOS	+X52_PropOS	+X53_PropBach+X50_censored_MeanSize + ln_Pop, data = Clustersample.bus.400.rd2)
-summary(Melb.buscluster.LM.2.5)
+plot(Melb.buscluster.LM.2.1.regb)
+#1131 is bordernig cook's distance ; 2218 is an outlier in all other plots; Shape generally fine; leave as is. 
 
-#Tram LOS
-Melb.buscluster.LM.2.6<-lm(ln_Patronage ~ X26_PropComm+ + X28_Balance + X29_LUEntropy	+ X31_PedConnect +X32_PBN	+X33_DestScore+ X38_ACCount	+X41_PropUrban	+X43_EmpAccess	+X44_C_LOS	+X52_PropOS	+X53_PropBach+X50_censored_MeanSize + ln_Pop, data = Clustersample.bus.400.rd2)
-summary(Melb.buscluster.LM.2.6)
-
-#propOS
-Melb.buscluster.LM.2.7<-lm(ln_Patronage ~ X26_PropComm+ + X28_Balance + X29_LUEntropy	+ X31_PedConnect +X32_PBN	+X33_DestScore+ X38_ACCount	+X41_PropUrban	+X43_EmpAccess	+X44_C_LOS	+X53_PropBach+X50_censored_MeanSize + ln_Pop, data = Clustersample.bus.400.rd2)
-summary(Melb.buscluster.LM.2.7)
-
-#balance
-Melb.buscluster.LM.2.8<-lm(ln_Patronage ~ X26_PropComm+ X29_LUEntropy	+ X31_PedConnect +X32_PBN	+X33_DestScore+ X38_ACCount	+X41_PropUrban	+X43_EmpAccess	+X44_C_LOS	+X53_PropBach+X50_censored_MeanSize + ln_Pop, data = Clustersample.bus.400.rd2)
-summary(Melb.buscluster.LM.2.8)
-
-#pedconnect
-Melb.buscluster.LM.2.9<-lm(ln_Patronage ~ X26_PropComm+ X29_LUEntropy+X32_PBN	+X33_DestScore+ X38_ACCount	+X41_PropUrban	+X43_EmpAccess	+X44_C_LOS	+X53_PropBach+X50_censored_MeanSize + ln_Pop, data = Clustersample.bus.400.rd2)
-summary(Melb.buscluster.LM.2.9)
-
-#propbach
-Melb.buscluster.LM.2.10<-lm(ln_Patronage ~ X26_PropComm+ X29_LUEntropy+X32_PBN	+X33_DestScore+ X38_ACCount	+X41_PropUrban	+X43_EmpAccess	+X44_C_LOS+X50_censored_MeanSize + ln_Pop, data = Clustersample.bus.400.rd2)
-summary(Melb.buscluster.LM.2.10)
-
-#empaccess
-Melb.buscluster.LM.2.11<-lm(ln_Patronage ~ X26_PropComm+ X29_LUEntropy+X32_PBN	+X33_DestScore+ X38_ACCount	+X41_PropUrban	+X44_C_LOS+X50_censored_MeanSize + ln_Pop, data = Clustersample.bus.400.rd2)
-summary(Melb.buscluster.LM.2.11)
-
-#propcomm
-Melb.buscluster.LM.2.12<-lm(ln_Patronage ~ X29_LUEntropy+X32_PBN	+X33_DestScore+ X38_ACCount	+X41_PropUrban	+X44_C_LOS+X50_censored_MeanSize + ln_Pop, data = Clustersample.bus.400.rd2)
-summary(Melb.buscluster.LM.2.12)
-
-#propurban
-Melb.buscluster.LM.2.13<-lm(ln_Patronage ~ X29_LUEntropy+X32_PBN	+X33_DestScore+ X38_ACCount	+X44_C_LOS+X50_censored_MeanSize + ln_Pop, data = Clustersample.bus.400.rd2)
-summary(Melb.buscluster.LM.2.13)
-
-#pbn (potentially leave in since adjusted R^2 went down)
-Melb.buscluster.LM.2.14<-lm(ln_Patronage ~ X29_LUEntropy	+X33_DestScore+ X38_ACCount	+X44_C_LOS+X50_censored_MeanSize + ln_Pop, data = Clustersample.bus.400.rd2)
-summary(Melb.buscluster.LM.2.14)
-
-#diagnostics
-plot(lm(ln_Patronage ~ X29_LUEntropy	+X33_DestScore+ X38_ACCount	+X44_C_LOS+X50_censored_MeanSize + ln_Pop, data = Clustersample.bus.400.rd2))
-
-#1131 is borderline on Cook's distance. Otherwise, assumptions appear to be met. Try removing. 
-which(rownames(Clustersample.bus.400.rd2) == "1131-bus") #208
-
-#remove potentially influential outliers (just the ones close to cook's distance)
-Clustersample.bus.400.rd3 <- Clustersample.bus.400.rd2[-c(208),]
-
-#rerun maximally adjusted model (rd3)
-Melb.buscluster.LM.3.1<-lm(ln_Patronage ~ X26_PropComm+ + X28_Balance + X29_LUEntropy	+ X31_PedConnect +X32_PBN	+X33_DestScore+X35_Parkiteer+X37_ACDist	+ X38_ACCount	+X40_Parking	+X41_PropUrban	+X43_EmpAccess	+X44_C_LOS	+X46_O_Tram_LOS	+X47_O_Train_LOS	+X52_PropOS	+X53_PropBach+X50_censored_MeanSize + ln_Pop, data = Clustersample.bus.400.rd3)
-summary(Melb.buscluster.LM.3.1)
-
-#AC dist
-Melb.buscluster.LM.3.2<-lm(ln_Patronage ~ X26_PropComm+ + X28_Balance + X29_LUEntropy	+ X31_PedConnect +X32_PBN	+X33_DestScore+X35_Parkiteer+ X38_ACCount	+X40_Parking	+X41_PropUrban	+X43_EmpAccess	+X44_C_LOS	+X46_O_Tram_LOS	+X47_O_Train_LOS	+X52_PropOS	+X53_PropBach+X50_censored_MeanSize + ln_Pop, data = Clustersample.bus.400.rd3)
-summary(Melb.buscluster.LM.3.2)
-
-#Tram LOS
-Melb.buscluster.LM.3.3<-lm(ln_Patronage ~ X26_PropComm+ + X28_Balance + X29_LUEntropy	+ X31_PedConnect +X32_PBN	+X33_DestScore+X35_Parkiteer+ X38_ACCount	+X40_Parking	+X41_PropUrban	+X43_EmpAccess	+X44_C_LOS+X47_O_Train_LOS	+X52_PropOS	+X53_PropBach+X50_censored_MeanSize + ln_Pop, data = Clustersample.bus.400.rd3)
-summary(Melb.buscluster.LM.3.3)
-
-#TBalance
-Melb.buscluster.LM.3.4<-lm(ln_Patronage ~ X26_PropComm + X29_LUEntropy	+ X31_PedConnect +X32_PBN	+X33_DestScore+X35_Parkiteer+ X38_ACCount	+X40_Parking	+X41_PropUrban	+X43_EmpAccess	+X44_C_LOS+X47_O_Train_LOS	+X52_PropOS	+X53_PropBach+X50_censored_MeanSize + ln_Pop, data = Clustersample.bus.400.rd3)
-summary(Melb.buscluster.LM.3.4)
-
-#PropOS
-Melb.buscluster.LM.3.5<-lm(ln_Patronage ~ X26_PropComm + X29_LUEntropy	+ X31_PedConnect +X32_PBN	+X33_DestScore+X35_Parkiteer+ X38_ACCount	+X40_Parking	+X41_PropUrban	+X43_EmpAccess	+X44_C_LOS+X47_O_Train_LOS	+X53_PropBach+X50_censored_MeanSize + ln_Pop, data = Clustersample.bus.400.rd3)
-summary(Melb.buscluster.LM.3.5)
-
-#parking
-Melb.buscluster.LM.3.6<-lm(ln_Patronage ~ X26_PropComm + X29_LUEntropy	+ X31_PedConnect +X32_PBN	+X33_DestScore+X35_Parkiteer+ X38_ACCount	+X41_PropUrban	+X43_EmpAccess	+X44_C_LOS+X47_O_Train_LOS	+X53_PropBach+X50_censored_MeanSize + ln_Pop, data = Clustersample.bus.400.rd3)
-summary(Melb.buscluster.LM.3.6)
-
-#pedconnect
-Melb.buscluster.LM.3.7<-lm(ln_Patronage ~ X26_PropComm + X29_LUEntropy+X32_PBN	+X33_DestScore+X35_Parkiteer+ X38_ACCount	+X41_PropUrban	+X43_EmpAccess	+X44_C_LOS+X47_O_Train_LOS	+X53_PropBach+X50_censored_MeanSize + ln_Pop, data = Clustersample.bus.400.rd3)
-summary(Melb.buscluster.LM.3.7)
-
-#trainLOS
-Melb.buscluster.LM.3.8<-lm(ln_Patronage ~ X26_PropComm + X29_LUEntropy+X32_PBN	+X33_DestScore+X35_Parkiteer+ X38_ACCount	+X41_PropUrban	+X43_EmpAccess	+X44_C_LOS	+X53_PropBach+X50_censored_MeanSize + ln_Pop, data = Clustersample.bus.400.rd3)
-summary(Melb.buscluster.LM.3.8)
-
-#parkiteer
-Melb.buscluster.LM.3.9<-lm(ln_Patronage ~ X26_PropComm + X29_LUEntropy+X32_PBN	+X33_DestScore+ X38_ACCount	+X41_PropUrban	+X43_EmpAccess	+X44_C_LOS	+X53_PropBach+X50_censored_MeanSize + ln_Pop, data = Clustersample.bus.400.rd3)
-summary(Melb.buscluster.LM.3.9)
-
-#prop bach
-Melb.buscluster.LM.3.10<-lm(ln_Patronage ~ X26_PropComm + X29_LUEntropy+X32_PBN	+X33_DestScore+ X38_ACCount	+X41_PropUrban	+X43_EmpAccess	+X44_C_LOS+X50_censored_MeanSize + ln_Pop, data = Clustersample.bus.400.rd3)
-summary(Melb.buscluster.LM.3.10)
-
-#ACCOunt
-Melb.buscluster.LM.3.11<-lm(ln_Patronage ~ X26_PropComm + X29_LUEntropy+X32_PBN	+X33_DestScore	+X41_PropUrban	+X43_EmpAccess	+X44_C_LOS+X50_censored_MeanSize + ln_Pop, data = Clustersample.bus.400.rd3)
-summary(Melb.buscluster.LM.3.11)
-
-#empaccess
-Melb.buscluster.LM.3.12<-lm(ln_Patronage ~ X26_PropComm + X29_LUEntropy+X32_PBN	+X33_DestScore	+X41_PropUrban	+X44_C_LOS+X50_censored_MeanSize + ln_Pop, data = Clustersample.bus.400.rd3)
-summary(Melb.buscluster.LM.3.12)
-
-#propcomm
-Melb.buscluster.LM.3.13<-lm(ln_Patronage ~ X29_LUEntropy+X32_PBN	+X33_DestScore	+X41_PropUrban	+X44_C_LOS+X50_censored_MeanSize + ln_Pop, data = Clustersample.bus.400.rd3)
-summary(Melb.buscluster.LM.3.13)
-
-#PBN
-Melb.buscluster.LM.3.14<-lm(ln_Patronage ~ X29_LUEntropy	+X33_DestScore	+X41_PropUrban	+X44_C_LOS+X50_censored_MeanSize + ln_Pop, data = Clustersample.bus.400.rd3)
-summary(Melb.buscluster.LM.3.14)
-#same variables as before
-
-#diagnostics
-plot(lm(ln_Patronage ~ X29_LUEntropy	+X33_DestScore	+X41_PropUrban	+X44_C_LOS+X50_censored_MeanSize + ln_Pop, data = Clustersample.bus.400.rd3))
-#extremely well-behaved plots
-
-Melb.buscluster.LM.3.14<-lm.beta(Melb.buscluster.LM.3.14)
-summary(Melb.buscluster.LM.3.14)
-capture.output(summary(Melb.buscluster.LM.3.14), file = "Melb.buscluster.LM.3.14.txt")
 
 #Tram
 #step 3 Check for multicolinearity
-Tram.cluster.LM.VIF<-vif(lm(ln_Patronage ~ X26_PropComm+ + X28_Balance + X29_LUEntropy	+ X31_PedConnect +X32_PBN	+X33_DestScore+X37_ACDist	+ X38_ACCount	+X39._FTZ +X40_Parking	+X41_PropUrban	+X43_EmpAccess	+X44_C_LOS	+X45_O_Bus_LOS	+X46_O_Tram_LOS +X47_O_Train_LOS	+X52_PropOS	+X53_PropBach	+X49_censored_PropFTE	+X50_censored_MeanSize + ln_Pop, data =Clustersample.tram.600))
-#removed  rural, overlapping (total) level of service, parkiteer to get rid of singularity
+Tram.cluster.LM.VIF<-vif(lm(ln_Patronage ~ PropComm +	Balance +	LUEntropy	+ PedConnect+	PBN	+ DestScore	+ FTZ + ACDist	+ ACCount	+ Parking + EmpAccess	+ C_LOS	+ O_Bus_LOS	+ O_Train_LOS +	PropOS +	PropBach	+ censored_PropFTE	+ censored_MeanSize	+	ln_Pop, data =Clustersample.tram.600))
+#removed  rural, parkiteer, overlapping (total) level of service to get rid of singularity
 Tram.cluster.LM.VIF
-#removed Med_Inc and ln_Emp to solve all large VIF
+#removed Med Inc, propUrban, ln_Emp (high VIF >7)
 
 
 #step 4 Simple correlations
-Corrdata.tramcluster<-Clustersample.tram.600[,c(64, 26, 28, 29, 31, 32, 33, 37, 38, 39, 40, 41, 43, 44, 45, 46, 47, 52, 53, 54, 55, 66)]
+Corrdata.tramcluster<-Clustersample.tram.600[,c(19:24, 26:29, 32:37, 39:42, 49:51)]
 
 #Option 1 for Correlation matrices with p-values
 Corrdata.tramcluster<-rcorr(as.matrix(Corrdata.tramcluster))
+#276 is far outlying on all plots, however generally conforms to assumptions/ Leave but investigate.
+
 
 #option 2 for flat correlation matrix
-options(max.print=1000000)
+#Set up a custom function to flatten
+options(scipen = 1)
+#option(scipen = 999)
 
 Corrdata.tramcluster<-flattenCorrMatrix(Corrdata.tramcluster$r,Corrdata.tramcluster$P)
 capture.output(Corrdata.tramcluster,file="Corrdata.tramcluster.csv")
+Corrdata.tramcluster
 
-#not significant for ln_patronage
-#X40_Parking
-#X41_PropUrban
-#X45_O_Bus_LOS
-#X47_O_Train_LOS
-#X49_censored_PropFTE
+#not significant for ln_tram
+#LUEntropy
+#Parking
+#O_Bus_LOS
+#O_Train_LOS
+#censored_PropFTE
 
-#Step 4 maximally adjusted model
-Melb.tramcluster.LM.1<-lm(ln_Patronage ~ X26_PropComm+ + X28_Balance + X29_LUEntropy	+ X31_PedConnect +X32_PBN	+X33_DestScore+X37_ACDist	+ X38_ACCount	+X39._FTZ	+X43_EmpAccess	+X44_C_LOS	+X46_O_Tram_LOS	+X52_PropOS	+X53_PropBach	+X50_censored_MeanSize + ln_Pop, data =Clustersample.tram.600)
+#MA tram
+Melb.tramcluster.LM.1<-lm(ln_Patronage ~ PropComm +	Balance + PedConnect+	PBN	+ DestScore	+ FTZ + ACDist	+ ACCount	+ EmpAccess	+ C_LOS	+	PropOS +	PropBach	+ censored_MeanSize	+	ln_Pop, data =Clustersample.tram.600)
 summary(Melb.tramcluster.LM.1)
 
-#remove AC Count
-Melb.tramcluster.LM.2<-lm(ln_Patronage ~ X26_PropComm+ + X28_Balance + X29_LUEntropy	+ X31_PedConnect +X32_PBN	+X33_DestScore+X37_ACDist	+ X39._FTZ	+X43_EmpAccess	+X44_C_LOS	+X46_O_Tram_LOS	+X52_PropOS	+X53_PropBach	+X50_censored_MeanSize + ln_Pop, data =Clustersample.tram.600)
-summary(Melb.tramcluster.LM.2)
+capture.output(Melb.tramcluster.LM.1, file = "tramcluster.MA.txt")
 
-#remove pedconnect
-Melb.tramcluster.LM.3<-lm(ln_Patronage ~ X26_PropComm+ + X28_Balance + X29_LUEntropy	+ X32_PBN	+X33_DestScore+X37_ACDist	+ X39._FTZ	+X43_EmpAccess	+X44_C_LOS	+X46_O_Tram_LOS	+X52_PropOS	+X53_PropBach	+X50_censored_MeanSize + ln_Pop, data =Clustersample.tram.600)
-summary(Melb.tramcluster.LM.3)
+Melb.tramcluster.LM.1.regb<-step(Melb.tramcluster.LM.1,
+                                  direction = "backward",
+                                  trace = 0) #don't print steps
 
-#remove ln_Pop (Strange, need to probe)
-Melb.tramcluster.LM.4<-lm(ln_Patronage ~ X26_PropComm+ + X28_Balance + X29_LUEntropy	+ X32_PBN	+X33_DestScore+X37_ACDist	+ X39._FTZ	+X43_EmpAccess	+X44_C_LOS	+X46_O_Tram_LOS	+X52_PropOS	+X53_PropBach	+X50_censored_MeanSize, data =Clustersample.tram.600)
-summary(Melb.tramcluster.LM.4)
-
-#REMOVE lueNTROPY
-Melb.tramcluster.LM.5<-lm(ln_Patronage ~ X26_PropComm+ + X28_Balance	+ X32_PBN	+X33_DestScore+X37_ACDist	+ X39._FTZ	+X43_EmpAccess	+X44_C_LOS	+X46_O_Tram_LOS	+X52_PropOS	+X53_PropBach	+X50_censored_MeanSize, data =Clustersample.tram.600)
-summary(Melb.tramcluster.LM.5)
-
-#Remove PBN
-Melb.tramcluster.LM.6<-lm(ln_Patronage ~ X26_PropComm+ + X28_Balance	+X33_DestScore+X37_ACDist	+ X39._FTZ	+X43_EmpAccess	+X44_C_LOS	+X46_O_Tram_LOS	+X52_PropOS	+X53_PropBach	+X50_censored_MeanSize, data =Clustersample.tram.600)
-summary(Melb.tramcluster.LM.6)
-
-#remove FTZ (problematic, since different fare rules apply which would be reasonably expected to impact results)
-Melb.tramcluster.LM.7<-lm(ln_Patronage ~ X26_PropComm+ + X28_Balance	+X33_DestScore+X37_ACDist	+X43_EmpAccess	+X44_C_LOS	+X46_O_Tram_LOS	+X52_PropOS	+X53_PropBach	+X50_censored_MeanSize, data =Clustersample.tram.600)
-summary(Melb.tramcluster.LM.7)
-
-#remove AC Dist
-Melb.tramcluster.LM.8<-lm(ln_Patronage ~ X26_PropComm+ + X28_Balance	+X33_DestScore+X43_EmpAccess	+X44_C_LOS	+X46_O_Tram_LOS	+X52_PropOS	+X53_PropBach	+X50_censored_MeanSize, data =Clustersample.tram.600)
-summary(Melb.tramcluster.LM.8)
-
-#remove PropBach
-Melb.tramcluster.LM.9<-lm(ln_Patronage ~ X26_PropComm+ + X28_Balance	+X33_DestScore+X43_EmpAccess	+X44_C_LOS	+X46_O_Tram_LOS	+X52_PropOS		+X50_censored_MeanSize, data =Clustersample.tram.600)
-summary(Melb.tramcluster.LM.9)
-
-#removeEmpAccess
-#rsults are jumping around a lot, suggesting collinearity
-Melb.tramcluster.LM.10<-lm(ln_Patronage ~ X26_PropComm+ + X28_Balance	+X33_DestScore	+X44_C_LOS	+X46_O_Tram_LOS	+X52_PropOS		+X50_censored_MeanSize, data =Clustersample.tram.600)
-summary(Melb.tramcluster.LM.10)
-
-#remove PropOS
-Melb.tramcluster.LM.11<-lm(ln_Patronage ~ X26_PropComm+ + X28_Balance	+X33_DestScore	+X44_C_LOS	+X46_O_Tram_LOS	+X50_censored_MeanSize, data =Clustersample.tram.600)
-summary(Melb.tramcluster.LM.11)
-
-#remove DestScore
-Melb.tramcluster.LM.12<-lm(ln_Patronage ~ X26_PropComm+ + X28_Balance	+X44_C_LOS	+X46_O_Tram_LOS	+X50_censored_MeanSize, data =Clustersample.tram.600)
-summary(Melb.tramcluster.LM.12)
-
-#removeMeansize
-Melb.tramcluster.LM.13<-lm(ln_Patronage ~ X26_PropComm+ + X28_Balance	+X44_C_LOS	+X46_O_Tram_LOS, data =Clustersample.tram.600)
-summary(Melb.tramcluster.LM.13)
-
-#run diagnostics
-#diagnostics
-par(mfrow=c(2,2))
-plot(lm(ln_Patronage ~ X26_PropComm+ + X28_Balance	+X44_C_LOS	+X46_O_Tram_LOS, data = Clustersample.tram.600))
-
-#Fits assumptions nicely. Investigate outliers: 1898 and 276 (on border of Cook's distance, so try removing)
-#compare results if not includig free tram zone
-
-Melb.tramcluster.LM.13<-lm.beta(Melb.tramcluster.LM.13)
-summary(Melb.tramcluster.LM.13)
-capture.output(summary(Melb.tramcluster.LM.13), file = "Melb.tramcluster.LM.13.txt")
-
-
-
-#tram.NoFTZ
-Clustersample.tram.600.NoFTZ<- MMLR_Data[which (MMLR_Data$Mode=='tram'
-                                          & MMLR_Data$Sample=='Yes'
-                                          & MMLR_Data$X39._FTZ =='0'),]
-row.names(Clustersample.tram.600.NoFTZ) <- Clustersample.tram.600.NoFTZ[,c(2)]
-
-#step 3 Check for multicolinearity
-Tram.cluster.noFTZ.LM.VIF<-vif(lm(ln_Patronage ~ X26_PropComm+ + X28_Balance + X29_LUEntropy	+ X31_PedConnect +X32_PBN	+X33_DestScore+X37_ACDist	+ X38_ACCount +X40_Parking	+X41_PropUrban	+X43_EmpAccess	+X44_C_LOS	+X45_O_Bus_LOS	+X46_O_Tram_LOS +X47_O_Train_LOS +X52_PropOS	+X53_PropBach	+X49_censored_PropFTE	+X50_censored_MeanSize +ln_Emp, data =Clustersample.tram.600.NoFTZ))
-#removed  rural, overlapping (total) level of service, parkiteer to get rid of singularity
-Tram.cluster.noFTZ.LM.VIF
-#removed Med_Inc and ln_Pop to solve all large VIF
-
-
-#step 4 Simple correlations
-Corrdata.tramcluster.noFTZ<-Clustersample.tram.600.NoFTZ[,c(64, 26, 28, 29, 31, 32, 33, 37, 38, 40, 41, 43, 44, 45, 46, 47, 52, 53, 54, 55, 65)]
-
-#Option 1 for Correlation matrices with p-values
-Corrdata.tramcluster.noFTZ<-rcorr(as.matrix(Corrdata.tramcluster.noFTZ))
-
-#option 2 for flat correlation matrix
-options(max.print=1000000)
-
-Corrdata.tramcluster.noFTZ<-flattenCorrMatrix(Corrdata.tramcluster.noFTZ$r,Corrdata.tramcluster.noFTZ$P)
-capture.output(Corrdata.tramcluster.noFTZ,file="Corrdata.tramcluster.noFTZ.csv")
-
-#not significant for ln_patronage
-#X41_PropUrban
-#X45_O_Bus_LOS
-#X46_O_Tram_LOS
-#X47_O_Train_LOS
-#X52_PropOS
-#X49_censored_PropFTE
-
-
-#Step 4 maximally adjusted model
-Melb.tramcluster.noFTZ.LM.1<-lm(ln_Patronage ~ X26_PropComm+ + X28_Balance + X29_LUEntropy	+ X31_PedConnect +X32_PBN	+X33_DestScore+X37_ACDist	+ X38_ACCount +X40_Parking	+X43_EmpAccess	+X44_C_LOS	+X53_PropBach	+X50_censored_MeanSize +ln_Emp, data =Clustersample.tram.600.NoFTZ)
-summary(Melb.tramcluster.noFTZ.LM.1)
-
-#remove ACDist
-Melb.tramcluster.noFTZ.LM.2<-lm(ln_Patronage ~ X26_PropComm+ + X28_Balance + X29_LUEntropy	+ X31_PedConnect +X32_PBN	+X33_DestScore+ X38_ACCount +X40_Parking	+X43_EmpAccess	+X44_C_LOS	+X53_PropBach	+X50_censored_MeanSize +ln_Emp, data =Clustersample.tram.600.NoFTZ)
-summary(Melb.tramcluster.noFTZ.LM.2)
-
-#remove EmpAccess
-Melb.tramcluster.noFTZ.LM.3<-lm(ln_Patronage ~ X26_PropComm+ + X28_Balance + X29_LUEntropy	+ X31_PedConnect +X32_PBN	+X33_DestScore+ X38_ACCount +X40_Parking	+X44_C_LOS	+X53_PropBach	+X50_censored_MeanSize +ln_Emp, data =Clustersample.tram.600.NoFTZ)
-summary(Melb.tramcluster.noFTZ.LM.3)
-
-#remove LuEntropy
-Melb.tramcluster.noFTZ.LM.4<-lm(ln_Patronage ~ X26_PropComm+ + X28_Balance + X31_PedConnect +X32_PBN	+X33_DestScore+ X38_ACCount +X40_Parking	+X44_C_LOS	+X53_PropBach	+X50_censored_MeanSize +ln_Emp, data =Clustersample.tram.600.NoFTZ)
-summary(Melb.tramcluster.noFTZ.LM.4)
-
-#remove PBN
-Melb.tramcluster.noFTZ.LM.5<-lm(ln_Patronage ~ X26_PropComm+ + X28_Balance + X31_PedConnect 	+X33_DestScore+ X38_ACCount +X40_Parking	+X44_C_LOS	+X53_PropBach	+X50_censored_MeanSize +ln_Emp, data =Clustersample.tram.600.NoFTZ)
-summary(Melb.tramcluster.noFTZ.LM.5)
-
-#remove ACCount
-Melb.tramcluster.noFTZ.LM.6<-lm(ln_Patronage ~ X26_PropComm+ + X28_Balance + X31_PedConnect 	+X33_DestScore+X40_Parking	+X44_C_LOS	+X53_PropBach	+X50_censored_MeanSize +ln_Emp, data =Clustersample.tram.600.NoFTZ)
-summary(Melb.tramcluster.noFTZ.LM.6)
-
-#remove PedConnect
-Melb.tramcluster.noFTZ.LM.7<-lm(ln_Patronage ~ X26_PropComm+ + X28_Balance	+X33_DestScore+X40_Parking	+X44_C_LOS	+X53_PropBach	+X50_censored_MeanSize +ln_Emp, data =Clustersample.tram.600.NoFTZ)
-summary(Melb.tramcluster.noFTZ.LM.7)
-
-#remove DestScore
-Melb.tramcluster.noFTZ.LM.8<-lm(ln_Patronage ~ X26_PropComm+ + X28_Balance	+X40_Parking	+X44_C_LOS	+X53_PropBach	+X50_censored_MeanSize +ln_Emp, data =Clustersample.tram.600.NoFTZ)
-summary(Melb.tramcluster.noFTZ.LM.8)
-
-#removePropBach
-Melb.tramcluster.noFTZ.LM.9<-lm(ln_Patronage ~ X26_PropComm+ + X28_Balance	+X40_Parking	+X44_C_LOS+X50_censored_MeanSize +ln_Emp, data =Clustersample.tram.600.NoFTZ)
-summary(Melb.tramcluster.noFTZ.LM.9)
+summary(Melb.tramcluster.LM.1.regb)
+capture.output(Melb.tramcluster.LM.1.regb, file = "tramcluster.PM.txt")
 
 #diagnostics
-plot(lm(ln_Patronage ~ X26_PropComm+ + X28_Balance	+X40_Parking	+X44_C_LOS+X50_censored_MeanSize +ln_Emp, data =Clustersample.tram.600.NoFTZ))
+plot(Melb.tramcluster.LM.1.regb)
 
-#this time 276 crosses cook's distance. Outliers from the original run (i.e. 1898) including FTZ persist: Try removing 276 from this version; since in the prior, FTZ was excluded yet that did not make thoeretical sense because the fare is different in FTZ. 
-
-which(rownames(Clustersample.tram.600.NoFTZ) == "276-tram") #48
-
-#remove potentially influential outliers (just the ones close to cook's distance)
-Clustersample.tram.600.noFTZ.rd2 <- Clustersample.tram.600.NoFTZ[-c(48),]
-
-Melb.tramcluster.noFTZ.LM.2.1<-lm(ln_Patronage ~ X26_PropComm+ + X28_Balance + X29_LUEntropy	+ X31_PedConnect +X32_PBN	+X33_DestScore+X37_ACDist	+ X38_ACCount +X40_Parking	+X43_EmpAccess	+X44_C_LOS	+X53_PropBach	+X50_censored_MeanSize +ln_Emp, data =Clustersample.tram.600.noFTZ.rd2)
-summary(Melb.tramcluster.noFTZ.LM.2.1)
-
-#ACDist
-Melb.tramcluster.noFTZ.LM.2.2<-lm(ln_Patronage ~ X26_PropComm+ + X28_Balance + X29_LUEntropy	+ X31_PedConnect +X32_PBN	+X33_DestScore+ X38_ACCount +X40_Parking	+X43_EmpAccess	+X44_C_LOS	+X53_PropBach	+X50_censored_MeanSize +ln_Emp, data =Clustersample.tram.600.noFTZ.rd2)
-summary(Melb.tramcluster.noFTZ.LM.2.2)
-
-#empaccess
-Melb.tramcluster.noFTZ.LM.2.3<-lm(ln_Patronage ~ X26_PropComm+ + X28_Balance + X29_LUEntropy	+ X31_PedConnect +X32_PBN	+X33_DestScore+ X38_ACCount +X40_Parking	+X44_C_LOS	+X53_PropBach	+X50_censored_MeanSize +ln_Emp, data =Clustersample.tram.600.noFTZ.rd2)
-summary(Melb.tramcluster.noFTZ.LM.2.3)
-
-#LUEntropy
-Melb.tramcluster.noFTZ.LM.2.4<-lm(ln_Patronage ~ X26_PropComm+ + X28_Balance	+ X31_PedConnect +X32_PBN	+X33_DestScore+ X38_ACCount +X40_Parking	+X44_C_LOS	+X53_PropBach	+X50_censored_MeanSize +ln_Emp, data =Clustersample.tram.600.noFTZ.rd2)
-summary(Melb.tramcluster.noFTZ.LM.2.4)
-
-#PBN
-Melb.tramcluster.noFTZ.LM.2.5<-lm(ln_Patronage ~ X26_PropComm+ + X28_Balance	+ X31_PedConnect	+X33_DestScore+ X38_ACCount +X40_Parking	+X44_C_LOS	+X53_PropBach	+X50_censored_MeanSize +ln_Emp, data =Clustersample.tram.600.noFTZ.rd2)
-summary(Melb.tramcluster.noFTZ.LM.2.5)
-
-#ACCount
-Melb.tramcluster.noFTZ.LM.2.6<-lm(ln_Patronage ~ X26_PropComm+ + X28_Balance	+ X31_PedConnect	+X33_DestScore +X40_Parking	+X44_C_LOS	+X53_PropBach	+X50_censored_MeanSize +ln_Emp, data =Clustersample.tram.600.noFTZ.rd2)
-summary(Melb.tramcluster.noFTZ.LM.2.6)
-
-#pedconnect
-Melb.tramcluster.noFTZ.LM.2.7<-lm(ln_Patronage ~ X26_PropComm+ + X28_Balance	+X33_DestScore +X40_Parking	+X44_C_LOS	+X53_PropBach	+X50_censored_MeanSize +ln_Emp, data =Clustersample.tram.600.noFTZ.rd2)
-summary(Melb.tramcluster.noFTZ.LM.2.7)
-
-#destscore
-Melb.tramcluster.noFTZ.LM.2.8<-lm(ln_Patronage ~ X26_PropComm+ + X28_Balance +X40_Parking	+X44_C_LOS	+X53_PropBach	+X50_censored_MeanSize +ln_Emp, data =Clustersample.tram.600.noFTZ.rd2)
-summary(Melb.tramcluster.noFTZ.LM.2.8)
-
-#doesn't make sense
-#run diagnostics
-plot(lm(ln_Patronage ~ X26_PropComm+ + X28_Balance +X40_Parking	+X44_C_LOS	+X53_PropBach	+X50_censored_MeanSize +ln_Emp, data =Clustersample.tram.600.noFTZ.rd2))
-#fits outlier assumptions; generally well-behaved. 1898 still an outlier. Generally converging on the same results; balance is negatively related to patronage; without FTZ sees ln_pop used instead of ln_Emp (due to VIF scores); and ln_Pop falls out of the model whereas ln_Emp stays. noFTZ model has parking as an explanatory variable; whereas it is not significant for FTZ included model. Need to probe this finding. 
-
-
-Melb.tramcluster.noFTZ.LM.2.8<-lm.beta(Melb.tramcluster.noFTZ.LM.2.8)
-summary(Melb.tramcluster.noFTZ.LM.2.8)
-capture.output(summary(Melb.tramcluster.noFTZ.LM.2.8), file = "Melb.tramcluster.noFTZ.LM.2.8.txt")
-
-#train
+#Train
 #step 3 Check for multicolinearity
-Train.cluster.LM.VIF<-vif(lm(ln_Patronage ~ X26_PropComm + X28_Balance + X29_LUEntropy	+ X31_PedConnect +X32_PBN	+X33_DestScore + X35_Parkiteer	+ X37_ACDist	+ X38_ACCount	+X39._FTZ	+X40_Parking	+X42_PropRural	+X43_EmpAccess	+X44_C_LOS	+X45_O_Bus_LOS	+X46_O_Tram_LOS	+X52_PropOS	+X53_PropBach	+X49_censored_PropFTE	+X50_censored_MeanSize + ln_Pop, data =Clustersample.train.800))
-#removed  overlapping train LOS and overlapping (total) level of serviceto get rid of singularity
+Train.cluster.LM.VIF<-vif(lm(ln_Patronage ~ PropComm +	Balance +	LUEntropy	+ PedConnect+	PBN	+ DestScore	+ FTZ + ACDist	+ ACCount	+ Parking +Parkiteer  + PropRural + EmpAccess	+ C_LOS	+ O_Bus_LOS	+ O_Tram_LOS +	PropOS +	PropBach	+ censored_PropFTE + censored_MeanSize	+	ln_Pop, data =Clustersample.train.800))
+#removed  overlapping (total) level of service to get rid of singularity
 Train.cluster.LM.VIF
-#removed ln_Emp, MedInc to solve VIF
-#ln_Pop still has VIF = 6.08. Try removing Prop Urban
-#fixed
+#removed Med Inc, propUrban, ln_Emp (high VIF >7)
+
 
 #step 4 Simple correlations
-Corrdata.traincluster<-Clustersample.train.800[,c(64, 26, 28, 29, 31, 32, 33, 35, 37, 38, 39, 40, 42, 43, 44, 45, 46, 52, 53, 54, 55, 66)]
+Corrdata.traincluster<-Clustersample.train.800[,c(19:29, 31:35, 39:42, 49:51)]
 
 #Option 1 for Correlation matrices with p-values
 Corrdata.traincluster<-rcorr(as.matrix(Corrdata.traincluster))
 
 #option 2 for flat correlation matrix
-options(max.print=1000000)
+#Set up a custom function to flatten
+options(scipen = 1)
+#option(scipen = 999)
 
 Corrdata.traincluster<-flattenCorrMatrix(Corrdata.traincluster$r,Corrdata.traincluster$P)
 capture.output(Corrdata.traincluster,file="Corrdata.traincluster.csv")
 
-#not significant for ln_patronage
-#X32_PBN
-#X42_PropRural
-#X49_censored_PropFTE
+#not significant for ln_train
+##PBN
+#PropRural
+#censored_PropFTE
 
-
-#Step 4 maximally adjusted model
-Melb.traincluster.LM.1<-lm(ln_Patronage ~ X26_PropComm + X28_Balance + X29_LUEntropy	+ X31_PedConnect +X32_PBN	+X33_DestScore + X35_Parkiteer	+ X37_ACDist	+ X38_ACCount	+X39._FTZ	+X40_Parking	+X42_PropRural	+X43_EmpAccess	+X44_C_LOS	+X45_O_Bus_LOS	+X46_O_Tram_LOS	+X52_PropOS	+X53_PropBach	+X49_censored_PropFTE	+X50_censored_MeanSize + ln_Pop, data =Clustersample.train.800)
+#maxmially adjusted model
+Melb.traincluster.LM.1<-lm(ln_Patronage ~ PropComm +	Balance +	LUEntropy	+ PedConnect	+ DestScore	+ FTZ + ACDist	+ ACCount	+ Parking +Parkiteer + EmpAccess	+ C_LOS	+ O_Bus_LOS	+ O_Tram_LOS +	PropOS +	PropBach + censored_MeanSize	+	ln_Pop, data =Clustersample.train.800)
 summary(Melb.traincluster.LM.1)
 
-#LUEntropy
-Melb.traincluster.LM.2<-lm(ln_Patronage ~ X26_PropComm + X28_Balance	+ X31_PedConnect +X32_PBN	+X33_DestScore + X35_Parkiteer	+ X37_ACDist	+ X38_ACCount	+X39._FTZ	+X40_Parking	+X42_PropRural	+X43_EmpAccess	+X44_C_LOS	+X45_O_Bus_LOS	+X46_O_Tram_LOS	+X52_PropOS	+X53_PropBach	+X49_censored_PropFTE	+X50_censored_MeanSize + ln_Pop, data =Clustersample.train.800)
-summary(Melb.traincluster.LM.2)
+capture.output(summary(Melb.traincluster.LM.1), file = "traincluster.MA.txt")
 
-#pedconnect
-Melb.traincluster.LM.3<-lm(ln_Patronage ~ X26_PropComm + X28_Balance	+X32_PBN	+X33_DestScore + X35_Parkiteer	+ X37_ACDist	+ X38_ACCount	+X39._FTZ	+X40_Parking	+X42_PropRural	+X43_EmpAccess	+X44_C_LOS	+X45_O_Bus_LOS	+X46_O_Tram_LOS	+X52_PropOS	+X53_PropBach	+X49_censored_PropFTE	+X50_censored_MeanSize + ln_Pop, data =Clustersample.train.800)
-summary(Melb.traincluster.LM.3)
+Melb.traincluster.LM.1.regb<-step(Melb.traincluster.LM.1,
+                                 direction = "backward",
+                                 trace = 0) #don't print steps
+summary(Melb.traincluster.LM.1.regb)
+capture.output(summary(Melb.traincluster.LM.1.regb), file = "traincluster.PM.txt")
 
-#ACCount
-Melb.traincluster.LM.4<-lm(ln_Patronage ~ X26_PropComm + X28_Balance	+X32_PBN	+X33_DestScore + X35_Parkiteer	+ X37_ACDist+X39._FTZ	+X40_Parking	+X42_PropRural	+X43_EmpAccess	+X44_C_LOS	+X45_O_Bus_LOS	+X46_O_Tram_LOS	+X52_PropOS	+X53_PropBach	+X49_censored_PropFTE	+X50_censored_MeanSize + ln_Pop, data =Clustersample.train.800)
-summary(Melb.traincluster.LM.4)
+#diagnostic
+plot(Melb.traincluster.LM.1.regb)
+#signs of heteroskedasticity with most outlying 597, 605, 636
+#exceeds Cook's distance: 2, 628, 4
 
-#PropOS
-Melb.traincluster.LM.5<-lm(ln_Patronage ~ X26_PropComm + X28_Balance	+X32_PBN	+X33_DestScore + X35_Parkiteer	+ X37_ACDist+X39._FTZ	+X40_Parking	+X42_PropRural	+X43_EmpAccess	+X44_C_LOS	+X45_O_Bus_LOS	+X46_O_Tram_LOS	+X53_PropBach	+X49_censored_PropFTE	+X50_censored_MeanSize + ln_Pop, data =Clustersample.train.800)
-summary(Melb.traincluster.LM.5)
-
-#DestScore
-Melb.traincluster.LM.6<-lm(ln_Patronage ~ X26_PropComm + X28_Balance	+X32_PBN + X35_Parkiteer	+ X37_ACDist+X39._FTZ	+X40_Parking	+X42_PropRural	+X43_EmpAccess	+X44_C_LOS	+X45_O_Bus_LOS	+X46_O_Tram_LOS	+X53_PropBach	+X49_censored_PropFTE	+X50_censored_MeanSize + ln_Pop, data =Clustersample.train.800)
-summary(Melb.traincluster.LM.6)
-
-#propComm
-Melb.traincluster.LM.7<-lm(ln_Patronage ~ X28_Balance	+X32_PBN + X35_Parkiteer	+ X37_ACDist+X39._FTZ	+X40_Parking	+X42_PropRural	+X43_EmpAccess	+X44_C_LOS	+X45_O_Bus_LOS	+X46_O_Tram_LOS	+X53_PropBach	+X49_censored_PropFTE	+X50_censored_MeanSize + ln_Pop, data =Clustersample.train.800)
-summary(Melb.traincluster.LM.7)
-
-#PropBach
-Melb.traincluster.LM.8<-lm(ln_Patronage ~ X28_Balance	+X32_PBN + X35_Parkiteer	+ X37_ACDist+X39._FTZ	+X40_Parking	+X42_PropRural	+X43_EmpAccess	+X44_C_LOS	+X45_O_Bus_LOS	+X46_O_Tram_LOS	+X49_censored_PropFTE	+X50_censored_MeanSize + ln_Pop, data =Clustersample.train.800)
-summary(Melb.traincluster.LM.8)
-
-#PropRural
-Melb.traincluster.LM.9<-lm(ln_Patronage ~ X28_Balance	+X32_PBN + X35_Parkiteer	+ X37_ACDist+X39._FTZ	+X40_Parking	+X43_EmpAccess	+X44_C_LOS	+X45_O_Bus_LOS	+X46_O_Tram_LOS	+X49_censored_PropFTE	+X50_censored_MeanSize + ln_Pop, data =Clustersample.train.800)
-summary(Melb.traincluster.LM.9)
-
-#propFTE
-Melb.traincluster.LM.10<-lm(ln_Patronage ~ X28_Balance	+X32_PBN + X35_Parkiteer	+ X37_ACDist+X39._FTZ	+X40_Parking	+X43_EmpAccess	+X44_C_LOS	+X45_O_Bus_LOS	+X46_O_Tram_LOS	+X50_censored_MeanSize + ln_Pop, data =Clustersample.train.800)
-summary(Melb.traincluster.LM.10)
-
-#PBN is negative, doesn't make sense
-#rest makes sense
-
-#diagnostics
-plot(lm(ln_Patronage ~ X28_Balance	+X32_PBN + X35_Parkiteer	+ X37_ACDist+X39._FTZ	+X40_Parking	+X43_EmpAccess	+X44_C_LOS	+X45_O_Bus_LOS	+X46_O_Tram_LOS	+X50_censored_MeanSize + ln_Pop, data =Clustersample.train.800))
-#major assumption violations. remove outside cook's distance:
-#2, 628, 4
-
+which(rownames(Clustersample.train.800) == "597-train") #93
+which(rownames(Clustersample.train.800) == "605-train") #125
+which(rownames(Clustersample.train.800) == "636-train") #79
 which(rownames(Clustersample.train.800) == "2-train") #209
 which(rownames(Clustersample.train.800) == "628-train") #210
 which(rownames(Clustersample.train.800) == "4-train") #211
 
-#remove potentially influential outliers (just the ones close to cook's distance)
-Clustersample.train.800.rd2 <- Clustersample.train.800[-c(209, 210, 211),]
+Clustersample.train.800.rd2 <- Clustersample.train.800[-c(93, 125, 79, 209, 210, 211),]
 
-Melb.traincluster.LM.2.1<-lm(ln_Patronage ~ X26_PropComm + X28_Balance + X29_LUEntropy	+ X31_PedConnect +X32_PBN	+X33_DestScore + X35_Parkiteer	+ X37_ACDist	+ X38_ACCount	+X39._FTZ	+X40_Parking	+X42_PropRural	+X43_EmpAccess	+X44_C_LOS	+X45_O_Bus_LOS	+X46_O_Tram_LOS	+X52_PropOS	+X53_PropBach	+X49_censored_PropFTE	+X50_censored_MeanSize + ln_Pop, data =Clustersample.train.800.rd2)
+Melb.traincluster.LM.2.1<-lm(ln_Patronage ~ PropComm +	Balance +	LUEntropy	+ PedConnect	+ DestScore	+ FTZ + ACDist	+ ACCount	+ Parking +Parkiteer + EmpAccess	+ C_LOS	+ O_Bus_LOS	+ O_Tram_LOS +	PropOS +	PropBach + censored_MeanSize	+	ln_Pop, data =Clustersample.train.800.rd2)
 summary(Melb.traincluster.LM.2.1)
 
-#PedConnect
-Melb.traincluster.LM.2.2<-lm(ln_Patronage ~ X26_PropComm + X28_Balance + X29_LUEntropy	+X32_PBN	+X33_DestScore + X35_Parkiteer	+ X37_ACDist	+ X38_ACCount	+X39._FTZ	+X40_Parking	+X42_PropRural	+X43_EmpAccess	+X44_C_LOS	+X45_O_Bus_LOS	+X46_O_Tram_LOS	+X52_PropOS	+X53_PropBach	+X49_censored_PropFTE	+X50_censored_MeanSize + ln_Pop, data =Clustersample.train.800.rd2)
-summary(Melb.traincluster.LM.2.2)
+capture.output(summary(Melb.traincluster.LM.2.1), file = "traincluster.MA.rd.2.txt")
 
-#balance
-Melb.traincluster.LM.2.3<-lm(ln_Patronage ~ X26_PropComm + X29_LUEntropy	+X32_PBN	+X33_DestScore + X35_Parkiteer	+ X37_ACDist	+ X38_ACCount	+X39._FTZ	+X40_Parking	+X42_PropRural	+X43_EmpAccess	+X44_C_LOS	+X45_O_Bus_LOS	+X46_O_Tram_LOS	+X52_PropOS	+X53_PropBach	+X49_censored_PropFTE	+X50_censored_MeanSize + ln_Pop, data =Clustersample.train.800.rd2)
-summary(Melb.traincluster.LM.2.3)
-
-#destscore
-Melb.traincluster.LM.2.4<-lm(ln_Patronage ~ X26_PropComm + X29_LUEntropy	+X32_PBN + X35_Parkiteer	+ X37_ACDist	+ X38_ACCount	+X39._FTZ	+X40_Parking	+X42_PropRural	+X43_EmpAccess	+X44_C_LOS	+X45_O_Bus_LOS	+X46_O_Tram_LOS	+X52_PropOS	+X53_PropBach	+X49_censored_PropFTE	+X50_censored_MeanSize + ln_Pop, data =Clustersample.train.800.rd2)
-summary(Melb.traincluster.LM.2.4)
-
-#ACCount
-Melb.traincluster.LM.2.5<-lm(ln_Patronage ~ X26_PropComm + X29_LUEntropy	+X32_PBN + X35_Parkiteer	+ X37_ACDist	+X39._FTZ	+X40_Parking	+X42_PropRural	+X43_EmpAccess	+X44_C_LOS	+X45_O_Bus_LOS	+X46_O_Tram_LOS	+X52_PropOS	+X53_PropBach	+X49_censored_PropFTE	+X50_censored_MeanSize + ln_Pop, data =Clustersample.train.800.rd2)
-summary(Melb.traincluster.LM.2.5)
-
-#PropOS
-Melb.traincluster.LM.2.6<-lm(ln_Patronage ~ X26_PropComm + X29_LUEntropy	+X32_PBN + X35_Parkiteer	+ X37_ACDist	+X39._FTZ	+X40_Parking	+X42_PropRural	+X43_EmpAccess	+X44_C_LOS	+X45_O_Bus_LOS	+X46_O_Tram_LOS		+X53_PropBach	+X49_censored_PropFTE	+X50_censored_MeanSize + ln_Pop, data =Clustersample.train.800.rd2)
-summary(Melb.traincluster.LM.2.6)
-
-#LUEntropy
-Melb.traincluster.LM.2.7<-lm(ln_Patronage ~ X26_PropComm +X32_PBN + X35_Parkiteer	+ X37_ACDist	+X39._FTZ	+X40_Parking	+X42_PropRural	+X43_EmpAccess	+X44_C_LOS	+X45_O_Bus_LOS	+X46_O_Tram_LOS		+X53_PropBach	+X49_censored_PropFTE	+X50_censored_MeanSize + ln_Pop, data =Clustersample.train.800.rd2)
-summary(Melb.traincluster.LM.2.7)
-
-#FTE
-Melb.traincluster.LM.2.8<-lm(ln_Patronage ~ X26_PropComm +X32_PBN + X35_Parkiteer	+ X37_ACDist	+X39._FTZ	+X40_Parking	+X42_PropRural	+X43_EmpAccess	+X44_C_LOS	+X45_O_Bus_LOS	+X46_O_Tram_LOS		+X53_PropBach	+X50_censored_MeanSize + ln_Pop, data =Clustersample.train.800.rd2)
-summary(Melb.traincluster.LM.2.8)
-
-#PropComm
-Melb.traincluster.LM.2.9<-lm(ln_Patronage ~X32_PBN + X35_Parkiteer	+ X37_ACDist	+X39._FTZ	+X40_Parking	+X42_PropRural	+X43_EmpAccess	+X44_C_LOS	+X45_O_Bus_LOS	+X46_O_Tram_LOS		+X53_PropBach	+X50_censored_MeanSize + ln_Pop, data =Clustersample.train.800.rd2)
-summary(Melb.traincluster.LM.2.9)
-
-#PropRural
-Melb.traincluster.LM.2.10<-lm(ln_Patronage ~X32_PBN + X35_Parkiteer	+ X37_ACDist	+X39._FTZ	+X40_Parking	+X43_EmpAccess	+X44_C_LOS	+X45_O_Bus_LOS	+X46_O_Tram_LOS		+X53_PropBach	+X50_censored_MeanSize + ln_Pop, data =Clustersample.train.800.rd2)
-summary(Melb.traincluster.LM.2.10)
-
-#PBN
-Melb.traincluster.LM.2.11<-lm(ln_Patronage ~ X35_Parkiteer	+ X37_ACDist	+X39._FTZ	+X40_Parking	+X43_EmpAccess	+X44_C_LOS	+X45_O_Bus_LOS	+X46_O_Tram_LOS		+X53_PropBach	+X50_censored_MeanSize + ln_Pop, data =Clustersample.train.800.rd2)
-summary(Melb.traincluster.LM.2.11)
-
-#TRamLOS
-Melb.traincluster.LM.2.12<-lm(ln_Patronage ~ X35_Parkiteer	+ X37_ACDist	+X39._FTZ	+X40_Parking	+X43_EmpAccess	+X44_C_LOS	+X45_O_Bus_LOS	+X53_PropBach	+X50_censored_MeanSize + ln_Pop, data =Clustersample.train.800.rd2)
-summary(Melb.traincluster.LM.2.12)
-
-#PropBach
-Melb.traincluster.LM.2.13<-lm(ln_Patronage ~ X35_Parkiteer	+ X37_ACDist	+X39._FTZ	+X40_Parking	+X43_EmpAccess	+X44_C_LOS	+X45_O_Bus_LOS+X50_censored_MeanSize + ln_Pop, data =Clustersample.train.800.rd2)
-summary(Melb.traincluster.LM.2.13)
-
-#results are logical
-#diagnostic
-plot(lm(ln_Patronage ~ X35_Parkiteer	+ X37_ACDist	+X39._FTZ	+X40_Parking	+X43_EmpAccess	+X44_C_LOS	+X45_O_Bus_LOS+X50_censored_MeanSize + ln_Pop, data =Clustersample.train.800.rd2))
-#violation of equal variance assumption. 
-#cook's distance is not exceeded; this is because of the large variance in patronage
-#significant outliers are 597, 609 and 636. Try removing
-
-which(rownames(Clustersample.train.800.rd2) == "597-train") #93
-which(rownames(Clustersample.train.800.rd2) == "609-train") #72
-which(rownames(Clustersample.train.800.rd2) == "636-train") #79
-
-#remove potentially influential outliers (just the ones close to cook's distance)
-Clustersample.train.800.rd3 <- Clustersample.train.800.rd2[-c(93, 72, 79),]
-
-Melb.traincluster.LM.3.1<-lm(ln_Patronage ~ X26_PropComm + X28_Balance + X29_LUEntropy	+ X31_PedConnect +X32_PBN	+X33_DestScore + X35_Parkiteer	+ X37_ACDist	+ X38_ACCount	+X39._FTZ	+X40_Parking	+X42_PropRural	+X43_EmpAccess	+X44_C_LOS	+X45_O_Bus_LOS	+X46_O_Tram_LOS	+X52_PropOS	+X53_PropBach	+X49_censored_PropFTE	+X50_censored_MeanSize + ln_Pop, data =Clustersample.train.800.rd3)
-summary(Melb.traincluster.LM.3.1)
-
-##propcomm
-Melb.traincluster.LM.3.2<-lm(ln_Patronage ~  X28_Balance + X29_LUEntropy	+ X31_PedConnect +X32_PBN	+X33_DestScore + X35_Parkiteer	+ X37_ACDist	+ X38_ACCount	+X39._FTZ	+X40_Parking	+X42_PropRural	+X43_EmpAccess	+X44_C_LOS	+X45_O_Bus_LOS	+X46_O_Tram_LOS	+X52_PropOS	+X53_PropBach	+X49_censored_PropFTE	+X50_censored_MeanSize + ln_Pop, data =Clustersample.train.800.rd3)
-summary(Melb.traincluster.LM.3.2)
-
-#PedConnect
-Melb.traincluster.LM.3.3<-lm(ln_Patronage ~  X28_Balance + X29_LUEntropy +X32_PBN	+X33_DestScore + X35_Parkiteer	+ X37_ACDist	+ X38_ACCount	+X39._FTZ	+X40_Parking	+X42_PropRural	+X43_EmpAccess	+X44_C_LOS	+X45_O_Bus_LOS	+X46_O_Tram_LOS	+X52_PropOS	+X53_PropBach	+X49_censored_PropFTE	+X50_censored_MeanSize + ln_Pop, data =Clustersample.train.800.rd3)
-summary(Melb.traincluster.LM.3.3)
-
-#ACCount
-Melb.traincluster.LM.3.4<-lm(ln_Patronage ~  X28_Balance + X29_LUEntropy +X32_PBN	+X33_DestScore + X35_Parkiteer	+ X37_ACDist	+ X39._FTZ	+X40_Parking	+X42_PropRural	+X43_EmpAccess	+X44_C_LOS	+X45_O_Bus_LOS	+X46_O_Tram_LOS	+X52_PropOS	+X53_PropBach	+X49_censored_PropFTE	+X50_censored_MeanSize + ln_Pop, data =Clustersample.train.800.rd3)
-summary(Melb.traincluster.LM.3.4)
-
-#DestScore
-Melb.traincluster.LM.3.5<-lm(ln_Patronage ~  X28_Balance + X29_LUEntropy +X32_PBN + X35_Parkiteer	+ X37_ACDist	+ X39._FTZ	+X40_Parking	+X42_PropRural	+X43_EmpAccess	+X44_C_LOS	+X45_O_Bus_LOS	+X46_O_Tram_LOS	+X52_PropOS	+X53_PropBach	+X49_censored_PropFTE	+X50_censored_MeanSize + ln_Pop, data =Clustersample.train.800.rd3)
-summary(Melb.traincluster.LM.3.5)
-
-#PropOS
-Melb.traincluster.LM.3.6<-lm(ln_Patronage ~  X28_Balance + X29_LUEntropy +X32_PBN + X35_Parkiteer	+ X37_ACDist	+ X39._FTZ	+X40_Parking	+X42_PropRural	+X43_EmpAccess	+X44_C_LOS	+X45_O_Bus_LOS	+X46_O_Tram_LOS	+X53_PropBach	+X49_censored_PropFTE	+X50_censored_MeanSize + ln_Pop, data =Clustersample.train.800.rd3)
-summary(Melb.traincluster.LM.3.6)
-
-#PropFTE
-Melb.traincluster.LM.3.7<-lm(ln_Patronage ~  X28_Balance + X29_LUEntropy +X32_PBN + X35_Parkiteer	+ X37_ACDist	+ X39._FTZ	+X40_Parking	+X42_PropRural	+X43_EmpAccess	+X44_C_LOS	+X45_O_Bus_LOS	+X46_O_Tram_LOS	+X53_PropBach	+X50_censored_MeanSize + ln_Pop, data =Clustersample.train.800.rd3)
-summary(Melb.traincluster.LM.3.7)
-
-#Balance
-Melb.traincluster.LM.3.8<-lm(ln_Patronage ~ X29_LUEntropy +X32_PBN + X35_Parkiteer	+ X37_ACDist	+ X39._FTZ	+X40_Parking	+X42_PropRural	+X43_EmpAccess	+X44_C_LOS	+X45_O_Bus_LOS	+X46_O_Tram_LOS	+X53_PropBach	+X50_censored_MeanSize + ln_Pop, data =Clustersample.train.800.rd3)
-summary(Melb.traincluster.LM.3.8)
-
-#proprural
-Melb.traincluster.LM.3.9<-lm(ln_Patronage ~ X29_LUEntropy +X32_PBN + X35_Parkiteer	+ X37_ACDist	+ X39._FTZ	+X40_Parking	+X43_EmpAccess	+X44_C_LOS	+X45_O_Bus_LOS	+X46_O_Tram_LOS	+X53_PropBach	+X50_censored_MeanSize + ln_Pop, data =Clustersample.train.800.rd3)
-summary(Melb.traincluster.LM.3.9)
-
-#propbach
-Melb.traincluster.LM.3.10<-lm(ln_Patronage ~ X29_LUEntropy +X32_PBN + X35_Parkiteer	+ X37_ACDist	+ X39._FTZ	+X40_Parking	+X43_EmpAccess	+X44_C_LOS	+X45_O_Bus_LOS	+X46_O_Tram_LOS	+X50_censored_MeanSize + ln_Pop, data =Clustersample.train.800.rd3)
-summary(Melb.traincluster.LM.3.10)
-
-#LUEntropy
-Melb.traincluster.LM.3.11<-lm(ln_Patronage ~ +X32_PBN + X35_Parkiteer	+ X37_ACDist	+ X39._FTZ	+X40_Parking	+X43_EmpAccess	+X44_C_LOS	+X45_O_Bus_LOS	+X46_O_Tram_LOS	+X50_censored_MeanSize + ln_Pop, data =Clustersample.train.800.rd3)
-summary(Melb.traincluster.LM.3.11)
-
-#meansize
-Melb.traincluster.LM.3.12<-lm(ln_Patronage ~ +X32_PBN + X35_Parkiteer	+ X37_ACDist	+ X39._FTZ	+X40_Parking	+X43_EmpAccess	+X44_C_LOS	+X45_O_Bus_LOS	+X46_O_Tram_LOS	+ ln_Pop, data =Clustersample.train.800.rd3)
-summary(Melb.traincluster.LM.3.12)
-
-#again PBN is significant with negative association
-#diagnostic plots
-plot(lm(ln_Patronage ~ +X32_PBN + X35_Parkiteer	+ X37_ACDist	+ X39._FTZ	+X40_Parking	+X43_EmpAccess	+X44_C_LOS	+X45_O_Bus_LOS	+X46_O_Tram_LOS	+ ln_Pop, data =Clustersample.train.800.rd3))
-
-#outliers (not past cook's distance but heteroscedasticity assumption violated): 642, 627, 632
-which(rownames(Clustersample.train.800.rd3) == "642-train") #66
-which(rownames(Clustersample.train.800.rd3) == "627-train") #72
-which(rownames(Clustersample.train.800.rd3) == "632-train") #73
-
-#remove potentially influential outliers (just the ones close to cook's distance)
-Clustersample.train.800.rd4 <- Clustersample.train.800.rd3[-c(66,72,73),]
-
-#check correlations since have changed the sample a lot
-
-#step 3 Check for multicolinearity
-Train.cluster.rd4.LM.VIF<-vif(lm(ln_Patronage ~ X26_PropComm + X28_Balance + X29_LUEntropy	+ X31_PedConnect +X32_PBN	+X33_DestScore + X35_Parkiteer	+ X37_ACDist	+ X38_ACCount	+X39._FTZ	+X40_Parking + X42_PropRural	+X43_EmpAccess	+X44_C_LOS	+X45_O_Bus_LOS	+X46_O_Tram_LOS	 + X52_PropOS	+X53_PropBach	+X49_censored_PropFTE	+X50_censored_MeanSize + ln_Pop, data =Clustersample.train.800.rd4))
-#removed  overlapping train LOS and overlapping (total) level of serviceto get rid of singularity
-Train.cluster.rd4.LM.VIF
-#removed ln_Emp, MedInc to solve VIF
-#removed PropUrban instead of Ln_pop as suspected these were colinear; and solved colinearity of ln_Pop
-Corrdata.traincluster.rd4<-Clustersample.train.800.rd4[,c(64, 26, 28, 29, 31, 32, 33, 35, 37, 38, 39, 40, 42, 43, 44, 45, 46, 52, 53, 54, 55, 66)]
-
-#Option 1 for Correlation matrices with p-values
-Corrdata.traincluster.rd4<-rcorr(as.matrix(Corrdata.traincluster.rd4))
-
-#option 2 for flat correlation matrix
-options(max.print=1000000)
-
-Corrdata.traincluster.rd4<-flattenCorrMatrix(Corrdata.traincluster.rd4$r,Corrdata.traincluster.rd4$P)
-capture.output(Corrdata.traincluster.rd4,file="Corrdata.traincluster.rd4.csv")
-
-#notsignificant
-#X42_PropRural
-#X49_censored_PropFTE
-
-#maximally adjusted model
-Melb.traincluster.LM.4.1<-lm(ln_Patronage ~ X26_PropComm + X28_Balance + X29_LUEntropy	+ X31_PedConnect +X32_PBN	+X33_DestScore + X35_Parkiteer	+ X37_ACDist	+ X38_ACCount	+X39._FTZ	+X40_Parking	+X43_EmpAccess	+X44_C_LOS	+X45_O_Bus_LOS	+X46_O_Tram_LOS	 + X52_PropOS	+X53_PropBach		+X50_censored_MeanSize + ln_Pop, data =Clustersample.train.800.rd4)
-summary(Melb.traincluster.LM.4.1)
-
-#function for backward (starts with maximal model)
-Melb.traincluster.LM.4.regb<-step(Melb.traincluster.LM.4.1,
+Melb.traincluster.LM.2.1.regb<-step(Melb.traincluster.LM.2.1,
                                   direction = "backward",
                                   trace = 0) #don't print steps
+summary(Melb.traincluster.LM.2.1.regb)
+#actually reduced the explanatory power by removing the outliers. 
 
-#alternative is forward regression
-
-#propcomm
-Melb.traincluster.LM.4.2<-lm(ln_Patronage ~ X28_Balance + X29_LUEntropy	+ X31_PedConnect +X32_PBN	+X33_DestScore + X35_Parkiteer	+ X37_ACDist	+ X38_ACCount	+X39._FTZ	+X40_Parking	+X43_EmpAccess	+X44_C_LOS	+X45_O_Bus_LOS	+X46_O_Tram_LOS	 + X52_PropOS	+X53_PropBach		+X50_censored_MeanSize + ln_Pop, data =Clustersample.train.800.rd4)
-summary(Melb.traincluster.LM.4.2)
-
-#destscore
-Melb.traincluster.LM.4.3<-lm(ln_Patronage ~ X28_Balance + X29_LUEntropy	+ X31_PedConnect +X32_PBN	 + X35_Parkiteer	+ X37_ACDist	+ X38_ACCount	+X39._FTZ	+X40_Parking	+X43_EmpAccess	+X44_C_LOS	+X45_O_Bus_LOS	+X46_O_Tram_LOS	 + X52_PropOS	+X53_PropBach		+X50_censored_MeanSize + ln_Pop, data =Clustersample.train.800.rd4)
-summary(Melb.traincluster.LM.4.3)
-
-#propOS
-Melb.traincluster.LM.4.4<-lm(ln_Patronage ~ X28_Balance + X29_LUEntropy	+ X31_PedConnect +X32_PBN	 + X35_Parkiteer	+ X37_ACDist	+ X38_ACCount	+X39._FTZ	+X40_Parking	+X43_EmpAccess	+X44_C_LOS	+X45_O_Bus_LOS	+X46_O_Tram_LOS		+X53_PropBach		+X50_censored_MeanSize + ln_Pop, data =Clustersample.train.800.rd4)
-summary(Melb.traincluster.LM.4.4)
-
-#meansize
-Melb.traincluster.LM.4.5<-lm(ln_Patronage ~ X28_Balance + X29_LUEntropy	+ X31_PedConnect +X32_PBN	 + X35_Parkiteer	+ X37_ACDist	+ X38_ACCount	+X39._FTZ	+X40_Parking	+X43_EmpAccess	+X44_C_LOS	+X45_O_Bus_LOS	+X46_O_Tram_LOS		+X53_PropBach + ln_Pop, data =Clustersample.train.800.rd4)
-summary(Melb.traincluster.LM.4.5)
-
-#pedconnect
-Melb.traincluster.LM.4.6<-lm(ln_Patronage ~ X28_Balance + X29_LUEntropy	+X32_PBN	 + X35_Parkiteer	+ X37_ACDist	+ X38_ACCount	+X39._FTZ	+X40_Parking	+X43_EmpAccess	+X44_C_LOS	+X45_O_Bus_LOS	+X46_O_Tram_LOS		+X53_PropBach + ln_Pop, data =Clustersample.train.800.rd4)
-summary(Melb.traincluster.LM.4.6)
-
-#luEntropy
-Melb.traincluster.LM.4.7<-lm(ln_Patronage ~ X28_Balance +	+X32_PBN	 + X35_Parkiteer	+ X37_ACDist	+ X38_ACCount	+X39._FTZ	+X40_Parking	+X43_EmpAccess	+X44_C_LOS	+X45_O_Bus_LOS	+X46_O_Tram_LOS		+X53_PropBach + ln_Pop, data =Clustersample.train.800.rd4)
-summary(Melb.traincluster.LM.4.7)
-
-#propbach
-Melb.traincluster.LM.4.8<-lm(ln_Patronage ~ X28_Balance +	+X32_PBN	 + X35_Parkiteer	+ X37_ACDist	+ X38_ACCount	+X39._FTZ	+X40_Parking	+X43_EmpAccess	+X44_C_LOS	+X45_O_Bus_LOS	+X46_O_Tram_LOS	+ ln_Pop, data =Clustersample.train.800.rd4)
-summary(Melb.traincluster.LM.4.8)
-
-#balance
-Melb.traincluster.LM.4.9<-lm(ln_Patronage ~	+X32_PBN	 + X35_Parkiteer	+ X37_ACDist	+ X38_ACCount	+X39._FTZ	+X40_Parking	+X43_EmpAccess	+X44_C_LOS	+X45_O_Bus_LOS	+X46_O_Tram_LOS	+ ln_Pop, data =Clustersample.train.800.rd4)
-summary(Melb.traincluster.LM.4.9)
-
-#ACCount
-Melb.traincluster.LM.4.10<-lm(ln_Patronage ~	+X32_PBN	 + X35_Parkiteer	+ X37_ACDist	+X39._FTZ	+X40_Parking	+X43_EmpAccess	+X44_C_LOS	+X45_O_Bus_LOS	+X46_O_Tram_LOS	+ ln_Pop, data =Clustersample.train.800.rd4)
-summary(Melb.traincluster.LM.4.10)
-
-#lnPop
-Melb.traincluster.LM.4.11<-lm(ln_Patronage ~	+X32_PBN	 + X35_Parkiteer	+ X37_ACDist	+X39._FTZ	+X40_Parking	+X43_EmpAccess	+X44_C_LOS	+X45_O_Bus_LOS	+X46_O_Tram_LOS, data =Clustersample.train.800.rd4)
-summary(Melb.traincluster.LM.4.11)
-#population dropped out as an explanatory variable. 
-#overlapping tram frequency influential?
-#PBN is negative
-#lots of illogical results need probing; comparing across samples with and without outliers
+capture.output(summary(Melb.traincluster.LM.2.1), file = "traincluster.PM.rd.2.txt")
 
 #diagnostics
-plot(lm(ln_Patronage ~	+X32_PBN	 + X35_Parkiteer	+ X37_ACDist	+X39._FTZ	+X40_Parking	+X43_EmpAccess	+X44_C_LOS	+X45_O_Bus_LOS	+X46_O_Tram_LOS, data =Clustersample.train.800.rd4))
+plot(Melb.traincluster.LM.2.1.regb)
+#609, 627 affecting assumptions. 8 is also an outlier but will retain.
 
-#much closer to adherance with assumption of heteroscedasticity
-#closest to Cook's distance is 615-train and 467-train.
-#residuals outliers: 8-train and 493-train
+which(rownames(Clustersample.train.800.rd2) == "609-train") #72
+which(rownames(Clustersample.train.800.rd2) == "627-train") #73
 
-options(scipen = 999)
-Melb.traincluster.LM.4.11<-lm.beta(Melb.traincluster.LM.4.11)
-summary(Melb.traincluster.LM.4.11)
-capture.output(summary(Melb.traincluster.LM.4.11), file = "Melb.traincluster.LM.4.11.txt")
 
-summary(Melb.traincluster.LM.4.regb)
-#gives most parsimonious model based on AIC, not p. 
+Clustersample.train.800.rd3 <- Clustersample.train.800.rd2[-c(72, 73),]
 
+#rd 3 maximally adjusted
+Melb.traincluster.LM.3.1<-lm(ln_Patronage ~ PropComm +	Balance +	LUEntropy	+ PedConnect	+ DestScore	+ FTZ + ACDist	+ ACCount	+ Parking +Parkiteer + EmpAccess	+ C_LOS	+ O_Bus_LOS	+ O_Tram_LOS +	PropOS +	PropBach + censored_MeanSize	+	ln_Pop, data =Clustersample.train.800.rd3)
+summary(Melb.traincluster.LM.3.1)
+
+capture.output(summary(Melb.traincluster.LM.3.1), file = "traincluster.MA.rd.3.txt")
+
+Melb.traincluster.LM.3.1.regb<-step(Melb.traincluster.LM.3.1,
+                                    direction = "backward",
+                                    trace = 0) #don't print steps
+summary(Melb.traincluster.LM.3.1.regb)
+
+capture.output(summary(Melb.traincluster.LM.3.1.regb), file = "traincluster.PM.rd.3.txt")
+
+plot(Melb.traincluster.LM.3.1.regb)
+#570(row index 204) is extreme outlier. #642, #632, #8 also outlying and now seem to be impacting assumptions
+
+
+which(rownames(Clustersample.train.800.rd3) == "642-train") #66
+which(rownames(Clustersample.train.800.rd3) == "632-train") #72
+which(rownames(Clustersample.train.800.rd3) == "8-train") #63
+which(rownames(Clustersample.train.800.rd3) == "570-train") #204
+
+
+Clustersample.train.800.rd4 <- Clustersample.train.800.rd3[-c(66, 72, 204, 63),]
+
+#maxmially adjusted model
+Melb.traincluster.LM.4.1<-lm(ln_Patronage ~ PropComm +	Balance +	LUEntropy	+ PedConnect	+ DestScore	+ FTZ + ACDist	+ ACCount	+ Parking +Parkiteer + EmpAccess	+ C_LOS	+ O_Bus_LOS	+ O_Tram_LOS +	PropOS +	PropBach + censored_MeanSize	+	ln_Pop, data =Clustersample.train.800.rd4)
+summary(Melb.traincluster.LM.4.1)
+
+capture.output(summary(Melb.traincluster.LM.4.1), file = "traincluster.MArd.4.txt")
+
+Melb.traincluster.LM.4.1.regb<-step(Melb.traincluster.LM.4.1,
+                                  direction = "backward",
+                                  trace = 0) #don't print steps
+summary(Melb.traincluster.LM.4.1.regb)
+capture.output(summary(Melb.traincluster.LM.4.1.regb), file = "traincluster.PM.rd.4.txt")
+
+#diagnostic
+plot(Melb.traincluster.LM.4.1.regb)
+#almost adheres to assumptions - one more influential outlier affecting assumptions: 615. 
+
+which(rownames(Clustersample.train.800.rd4) == "615-train") #69
+Clustersample.train.800.rd5 <- Clustersample.train.800.rd4[-c(69),]
+
+#maxmially adjusted model #rd 5
+Melb.traincluster.LM.5.1<-lm(ln_Patronage ~ PropComm +	Balance +	LUEntropy	+ PedConnect	+ DestScore	+ FTZ + ACDist	+ ACCount	+ Parking +Parkiteer + EmpAccess	+ C_LOS	+ O_Bus_LOS	+ O_Tram_LOS +	PropOS +	PropBach + censored_MeanSize	+	ln_Pop, data =Clustersample.train.800.rd5)
+summary(Melb.traincluster.LM.5.1)
+
+capture.output(summary(Melb.traincluster.LM.5.1), file = "traincluster.MArd.5.txt")
+
+Melb.traincluster.LM.5.1.regb<-step(Melb.traincluster.LM.5.1,
+                                    direction = "backward",
+                                    trace = 0)#don't print steps
+summary(Melb.traincluster.LM.5.1.regb)
+capture.output(summary(Melb.traincluster.LM.5.1.regb), file = "traincluster.PM.rd.5.txt")
+
+#diagnostic
+plot(Melb.traincluster.LM.5.1.regb)
+#conforms to assumptions, no influential outliers although 467 comes closest to Cook's distance
