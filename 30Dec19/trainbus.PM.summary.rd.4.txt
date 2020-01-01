@@ -1,0 +1,66 @@
+Response ln_centroid :
+
+Call:
+lm(formula = ln_centroid ~ PropComm + Balance + PedConnect + 
+    PBN + ACDist + ACCount + EmpAccess + C_LOS + O_Bus_LOS + 
+    Parking + Parkiteer, data = Melb.Trainbus.rd4)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-1.60569 -0.19841 -0.00275  0.24752  1.02275 
+
+Coefficients:
+                 Estimate    Std. Error t value             Pr(>|t|)    
+(Intercept)  6.7317422901  0.1826128490  36.863 < 0.0000000000000002 ***
+PropComm    -0.2992907123  0.3197129102  -0.936             0.350959    
+Balance      0.6671417869  0.5247153972   1.271             0.205861    
+PedConnect  -0.0006198938  0.0010621803  -0.584             0.560505    
+PBN         -0.4442727547  0.2116620393  -2.099             0.037769 *  
+ACDist      -0.0676897171  0.0444461001  -1.523             0.130216    
+ACCount      0.0803064238  0.1069423733   0.751             0.454061    
+EmpAccess    0.0000011782  0.0000002963   3.976             0.000116 ***
+C_LOS        0.0035569513  0.0007090261   5.017         0.0000017036 ***
+O_Bus_LOS    0.0039547932  0.0007000063   5.650         0.0000000981 ***
+Parking     24.0146476583  9.6826723866   2.480             0.014421 *  
+Parkiteer    0.3535021683  0.0827921568   4.270         0.0000376337 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 0.4085 on 129 degrees of freedom
+Multiple R-squared:  0.6449,	Adjusted R-squared:  0.6146 
+F-statistic:  21.3 on 11 and 129 DF,  p-value: < 0.00000000000000022
+
+
+Response ln_bus :
+
+Call:
+lm(formula = ln_bus ~ PropComm + Balance + PedConnect + PBN + 
+    ACDist + ACCount + EmpAccess + C_LOS + O_Bus_LOS + Parking + 
+    Parkiteer, data = Melb.Trainbus.rd4)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-4.8443 -0.6447  0.0474  0.6010  2.8433 
+
+Coefficients:
+                 Estimate    Std. Error t value        Pr(>|t|)    
+(Intercept)  2.6855403301  0.4747357924   5.657 0.0000000947995 ***
+PropComm     0.4674226751  0.8311526957   0.562         0.57483    
+Balance      2.6862254949  1.3640944829   1.969         0.05107 .  
+PedConnect  -0.0038001672  0.0027613337  -1.376         0.17114    
+PBN         -0.0525591664  0.5502545220  -0.096         0.92405    
+ACDist       0.1637390914  0.1155458373   1.417         0.15887    
+ACCount      0.8718947137  0.2780164299   3.136         0.00212 ** 
+EmpAccess    0.0000006812  0.0000007704   0.884         0.37821    
+C_LOS        0.0050604827  0.0018432441   2.745         0.00691 ** 
+O_Bus_LOS    0.0135294595  0.0018197954   7.435 0.0000000000129 ***
+Parking     40.0175384965 25.1718932830   1.590         0.11433    
+Parkiteer    0.4104843402  0.2152334864   1.907         0.05872 .  
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 1.062 on 129 degrees of freedom
+Multiple R-squared:  0.6107,	Adjusted R-squared:  0.5775 
+F-statistic:  18.4 on 11 and 129 DF,  p-value: < 0.00000000000000022
+
+
