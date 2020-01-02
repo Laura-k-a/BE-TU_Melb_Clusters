@@ -192,7 +192,8 @@ plotnScree(nS_BE) #2 eigenvalues; levels off at 2 and again at 3. Accept 3-facto
 
 fa.BE.800.3.promax<- factanal(cormat.BE.Allmodes.800, factors = 3, rotation = "promax", lower =0.01, scores = "regression")
 capture.output(fa.BE.800.3.promax , file = "fa.BE.800.3.promax.csv")
-
+capture.output(fa.BE.800.3, file = "fa.BE.800.3.evs.csv")
+fa.BE.800.3
 
 #Step 2 - append factor scores to dataset
 

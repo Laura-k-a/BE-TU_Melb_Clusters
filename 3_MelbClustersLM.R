@@ -274,7 +274,7 @@ Corrdata.tramcluster<-Clustersample.tram.600[,c(19:24, 26:29, 32:37, 39:42, 49:5
 
 #Option 1 for Correlation matrices with p-values
 Corrdata.tramcluster<-rcorr(as.matrix(Corrdata.tramcluster))
-#276 is far outlying on all plots, however generally conforms to assumptions/ Leave but investigate.
+
 
 
 #option 2 for flat correlation matrix
@@ -307,7 +307,9 @@ summary(Melb.tramcluster.LM.1.regb)
 capture.output(Melb.tramcluster.LM.1.regb, file = "tramcluster.PM.txt")
 
 #diagnostics
+par(mfrow=c(2,2))
 plot(Melb.tramcluster.LM.1.regb)
+#276 is far outlying on all plots, however generally conforms to assumptions/ Leave but investigate.
 
 #Train
 #step 3 Check for multicolinearity
