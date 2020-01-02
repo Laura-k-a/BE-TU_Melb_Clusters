@@ -1,32 +1,28 @@
 
 Call:
-lm(formula = ln_bus ~ PropComm + Balance + LUEntropy + PedConnect + 
-    PBN + ACDist + ACCount + EmpAccess + C_LOS + O_Bus_LOS + 
-    Parking + Parkiteer, data = Melb.Trainbus.rd3)
+lm(formula = ln_bus ~ Balance + PBN + ACDist + ACCount + EmpAccess + 
+    C_LOS + O_Bus_LOS + Parking + Parkiteer, data = Melb.Trainbus.rd3)
 
 Residuals:
     Min      1Q  Median      3Q     Max 
--4.8586 -0.7100  0.0690  0.6946  2.7809 
+-4.8832 -0.6877  0.0825  0.6912  2.9547 
 
 Coefficients:
-                 Estimate  Standardized    Std. Error t value       Pr(>|t|)    
-(Intercept)  3.0771285030  0.0000000000  0.5892395195   5.222 0.000000676461 ***
-PropComm     0.7462287425  0.0607921187  0.9476496411   0.787         0.4324    
-Balance      3.0951674097  0.1408776335  1.5221060828   2.033         0.0440 *  
-LUEntropy   -0.7024594316 -0.0502140486  0.9577943806  -0.733         0.4646    
-PedConnect  -0.0026507184 -0.0629084095  0.0030635433  -0.865         0.3885    
-PBN         -0.4171992261 -0.0438381036  0.5961473939  -0.700         0.4853    
-ACDist       0.0147765375  0.0106157141  0.1181553731   0.125         0.9007    
-ACCount      0.6878907322  0.1935251973  0.2972829610   2.314         0.0222 *  
-EmpAccess    0.0000008522  0.0788635076  0.0000008480   1.005         0.3168    
-C_LOS        0.0040527987  0.1245076077  0.0020052645   2.021         0.0453 *  
-O_Bus_LOS    0.0139085607  0.5071260785  0.0020386268   6.823 0.000000000299 ***
-Parking     48.3253487784  0.1047710111 27.4926293892   1.758         0.0811 .  
-Parkiteer    0.4909966184  0.1401533759  0.2344810565   2.094         0.0382 *  
+              Estimate Standardized Std. Error t value Pr(>|t|)    
+(Intercept)  2.608e+00    0.000e+00  4.285e-01   6.086 1.14e-08 ***
+Balance      3.555e+00    1.618e-01  1.296e+00   2.742  0.00694 ** 
+PBN         -4.610e-01   -4.844e-02  5.611e-01  -0.822  0.41277    
+ACDist       2.781e-02    1.998e-02  1.136e-01   0.245  0.80690    
+ACCount      7.256e-01    2.041e-01  2.868e-01   2.530  0.01256 *  
+EmpAccess    6.022e-07    5.573e-02  7.393e-07   0.815  0.41678    
+C_LOS        3.639e-03    1.118e-01  1.943e-03   1.873  0.06328 .  
+O_Bus_LOS    1.376e-02    5.019e-01  1.805e-03   7.624 4.03e-12 ***
+Parking      4.595e+01    9.962e-02  2.725e+01   1.686  0.09410 .  
+Parkiteer    4.922e-01    1.405e-01  2.310e-01   2.131  0.03488 *  
 ---
 Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 
-Residual standard error: 1.165 on 131 degrees of freedom
-Multiple R-squared:  0.5936,	Adjusted R-squared:  0.5564 
-F-statistic: 15.95 on 12 and 131 DF,  p-value: < 0.00000000000000022
+Residual standard error: 1.16 on 134 degrees of freedom
+Multiple R-squared:  0.5878,	Adjusted R-squared:  0.5601 
+F-statistic: 21.23 on 9 and 134 DF,  p-value: < 2.2e-16
 

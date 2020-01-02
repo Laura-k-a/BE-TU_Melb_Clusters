@@ -116,8 +116,9 @@ summary(Melb.Trambus.noFTZ.MMLR.1)
 #was signular until parking removed
 Anova(Melb.Trambus.noFTZ.MMLR.1)
 
+
 capture.output(summary(Melb.Trambus.noFTZ.MMLR.1), file = "Trambus.MA.summary.txt")
-capture.output(Anova(Melb.Trambus.noFTZ.MMLR.1), file = "Trambus.MA.anova.txt")
+capture.output(Anova(Melb.Trambus.noFTZ.MMLR.1), file = "Trambus.MA.Anova.txt")
 
 #MA with standardized coefficients for bus
 Trambus.bus.noFTZ.MMLR.1<-lm.beta(lm(ln_bus ~ PropComm + LUEntropy+ PedConnect+ PBN+ ACDist+ ACCount+ EmpAccess+C_LOS+O_Bus_LOS+O_Tram_LOS+O_Train_LOS+ PropOS+ PropBach+ X34_censored_PropFTE+ X35_censored_MeanSize+ DestScore_surrogate +ln_Pop_surrogate + ln_Emp_surrogate, data =Melb.Trambus.noFTZ))
@@ -166,7 +167,7 @@ summary(Melb.Trambus.noFTZ.MMLR.8)
 Anova(Melb.Trambus.noFTZ.MMLR.8)
 
 capture.output(summary(Melb.Trambus.noFTZ.MMLR.8), file = "Trambus.PM.summary.rd1.txt")
-capture.output(Anova(Melb.Trambus.noFTZ.MMLR.8), file = "Trambus.PM.anova.rd1.txt")
+capture.output(Anova(Melb.Trambus.noFTZ.MMLR.8), file = "Trambus.PM.Anova.rd1.txt")
 
 #standardised coefficients for PM rd 1
 #bus
@@ -203,7 +204,7 @@ Anova(Melb.Trambus.noFTZ.MMLR.2.1)
 
 
 capture.output(summary(Melb.Trambus.noFTZ.MMLR.2.1), file = "trambus.MA.summary.rd2.txt")
-capture.output(Anova(Melb.Trambus.noFTZ.MMLR.2.1), file = "trambus.MA.anova.rd2.txt")
+capture.output(Anova(Melb.Trambus.noFTZ.MMLR.2.1), file = "trambus.MA.Anova.rd2.txt")
 
 #standardised coefficients
 Melb.Trambus.bus.noFTZ.MMLR.2.1<-lm.beta(lm(ln_bus ~ PropComm + LUEntropy+ PedConnect+ PBN+ ACDist+ ACCount+ EmpAccess+C_LOS+O_Bus_LOS+O_Train_LOS+ PropOS+ PropBach+ X34_censored_PropFTE+ X35_censored_MeanSize+ DestScore_surrogate +ln_Pop_surrogate + ln_Emp_surrogate, data =Melb.Trambus.noFTZ.rd2))
@@ -250,7 +251,7 @@ summary(Melb.Trambus.noFTZ.MMLR.2.7)
 Anova(Melb.Trambus.noFTZ.MMLR.2.7)
 
 capture.output(summary(Melb.Trambus.noFTZ.MMLR.2.7), file = "trambus.PM.summary.rd.2.txt")
-capture.output(Anova(Melb.Trambus.noFTZ.MMLR.2.7), file = "trambus.PM.anova.rd.2.txt")
+capture.output(Anova(Melb.Trambus.noFTZ.MMLR.2.7), file = "trambus.PM.Anova.rd.2.txt")
 
 #standardised coefficients
 Melb.Trambus.bus.noFTZ.MMLR.2.7<-lm.beta(lm(ln_bus ~ PropComm + LUEntropy+  EmpAccess+C_LOS+O_Bus_LOS+O_Train_LOS+ PropOS+ PropBach+ X34_censored_PropFTE+ ln_Pop_surrogate, data =Melb.Trambus.noFTZ.rd2))
@@ -278,7 +279,7 @@ summary(Melb.Trambus.noFTZ.MMLR.3.1)
 Anova(Melb.Trambus.noFTZ.MMLR.3.1)
 
 capture.output(summary(Melb.Trambus.noFTZ.MMLR.3.1), file = "trambus.MA.summary.rd3.txt")
-capture.output(Anova(Melb.Trambus.noFTZ.MMLR.3.1), file = "trambus.MA.anova.rd3.txt")
+capture.output(Anova(Melb.Trambus.noFTZ.MMLR.3.1), file = "trambus.MA.Anova.rd3.txt")
 
 #standardised coefficients
 Melb.Trambus.bus.noFTZ.MMLR.3.1<-lm.beta(lm(ln_bus ~ PropComm + LUEntropy+ PedConnect+ PBN+ ACDist+ ACCount+ EmpAccess+C_LOS+O_Bus_LOS+O_Train_LOS+ PropOS+ PropBach+ X34_censored_PropFTE+ X35_censored_MeanSize+ DestScore_surrogate +ln_Pop_surrogate + ln_Emp_surrogate, data =Melb.Trambus.noFTZ.rd3))
@@ -326,7 +327,7 @@ summary(Melb.Trambus.noFTZ.MMLR.3.8)
 Anova(Melb.Trambus.noFTZ.MMLR.3.8)
 
 capture.output(summary(Melb.Trambus.noFTZ.MMLR.3.8), file = "trambus.PM.summary.rd.3.txt")
-capture.output(Anova(Melb.Trambus.noFTZ.MMLR.3.8), file = "trambus.PM.anova.rd.3.txt")
+capture.output(Anova(Melb.Trambus.noFTZ.MMLR.3.8), file = "trambus.PM.Anova.rd.3.txt")
 
 #standardised coefficients
 Melb.Trambus.bus.noFTZ.MMLR.3.8<-lm.beta(lm(ln_bus ~ PropComm + LUEntropy+ EmpAccess+C_LOS+O_Bus_LOS+O_Train_LOS+ PropOS+ PropBach+ X34_censored_PropFTE +ln_Pop_surrogate, data =Melb.Trambus.noFTZ.rd3))
@@ -353,7 +354,7 @@ summary(Melb.Trambus.noFTZ.MMLR.4.1)
 Anova(Melb.Trambus.noFTZ.MMLR.4.1)
 
 capture.output(summary(Melb.Trambus.noFTZ.MMLR.4.1), file = "trambus.MA.summary.rd4.txt")
-capture.output(Anova(Melb.Trambus.noFTZ.MMLR.4.1), file = "trambus.MA.anova.rd4.txt")
+capture.output(Anova(Melb.Trambus.noFTZ.MMLR.4.1), file = "trambus.MA.Anova.rd4.txt")
 
 #standardised coefficients
 Melb.Trambus.bus.noFTZ.MMLR.4.1<-lm.beta(lm(ln_bus ~ PropComm + LUEntropy+ PedConnect+ PBN+ ACDist+ ACCount+ EmpAccess+C_LOS+O_Bus_LOS+O_Train_LOS+ PropOS+ PropBach+ X34_censored_PropFTE+ X35_censored_MeanSize+ DestScore_surrogate +ln_Pop_surrogate + ln_Emp_surrogate, data =Melb.Trambus.noFTZ.rd4))
@@ -400,7 +401,7 @@ summary(Melb.Trambus.noFTZ.MMLR.4.8)
 Anova(Melb.Trambus.noFTZ.MMLR.4.8)
 
 capture.output(summary(Melb.Trambus.noFTZ.MMLR.4.8), file = "trambus.PM.summary.rd.4.txt")
-capture.output(Anova(Melb.Trambus.noFTZ.MMLR.4.8), file = "trambus.PM.anova.rd.4.txt")
+capture.output(Anova(Melb.Trambus.noFTZ.MMLR.4.8), file = "trambus.PM.Anova.rd.4.txt")
 
 
 #standardised coefficients
@@ -428,7 +429,7 @@ summary(Melb.Trambus.noFTZ.MMLR.5.1)
 Anova(Melb.Trambus.noFTZ.MMLR.5.1)
 
 capture.output(summary(Melb.Trambus.noFTZ.MMLR.5.1), file = "trambus.MA.summary.rd5.txt")
-capture.output(Anova(Melb.Trambus.noFTZ.MMLR.5.1), file = "trambus.MA.anova.rd5.txt")
+capture.output(Anova(Melb.Trambus.noFTZ.MMLR.5.1), file = "trambus.MA.Anova.rd5.txt")
 
 #standardised coefficients
 Melb.Trambus.bus.noFTZ.MMLR.5.1<-lm.beta(lm(ln_bus ~ PropComm + LUEntropy+ PedConnect+ PBN+ ACDist+ ACCount+ EmpAccess+C_LOS+O_Bus_LOS+O_Train_LOS+ PropOS+ PropBach+ X34_censored_PropFTE+ X35_censored_MeanSize+ DestScore_surrogate +ln_Pop_surrogate + ln_Emp_surrogate, data =Melb.Trambus.noFTZ.rd5))
@@ -476,7 +477,7 @@ summary(Melb.Trambus.noFTZ.MMLR.5.8)
 Anova(Melb.Trambus.noFTZ.MMLR.5.8)
 
 capture.output(summary(Melb.Trambus.noFTZ.MMLR.5.8), file = "trambus.PM.summary.rd5.txt")
-capture.output(Anova(Melb.Trambus.noFTZ.MMLR.5.8), file = "trambus.PM.anova.rd5.txt")
+capture.output(Anova(Melb.Trambus.noFTZ.MMLR.5.8), file = "trambus.PM.Anova.rd5.txt")
 
 #standardised coefficients
 Melb.Trambus.bus.noFTZ.MMLR.5.8<-lm.beta(lm(ln_bus ~ PropComm + LUEntropy+ EmpAccess+C_LOS+O_Bus_LOS+O_Train_LOS+ PropOS+ PropBach+ X34_censored_PropFTE +ln_Pop_surrogate, data =Melb.Trambus.noFTZ.rd5))
@@ -535,10 +536,10 @@ capture.output(Corrdata.Trainbus,file="Corrdata.Trainbus.csv")
 #Maximally adjsuted model
 Melb.Trainbus.MMLR.1<-lm(cbind(ln_centroid, ln_bus) ~ PropComm+Balance+LUEntropy+PedConnect+PBN+ ACDist+ ACCount+EmpAccess+C_LOS+O_Bus_LOS+PropOS+ PropBach+ X34_censored_PropFTE+ DestScore_surrogate +ln_Pop_surrogate +Parking + Parkiteer, data =Melb.Trainbus)
 summary(Melb.Trainbus.MMLR.1)
-anova(Melb.Trainbus.MMLR.1)
+Anova(Melb.Trainbus.MMLR.1)
 
 capture.output(summary(Melb.Trainbus.MMLR.1), file = "trainbus.MA.summary.txt")
-capture.output(Anova(Melb.Trainbus.MMLR.1), file = "trainbus.MA.anova.txt")
+capture.output(Anova(Melb.Trainbus.MMLR.1), file = "trainbus.MA.Anova.txt")
 
 #standardised coefficients
 Melb.Trainbus.bus.MMLR.1<-lm.beta(lm(ln_bus ~ PropComm+Balance+LUEntropy+PedConnect+PBN+ ACDist+ ACCount+EmpAccess+C_LOS+O_Bus_LOS+PropOS+ PropBach+ X34_censored_PropFTE+ DestScore_surrogate +ln_Pop_surrogate +Parking + Parkiteer, data =Melb.Trainbus))
@@ -549,53 +550,68 @@ Melb.Trainbus.train.MMLR.1<-lm.beta(lm(ln_centroid ~ PropComm+Balance+LUEntropy+
 
 capture.output(summary(Melb.Trainbus.train.MMLR.1), file = "trainbus.train.MA.summary.txt")
 
+#LUEntropy
+Melb.Trainbus.MMLR.2<-lm(cbind(ln_centroid, ln_bus) ~ PropComm+Balance+PedConnect+PBN+ ACDist+ ACCount+EmpAccess+C_LOS+O_Bus_LOS+PropOS+ PropBach+ X34_censored_PropFTE+ DestScore_surrogate +ln_Pop_surrogate +Parking + Parkiteer, data =Melb.Trainbus)
+summary(Melb.Trainbus.MMLR.2)
+Anova(Melb.Trainbus.MMLR.2)
+
+#PropFTE
+Melb.Trainbus.MMLR.3<-lm(cbind(ln_centroid, ln_bus) ~ PropComm+Balance+PedConnect+PBN+ ACDist+ ACCount+EmpAccess+C_LOS+O_Bus_LOS+PropOS+ PropBach+ DestScore_surrogate +ln_Pop_surrogate +Parking + Parkiteer, data =Melb.Trainbus)
+summary(Melb.Trainbus.MMLR.3)
+Anova(Melb.Trainbus.MMLR.3)
+
+#EmpAccess
+Melb.Trainbus.MMLR.4<-lm(cbind(ln_centroid, ln_bus) ~ PropComm+Balance+PedConnect+PBN+ ACDist+ ACCount+C_LOS+O_Bus_LOS+PropOS+ PropBach+ DestScore_surrogate +ln_Pop_surrogate +Parking + Parkiteer, data =Melb.Trainbus)
+summary(Melb.Trainbus.MMLR.4)
+Anova(Melb.Trainbus.MMLR.4)
+
+#propcomm
+Melb.Trainbus.MMLR.5<-lm(cbind(ln_centroid, ln_bus) ~ Balance+PedConnect+PBN+ ACDist+ ACCount+C_LOS+O_Bus_LOS+PropOS+ PropBach+ DestScore_surrogate +ln_Pop_surrogate +Parking + Parkiteer, data =Melb.Trainbus)
+summary(Melb.Trainbus.MMLR.5)
+Anova(Melb.Trainbus.MMLR.5)
 
 #ln_Pop
-Melb.Trainbus.MMLR.2<-lm(cbind(ln_centroid, ln_bus) ~ PropComm+Balance+LUEntropy+PedConnect+PBN+ ACDist+ ACCount+EmpAccess+C_LOS+O_Bus_LOS+PropOS+ PropBach+ X34_censored_PropFTE+ DestScore_surrogate +Parking + Parkiteer, data =Melb.Trainbus)
-summary(Melb.Trainbus.MMLR.2)
-anova(Melb.Trainbus.MMLR.2)
+Melb.Trainbus.MMLR.6<-lm(cbind(ln_centroid, ln_bus) ~ Balance+PedConnect+PBN+ ACDist+ ACCount+C_LOS+O_Bus_LOS+PropOS+ PropBach+ DestScore_surrogate +Parking + Parkiteer, data =Melb.Trainbus)
+summary(Melb.Trainbus.MMLR.6)
+Anova(Melb.Trainbus.MMLR.6)
 
-#propFTE
-Melb.Trainbus.MMLR.3<-lm(cbind(ln_centroid, ln_bus) ~ PropComm+Balance+LUEntropy+PedConnect+PBN+ ACDist+ ACCount+EmpAccess+C_LOS+O_Bus_LOS+PropOS+ PropBach+ DestScore_surrogate +Parking + Parkiteer, data =Melb.Trainbus)
-summary(Melb.Trainbus.MMLR.3)
-anova(Melb.Trainbus.MMLR.3)
-
-#propOS
-Melb.Trainbus.MMLR.4<-lm(cbind(ln_centroid, ln_bus) ~ PropComm+Balance+LUEntropy+PedConnect+PBN+ ACDist+ ACCount+EmpAccess+C_LOS+O_Bus_LOS+PropBach+ DestScore_surrogate +Parking + Parkiteer, data =Melb.Trainbus)
-summary(Melb.Trainbus.MMLR.4)
-anova(Melb.Trainbus.MMLR.4)
+#pedconnect
+Melb.Trainbus.MMLR.7<-lm(cbind(ln_centroid, ln_bus) ~ Balance+PBN+ ACDist+ ACCount+C_LOS+O_Bus_LOS+PropOS+ PropBach+ DestScore_surrogate +Parking + Parkiteer, data =Melb.Trainbus)
+summary(Melb.Trainbus.MMLR.7)
+Anova(Melb.Trainbus.MMLR.7)
 
 #destscore
-Melb.Trainbus.MMLR.5<-lm(cbind(ln_centroid, ln_bus) ~ PropComm+Balance+LUEntropy+PedConnect+PBN+ ACDist+ ACCount+EmpAccess+C_LOS+O_Bus_LOS+PropBach+ Parking + Parkiteer, data =Melb.Trainbus)
-summary(Melb.Trainbus.MMLR.5)
-anova(Melb.Trainbus.MMLR.5)
+Melb.Trainbus.MMLR.8<-lm(cbind(ln_centroid, ln_bus) ~ Balance+PBN+ ACDist+ ACCount+C_LOS+O_Bus_LOS+PropOS+ PropBach +Parking + Parkiteer, data =Melb.Trainbus)
+summary(Melb.Trainbus.MMLR.8)
+Anova(Melb.Trainbus.MMLR.8)
 
-#empaccess
-Melb.Trainbus.MMLR.6<-lm(cbind(ln_centroid, ln_bus) ~ PropComm+Balance+LUEntropy+PedConnect+PBN+ ACDist+ ACCount+C_LOS+O_Bus_LOS+PropBach+ Parking + Parkiteer, data =Melb.Trainbus)
-summary(Melb.Trainbus.MMLR.6)
-anova(Melb.Trainbus.MMLR.6)
+#propos
+Melb.Trainbus.MMLR.9<-lm(cbind(ln_centroid, ln_bus) ~ Balance+PBN+ ACDist+ ACCount+C_LOS+O_Bus_LOS+ PropBach +Parking + Parkiteer, data =Melb.Trainbus)
+summary(Melb.Trainbus.MMLR.9)
+Anova(Melb.Trainbus.MMLR.9)
 
-#LUEntropy
-Melb.Trainbus.MMLR.7<-lm(cbind(ln_centroid, ln_bus) ~ PropComm+Balance+PedConnect+PBN+ ACDist+ ACCount+C_LOS+O_Bus_LOS+PropBach+ Parking + Parkiteer, data =Melb.Trainbus)
-summary(Melb.Trainbus.MMLR.7)
-anova(Melb.Trainbus.MMLR.7)
+#parking
+Melb.Trainbus.MMLR.10<-lm(cbind(ln_centroid, ln_bus) ~ Balance+PBN+ ACDist+ ACCount+C_LOS+O_Bus_LOS+ PropBach + Parkiteer, data =Melb.Trainbus)
+summary(Melb.Trainbus.MMLR.10)
+Anova(Melb.Trainbus.MMLR.10)
 
-capture.output(summary(Melb.Trainbus.MMLR.7), file = "trainbus.PM.summary.txt")
-capture.output(Anova(Melb.Trainbus.MMLR.7), file = "trainbus.PM.anova.txt")
+capture.output(summary(Melb.Trainbus.MMLR.10), file = "trainbus.PM.summary.txt")
+capture.output(Anova(Melb.Trainbus.MMLR.10), file = "trainbus.PM.Anova.txt")
 
 #standardised coefficients
-Melb.Trainbus.bus.MMLR.7<-lm.beta(lm(ln_bus ~ PropComm+Balance+PedConnect+PBN+ ACDist+ ACCount+C_LOS+O_Bus_LOS+PropBach+ Parking + Parkiteer, data =Melb.Trainbus))
-capture.output(summary(Melb.Trainbus.bus.MMLR.7), file = "trainbus.bus.PM.summary.txt")
+Melb.Trainbus.bus.MMLR.10<-lm.beta(lm(ln_bus ~ Balance+PBN+ ACDist+ ACCount+C_LOS+O_Bus_LOS+ PropBach + Parkiteer, data =Melb.Trainbus))
+capture.output(summary(Melb.Trainbus.bus.MMLR.10), file = "trainbus.bus.PM.summary.txt")
 
-Melb.Trainbus.train.MMLR.7<-lm.beta(lm(ln_centroid ~ PropComm+Balance+PedConnect+PBN+ ACDist+ ACCount+C_LOS+O_Bus_LOS+PropBach+ Parking + Parkiteer, data =Melb.Trainbus))
-capture.output(summary(Melb.Trainbus.train.MMLR.7), file = "trainbus.train.PM.summary.txt")
+Melb.Trainbus.train.MMLR.10<-lm.beta(lm(ln_centroid ~ Balance+PBN+ ACDist+ ACCount+C_LOS+O_Bus_LOS+ PropBach + Parkiteer, data =Melb.Trainbus))
+capture.output(summary(Melb.Trainbus.train.MMLR.10), file = "trainbus.train.PM.summary.txt")
 
 
 #diagnostics
-plot(lm(ln_bus ~ PropComm+Balance+PedConnect+PBN+ ACDist+ ACCount+C_LOS+O_Bus_LOS+PropBach+ Parking + Parkiteer, data =Melb.Trainbus))
+par(mfrow=c(2,2))
+plot(lm(ln_bus ~ Balance+PBN+ ACDist+ ACCount+C_LOS+O_Bus_LOS+ PropBach + Parkiteer, data =Melb.Trainbus))
 #generally seems to meet assumptions with no influential outliers. Most outlying values are 572 451
 
-plot(lm(ln_centroid ~ PropComm+Balance+PedConnect+PBN+ ACDist+ ACCount+C_LOS+O_Bus_LOS+PropBach+ Parking + Parkiteer, data =Melb.Trainbus))
+plot(lm(ln_centroid ~ Balance+PBN+ ACDist+ ACCount+C_LOS+O_Bus_LOS+ PropBach + Parkiteer, data =Melb.Trainbus))
 #636, 632 major outliers affecting heteroscedasticity and with largest deviation from normal QQ plot
 
 which(rownames(Melb.Trainbus) == "636-train") #1
@@ -606,78 +622,85 @@ Melb.Trainbus.rd2 <- Melb.Trainbus[-c(1,2),]
 #rd 2 maximally adjusted model
 Melb.Trainbus.MMLR.2.1<-lm(cbind(ln_centroid, ln_bus) ~ PropComm+Balance+LUEntropy+PedConnect+PBN+ ACDist+ ACCount+EmpAccess+C_LOS+O_Bus_LOS+PropOS+ PropBach+ X34_censored_PropFTE+ DestScore_surrogate +ln_Pop_surrogate +Parking + Parkiteer, data =Melb.Trainbus.rd2)
 summary(Melb.Trainbus.MMLR.2.1)
-anova(Melb.Trainbus.MMLR.2.1)
+Anova(Melb.Trainbus.MMLR.2.1)
 
 capture.output(summary(Melb.Trainbus.MMLR.2.1), file = "trainbus.MA.summary.rd.2.txt")
-capture.output(Anova(Melb.Trainbus.MMLR.2.1), file = "trainbus.MA.anova.rd.2.txt")
+capture.output(Anova(Melb.Trainbus.MMLR.2.1), file = "trainbus.MA.Anova.rd.2.txt")
 
 #standardised coefficients
 Melb.Trainbus.bus.MMLR.2.1<-lm.beta(lm(ln_bus ~ PropComm+Balance+LUEntropy+PedConnect+PBN+ ACDist+ ACCount+EmpAccess+C_LOS+O_Bus_LOS+PropOS+ PropBach+ X34_censored_PropFTE+ DestScore_surrogate +ln_Pop_surrogate +Parking + Parkiteer, data =Melb.Trainbus.rd2))
 
 capture.output(summary(Melb.Trainbus.bus.MMLR.2.1), file = "trainbus.bus.MA.summary.rd.2.txt")
 
-Melb.Trainbus.train.MMLR.2.1<-lm.beta(lm(ln_centroid ~ PropComm+Balance+LUEntropy+PedConnect+PBN+ ACDist+ ACCount+EmpAccess+C_LOS+O_Bus_LOS+PropOS+ PropBach+ X34_censored_PropFTE+ DestScore_surrogate +ln_Pop_surrogate +Parking + Parkiteer, data =Melb.Trainbus.rd2))
-
-capture.output(summary(Melb.Trainbus.train.MMLR.2.1), file = "trainbus.train.MA.summary.rd.2.txt")
-
-#propbach
-Melb.Trainbus.MMLR.2.2<-lm(cbind(ln_centroid, ln_bus) ~ PropComm+Balance+LUEntropy+PedConnect+PBN+ ACDist+ ACCount+EmpAccess+C_LOS+O_Bus_LOS+PropOS+  X34_censored_PropFTE+ DestScore_surrogate +ln_Pop_surrogate +Parking + Parkiteer, data =Melb.Trainbus.rd2)
-summary(Melb.Trainbus.MMLR.2.2)
-anova(Melb.Trainbus.MMLR.2.2)
-
-#ln_pop
-Melb.Trainbus.MMLR.2.3<-lm(cbind(ln_centroid, ln_bus) ~ PropComm+Balance+LUEntropy+PedConnect+PBN+ ACDist+ ACCount+EmpAccess+C_LOS+O_Bus_LOS+PropOS+  X34_censored_PropFTE+ DestScore_surrogate +Parking + Parkiteer, data =Melb.Trainbus.rd2)
-summary(Melb.Trainbus.MMLR.2.3)
-anova(Melb.Trainbus.MMLR.2.3)
-
 #destscore
-Melb.Trainbus.MMLR.2.4<-lm(cbind(ln_centroid, ln_bus) ~ PropComm+Balance+LUEntropy+PedConnect+PBN+ ACDist+ ACCount+EmpAccess+C_LOS+O_Bus_LOS+PropOS+  X34_censored_PropFTE+ Parking + Parkiteer, data =Melb.Trainbus.rd2)
-summary(Melb.Trainbus.MMLR.2.4)
-anova(Melb.Trainbus.MMLR.2.4)
-
-#propFTE
-Melb.Trainbus.MMLR.2.5<-lm(cbind(ln_centroid, ln_bus) ~ PropComm+Balance+LUEntropy+PedConnect+PBN+ ACDist+ ACCount+EmpAccess+C_LOS+O_Bus_LOS+PropOS+   Parking + Parkiteer, data =Melb.Trainbus.rd2)
-summary(Melb.Trainbus.MMLR.2.5)
-anova(Melb.Trainbus.MMLR.2.5)
-
-#pRopOS
-Melb.Trainbus.MMLR.2.6<-lm(cbind(ln_centroid, ln_bus) ~ PropComm+Balance+LUEntropy+PedConnect+PBN+ ACDist+ ACCount+EmpAccess+C_LOS+O_Bus_LOS+   Parking + Parkiteer, data =Melb.Trainbus.rd2)
-summary(Melb.Trainbus.MMLR.2.6)
-anova(Melb.Trainbus.MMLR.2.6)
+Melb.Trainbus.MMLR.2.2<-lm(cbind(ln_centroid, ln_bus) ~ PropComm+Balance+LUEntropy+PedConnect+PBN+ ACDist+ ACCount+EmpAccess+C_LOS+O_Bus_LOS+PropOS+ PropBach+ X34_censored_PropFTE +ln_Pop_surrogate +Parking + Parkiteer, data =Melb.Trainbus.rd2)
+summary(Melb.Trainbus.MMLR.2.2)
+Anova(Melb.Trainbus.MMLR.2.2)
 
 #LUEntropy
-Melb.Trainbus.MMLR.2.7<-lm(cbind(ln_centroid, ln_bus) ~ PropComm+Balance+PedConnect+PBN+ ACDist+ ACCount+EmpAccess+C_LOS+O_Bus_LOS+   Parking + Parkiteer, data =Melb.Trainbus.rd2)
-summary(Melb.Trainbus.MMLR.2.7)
-anova(Melb.Trainbus.MMLR.2.7)
+Melb.Trainbus.MMLR.2.3<-lm(cbind(ln_centroid, ln_bus) ~ PropComm+Balance+PedConnect+PBN+ ACDist+ ACCount+EmpAccess+C_LOS+O_Bus_LOS+PropOS+ PropBach+ X34_censored_PropFTE +ln_Pop_surrogate +Parking + Parkiteer, data =Melb.Trainbus.rd2)
+summary(Melb.Trainbus.MMLR.2.3)
+Anova(Melb.Trainbus.MMLR.2.3)
 
-capture.output(summary(Melb.Trainbus.MMLR.2.7), file = "trainbus.PM.summaryrd.2.txt")
-capture.output(Anova(Melb.Trainbus.MMLR.2.7), file = "trainbus.PM.anova.rd.2.txt")
+#PropOS
+Melb.Trainbus.MMLR.2.4<-lm(cbind(ln_centroid, ln_bus) ~ PropComm+Balance+PedConnect+PBN+ ACDist+ ACCount+EmpAccess+C_LOS+O_Bus_LOS+PropBach+ X34_censored_PropFTE +ln_Pop_surrogate +Parking + Parkiteer, data =Melb.Trainbus.rd2)
+summary(Melb.Trainbus.MMLR.2.4)
+Anova(Melb.Trainbus.MMLR.2.4)
+
+##FTE
+Melb.Trainbus.MMLR.2.5<-lm(cbind(ln_centroid, ln_bus) ~ PropComm+Balance+PedConnect+PBN+ ACDist+ ACCount+EmpAccess+C_LOS+O_Bus_LOS+PropBach +ln_Pop_surrogate +Parking + Parkiteer, data =Melb.Trainbus.rd2)
+summary(Melb.Trainbus.MMLR.2.5)
+Anova(Melb.Trainbus.MMLR.2.5)
+
+#PropBach
+Melb.Trainbus.MMLR.2.6<-lm(cbind(ln_centroid, ln_bus) ~ PropComm+Balance+PedConnect+PBN+ ACDist+ ACCount+EmpAccess+C_LOS+O_Bus_LOS +ln_Pop_surrogate +Parking + Parkiteer, data =Melb.Trainbus.rd2)
+summary(Melb.Trainbus.MMLR.2.6)
+Anova(Melb.Trainbus.MMLR.2.6)
+
+#ln_Pop
+Melb.Trainbus.MMLR.2.7<-lm(cbind(ln_centroid, ln_bus) ~ PropComm+Balance+PedConnect+PBN+ ACDist+ ACCount+EmpAccess+C_LOS+O_Bus_LOS  +Parking + Parkiteer, data =Melb.Trainbus.rd2)
+summary(Melb.Trainbus.MMLR.2.7)
+Anova(Melb.Trainbus.MMLR.2.7)
+
+#pedconnect
+Melb.Trainbus.MMLR.2.8<-lm(cbind(ln_centroid, ln_bus) ~ PropComm+Balance+PBN+ ACDist+ ACCount+EmpAccess+C_LOS+O_Bus_LOS  +Parking + Parkiteer, data =Melb.Trainbus.rd2)
+summary(Melb.Trainbus.MMLR.2.8)
+Anova(Melb.Trainbus.MMLR.2.8)
+
+#propcomm
+Melb.Trainbus.MMLR.2.9<-lm(cbind(ln_centroid, ln_bus) ~ Balance+PBN+ ACDist+ ACCount+EmpAccess+C_LOS+O_Bus_LOS  +Parking + Parkiteer, data =Melb.Trainbus.rd2)
+summary(Melb.Trainbus.MMLR.2.9)
+Anova(Melb.Trainbus.MMLR.2.9)
+
+
+capture.output(summary(Melb.Trainbus.MMLR.2.9), file = "trainbus.PM.summaryrd.2.txt")
+capture.output(Anova(Melb.Trainbus.MMLR.2.9), file = "trainbus.PM.Anova.rd.2.txt")
 
 #standardised coefficients
-Melb.Trainbus.bus.MMLR.2.7<-lm.beta(lm(ln_bus ~ PropComm+Balance+PedConnect+PBN+ ACDist+ ACCount+EmpAccess+C_LOS+O_Bus_LOS+   Parking + Parkiteer, data =Melb.Trainbus.rd2))
+Melb.Trainbus.bus.MMLR.2.7<-lm.beta(lm(ln_bus ~ Balance+PBN+ ACDist+ ACCount+EmpAccess+C_LOS+O_Bus_LOS  +Parking + Parkiteer, data =Melb.Trainbus.rd2))
 
 capture.output(summary(Melb.Trainbus.bus.MMLR.2.7), file = "trainbus.bus.PM.summaryrd.2.txt")
 
-Melb.Trainbus.train.MMLR.2.7<-lm.beta(lm(ln_centroid ~ PropComm+Balance+PedConnect+PBN+ ACDist+ ACCount+EmpAccess+C_LOS+O_Bus_LOS+   Parking + Parkiteer, data =Melb.Trainbus.rd2))
+Melb.Trainbus.train.MMLR.2.7<-lm.beta(lm(ln_centroid ~ Balance+PBN+ ACDist+ ACCount+EmpAccess+C_LOS+O_Bus_LOS  +Parking + Parkiteer, data =Melb.Trainbus.rd2))
 
 capture.output(summary(Melb.Trainbus.train.MMLR.2.7), file = "trainbus.bus.PM.summaryrd.2.txt")
 
 
 #diagnostics
-plot(lm(ln_bus ~ PropComm+Balance+PedConnect+PBN+ ACDist+ ACCount+EmpAccess+C_LOS+O_Bus_LOS+   Parking + Parkiteer, data =Melb.Trainbus.rd2))
+plot(lm(ln_bus ~ Balance+PBN+ ACDist+ ACCount+EmpAccess+C_LOS+O_Bus_LOS  +Parking + Parkiteer, data =Melb.Trainbus.rd2))
 #547, 451, 572 more pronounced on the residuals and heteroskedasticity plots - investigate
 
-plot(lm(ln_centroid ~ PropComm+Balance+PedConnect+PBN+ ACDist+ ACCount+EmpAccess+C_LOS+O_Bus_LOS+   Parking + Parkiteer, data =Melb.Trainbus.rd2))
+plot(lm(ln_centroid ~ Balance+PBN+ ACDist+ ACCount+EmpAccess+C_LOS+O_Bus_LOS  +Parking + Parkiteer, data =Melb.Trainbus.rd2))
 #615 exceeds cook's distance
 which(rownames(Melb.Trainbus.rd2) == "615-train") #1
 Melb.Trainbus.rd3 <- Melb.Trainbus.rd2[-c(1),]
 
 Melb.Trainbus.MMLR.3.1<-lm(cbind(ln_centroid, ln_bus) ~ PropComm+Balance+LUEntropy+PedConnect+PBN+ ACDist+ ACCount+EmpAccess+C_LOS+O_Bus_LOS+PropOS+ PropBach+ X34_censored_PropFTE+ DestScore_surrogate +ln_Pop_surrogate +Parking + Parkiteer, data =Melb.Trainbus.rd3)
 summary(Melb.Trainbus.MMLR.3.1)
-anova(Melb.Trainbus.MMLR.3.1)
+Anova(Melb.Trainbus.MMLR.3.1)
 
 capture.output(summary(Melb.Trainbus.MMLR.3.1), file = "trainbus.MA.summary.rd.3.txt")
-capture.output(Anova(Melb.Trainbus.MMLR.3.1), file = "trainbus.MA.anova.rd.3.txt")
+capture.output(Anova(Melb.Trainbus.MMLR.3.1), file = "trainbus.MA.Anova.rd.3.txt")
 
 #standardised coefficients
 Melb.Trainbus.bus.MMLR.3.1<-lm.beta(lm(ln_bus ~ PropComm+Balance+LUEntropy+PedConnect+PBN+ ACDist+ ACCount+EmpAccess+C_LOS+O_Bus_LOS+PropOS+ PropBach+ X34_censored_PropFTE+ DestScore_surrogate +ln_Pop_surrogate +Parking + Parkiteer, data =Melb.Trainbus.rd3))
@@ -688,48 +711,65 @@ Melb.Trainbus.train.MMLR.3.1<-lm.beta(lm(ln_centroid ~ PropComm+Balance+LUEntrop
 
 capture.output(summary(Melb.Trainbus.train.MMLR.3.1), file = "trainbus.train.MA.summary.rd.3.txt")
 
-#propbach
-Melb.Trainbus.MMLR.3.2<-lm(cbind(ln_centroid, ln_bus) ~ PropComm+Balance+LUEntropy+PedConnect+PBN+ ACDist+ ACCount+EmpAccess+C_LOS+O_Bus_LOS+PropOS+  X34_censored_PropFTE+ DestScore_surrogate +ln_Pop_surrogate +Parking + Parkiteer, data =Melb.Trainbus.rd3)
-summary(Melb.Trainbus.MMLR.3.2)
-anova(Melb.Trainbus.MMLR.3.2)
-
 #destscore
-Melb.Trainbus.MMLR.3.3<-lm(cbind(ln_centroid, ln_bus) ~ PropComm+Balance+LUEntropy+PedConnect+PBN+ ACDist+ ACCount+EmpAccess+C_LOS+O_Bus_LOS+PropOS+  X34_censored_PropFTE +ln_Pop_surrogate +Parking + Parkiteer, data =Melb.Trainbus.rd3)
+Melb.Trainbus.MMLR.3.2<-lm(cbind(ln_centroid, ln_bus) ~ PropComm+Balance+LUEntropy+PedConnect+PBN+ ACDist+ ACCount+EmpAccess+C_LOS+O_Bus_LOS+PropOS+ PropBach+ X34_censored_PropFTE +ln_Pop_surrogate +Parking + Parkiteer, data =Melb.Trainbus.rd3)
+summary(Melb.Trainbus.MMLR.3.2)
+Anova(Melb.Trainbus.MMLR.3.2)
+
+#propbach
+Melb.Trainbus.MMLR.3.3<-lm(cbind(ln_centroid, ln_bus) ~ PropComm+Balance+LUEntropy+PedConnect+PBN+ ACDist+ ACCount+EmpAccess+C_LOS+O_Bus_LOS+PropOS+ X34_censored_PropFTE +ln_Pop_surrogate +Parking + Parkiteer, data =Melb.Trainbus.rd3)
+
 summary(Melb.Trainbus.MMLR.3.3)
-anova(Melb.Trainbus.MMLR.3.3)
+Anova(Melb.Trainbus.MMLR.3.3)
 
-#ln_Pop
-Melb.Trainbus.MMLR.3.4<-lm(cbind(ln_centroid, ln_bus) ~ PropComm+Balance+LUEntropy+PedConnect+PBN+ ACDist+ ACCount+EmpAccess+C_LOS+O_Bus_LOS+PropOS+  X34_censored_PropFTE +Parking + Parkiteer, data =Melb.Trainbus.rd3)
+#propFTE
+Melb.Trainbus.MMLR.3.4<-lm(cbind(ln_centroid, ln_bus) ~ PropComm+Balance+LUEntropy+PedConnect+PBN+ ACDist+ ACCount+EmpAccess+C_LOS+O_Bus_LOS+PropOS +ln_Pop_surrogate +Parking + Parkiteer, data =Melb.Trainbus.rd3)
 summary(Melb.Trainbus.MMLR.3.4)
-anova(Melb.Trainbus.MMLR.3.4)
+Anova(Melb.Trainbus.MMLR.3.4)
 
-#FTE
-Melb.Trainbus.MMLR.3.5<-lm(cbind(ln_centroid, ln_bus) ~ PropComm+Balance+LUEntropy+PedConnect+PBN+ ACDist+ ACCount+EmpAccess+C_LOS+O_Bus_LOS+PropOS+ +Parking + Parkiteer, data =Melb.Trainbus.rd3)
+#LUEntropy
+Melb.Trainbus.MMLR.3.5<-lm(cbind(ln_centroid, ln_bus) ~ PropComm+Balance+PedConnect+PBN+ ACDist+ ACCount+EmpAccess+C_LOS+O_Bus_LOS+PropOS +ln_Pop_surrogate +Parking + Parkiteer, data =Melb.Trainbus.rd3)
 summary(Melb.Trainbus.MMLR.3.5)
-anova(Melb.Trainbus.MMLR.3.5)
+Anova(Melb.Trainbus.MMLR.3.5)
 
-#propOS
-Melb.Trainbus.MMLR.3.6<-lm(cbind(ln_centroid, ln_bus) ~ PropComm+Balance+LUEntropy+PedConnect+PBN+ ACDist+ ACCount+EmpAccess+C_LOS+O_Bus_LOS +Parking + Parkiteer, data =Melb.Trainbus.rd3)
+#PropOS
+Melb.Trainbus.MMLR.3.6<-lm(cbind(ln_centroid, ln_bus) ~ PropComm+Balance+PedConnect+PBN+ ACDist+ ACCount+EmpAccess+C_LOS+O_Bus_LOS +ln_Pop_surrogate +Parking + Parkiteer, data =Melb.Trainbus.rd3)
 summary(Melb.Trainbus.MMLR.3.6)
-anova(Melb.Trainbus.MMLR.3.6)
+Anova(Melb.Trainbus.MMLR.3.6)
 
-capture.output(summary(Melb.Trainbus.MMLR.3.6), file = "trainbus.PM.summary.rd.3.txt")
-capture.output(Anova(Melb.Trainbus.MMLR.3.6), file = "trainbus.PM.anova.rd.3.txt")
+#pedconnect
+Melb.Trainbus.MMLR.3.7<-lm(cbind(ln_centroid, ln_bus) ~ PropComm+Balance+PBN+ ACDist+ ACCount+EmpAccess+C_LOS+O_Bus_LOS +ln_Pop_surrogate +Parking + Parkiteer, data =Melb.Trainbus.rd3)
+summary(Melb.Trainbus.MMLR.3.7)
+Anova(Melb.Trainbus.MMLR.3.7)
+
+#propcomm
+Melb.Trainbus.MMLR.3.8<-lm(cbind(ln_centroid, ln_bus) ~ Balance+PBN+ ACDist+ ACCount+EmpAccess+C_LOS+O_Bus_LOS +ln_Pop_surrogate +Parking + Parkiteer, data =Melb.Trainbus.rd3)
+summary(Melb.Trainbus.MMLR.3.8)
+Anova(Melb.Trainbus.MMLR.3.8)
+
+#ln_pop
+Melb.Trainbus.MMLR.3.9<-lm(cbind(ln_centroid, ln_bus) ~ Balance+PBN+ ACDist+ ACCount+EmpAccess+C_LOS+O_Bus_LOS +Parking + Parkiteer, data =Melb.Trainbus.rd3)
+summary(Melb.Trainbus.MMLR.3.9)
+Anova(Melb.Trainbus.MMLR.3.9)
+
+
+capture.output(summary(Melb.Trainbus.MMLR.3.9), file = "trainbus.PM.summary.rd.3.txt")
+capture.output(Anova(Melb.Trainbus.MMLR.3.9), file = "trainbus.PM.Anova.rd.3.txt")
 
 #standardised coefficients
-Melb.Trainbus.bus.MMLR.3.6<-lm.beta(lm(ln_bus ~ PropComm+Balance+LUEntropy+PedConnect+PBN+ ACDist+ ACCount+EmpAccess+C_LOS+O_Bus_LOS +Parking + Parkiteer, data =Melb.Trainbus.rd3))
+Melb.Trainbus.bus.MMLR.3.9<-lm.beta(lm(ln_bus ~ Balance+PBN+ ACDist+ ACCount+EmpAccess+C_LOS+O_Bus_LOS +Parking + Parkiteer, data =Melb.Trainbus.rd3))
 
-capture.output(summary(Melb.Trainbus.bus.MMLR.3.6), file = "trainbus.bus.PM.summary.rd.3.txt")
+capture.output(summary(Melb.Trainbus.bus.MMLR.3.9), file = "trainbus.bus.PM.summary.rd.3.txt")
 
-Melb.Trainbus.train.MMLR.3.6<-lm.beta(lm(ln_centroid ~ PropComm+Balance+LUEntropy+PedConnect+PBN+ ACDist+ ACCount+EmpAccess+C_LOS+O_Bus_LOS +Parking + Parkiteer, data =Melb.Trainbus.rd3))
+Melb.Trainbus.train.MMLR.3.9<-lm.beta(lm(ln_centroid ~ Balance+PBN+ ACDist+ ACCount+EmpAccess+C_LOS+O_Bus_LOS +Parking + Parkiteer, data =Melb.Trainbus.rd3))
 
-capture.output(summary(Melb.Trainbus.train.MMLR.3.6), file = "trainbus.train.PM.summary.rd.3.txt")
+capture.output(summary(Melb.Trainbus.train.MMLR.3.9), file = "trainbus.train.PM.summary.rd.3.txt")
 
 #diagnostics
-plot(lm(ln_centroid~ PropComm+Balance+LUEntropy+PedConnect+PBN+ ACDist+ ACCount+EmpAccess+C_LOS+O_Bus_LOS +Parking + Parkiteer, data =Melb.Trainbus.rd3))
+plot(lm(ln_centroid~ Balance+PBN+ ACDist+ ACCount+EmpAccess+C_LOS+O_Bus_LOS +Parking + Parkiteer, data =Melb.Trainbus.rd3))
 #493deviates from the the assumptions. investigate but retain. 
 
-plot(lm(ln_bus~ PropComm+Balance+LUEntropy+PedConnect+PBN+ ACDist+ ACCount+EmpAccess+C_LOS+O_Bus_LOS +Parking + Parkiteer, data =Melb.Trainbus.rd3))
+plot(lm(ln_bus~ Balance+PBN+ ACDist+ ACCount+EmpAccess+C_LOS+O_Bus_LOS +Parking + Parkiteer, data =Melb.Trainbus.rd3))
 #547, #451, #527 now clearly deviating from other data points. remove
 
 which(rownames(Melb.Trainbus.rd3) == "547-train") #36
@@ -741,10 +781,10 @@ Melb.Trainbus.rd4 <- Melb.Trainbus.rd3[-c(36, 12, 104),]
 
 Melb.Trainbus.MMLR.4.1<-lm(cbind(ln_centroid, ln_bus) ~ PropComm+Balance+LUEntropy+PedConnect+PBN+ ACDist+ ACCount+EmpAccess+C_LOS+O_Bus_LOS+PropOS+ PropBach+ X34_censored_PropFTE+ DestScore_surrogate +ln_Pop_surrogate +Parking + Parkiteer, data =Melb.Trainbus.rd4)
 summary(Melb.Trainbus.MMLR.4.1)
-anova(Melb.Trainbus.MMLR.4.1)
+Anova(Melb.Trainbus.MMLR.4.1)
 
 capture.output(summary(Melb.Trainbus.MMLR.4.1), file = "trainbus.MA.summary.rd.4.txt")
-capture.output(Anova(Melb.Trainbus.MMLR.4.1), file = "trainbus.MA.anova.rd.4.txt")
+capture.output(Anova(Melb.Trainbus.MMLR.4.1), file = "trainbus.MA.Anova.rd.4.txt")
 
 #standardised coefficients
 Melb.Trainbus.bus.MMLR.4.1<-lm.beta(lm(ln_bus ~ PropComm+Balance+LUEntropy+PedConnect+PBN+ ACDist+ ACCount+EmpAccess+C_LOS+O_Bus_LOS+PropOS+ PropBach+ X34_censored_PropFTE+ DestScore_surrogate +ln_Pop_surrogate +Parking + Parkiteer, data =Melb.Trainbus.rd4))
@@ -755,52 +795,51 @@ Melb.Trainbus.train.MMLR.4.1<-lm.beta(lm(ln_centroid ~ PropComm+Balance+LUEntrop
 
 capture.output(summary(Melb.Trainbus.train.MMLR.4.1), file = "trainbus.train.MA.summary.rd.4.txt")
 
-#propbach
-Melb.Trainbus.MMLR.4.2<-lm(cbind(ln_centroid, ln_bus) ~ PropComm+Balance+LUEntropy+PedConnect+PBN+ ACDist+ ACCount+EmpAccess+C_LOS+O_Bus_LOS+PropOS+  X34_censored_PropFTE+ DestScore_surrogate +ln_Pop_surrogate +Parking + Parkiteer, data =Melb.Trainbus.rd4)
-summary(Melb.Trainbus.MMLR.4.2)
-anova(Melb.Trainbus.MMLR.4.2)
-
 #destscore
-Melb.Trainbus.MMLR.4.3<-lm(cbind(ln_centroid, ln_bus) ~ PropComm+Balance+LUEntropy+PedConnect+PBN+ ACDist+ ACCount+EmpAccess+C_LOS+O_Bus_LOS+PropOS+  X34_censored_PropFTE+ ln_Pop_surrogate +Parking + Parkiteer, data =Melb.Trainbus.rd4)
+Melb.Trainbus.MMLR.4.2<-lm(cbind(ln_centroid, ln_bus) ~ PropComm+Balance+LUEntropy+PedConnect+PBN+ ACDist+ ACCount+EmpAccess+C_LOS+O_Bus_LOS+PropOS+ PropBach+ X34_censored_PropFTE +ln_Pop_surrogate +Parking + Parkiteer, data =Melb.Trainbus.rd4)
+summary(Melb.Trainbus.MMLR.4.2)
+Anova(Melb.Trainbus.MMLR.4.2)
+
+#propbach
+Melb.Trainbus.MMLR.4.3<-lm(cbind(ln_centroid, ln_bus) ~ PropComm+Balance+LUEntropy+PedConnect+PBN+ ACDist+ ACCount+EmpAccess+C_LOS+O_Bus_LOS+PropOS+ X34_censored_PropFTE +ln_Pop_surrogate +Parking + Parkiteer, data =Melb.Trainbus.rd4)
 summary(Melb.Trainbus.MMLR.4.3)
-anova(Melb.Trainbus.MMLR.4.3)
+Anova(Melb.Trainbus.MMLR.4.3)
 
-#propFTE
-Melb.Trainbus.MMLR.4.4<-lm(cbind(ln_centroid, ln_bus) ~ PropComm+Balance+LUEntropy+PedConnect+PBN+ ACDist+ ACCount+EmpAccess+C_LOS+O_Bus_LOS+PropOS+ ln_Pop_surrogate +Parking + Parkiteer, data =Melb.Trainbus.rd4)
+#propfte
+Melb.Trainbus.MMLR.4.4<-lm(cbind(ln_centroid, ln_bus) ~ PropComm+Balance+LUEntropy+PedConnect+PBN+ ACDist+ ACCount+EmpAccess+C_LOS+O_Bus_LOS+PropOS +ln_Pop_surrogate +Parking + Parkiteer, data =Melb.Trainbus.rd4)
 summary(Melb.Trainbus.MMLR.4.4)
-anova(Melb.Trainbus.MMLR.4.4)
+Anova(Melb.Trainbus.MMLR.4.4)
 
-#ln_Pop
-Melb.Trainbus.MMLR.4.5<-lm(cbind(ln_centroid, ln_bus) ~ PropComm+Balance+LUEntropy+PedConnect+PBN+ ACDist+ ACCount+EmpAccess+C_LOS+O_Bus_LOS+PropOS+ Parking + Parkiteer, data =Melb.Trainbus.rd4)
+#propOS
+Melb.Trainbus.MMLR.4.5<-lm(cbind(ln_centroid, ln_bus) ~ PropComm+Balance+LUEntropy+PedConnect+PBN+ ACDist+ ACCount+EmpAccess+C_LOS+O_Bus_LOS+ln_Pop_surrogate +Parking + Parkiteer, data =Melb.Trainbus.rd4)
 summary(Melb.Trainbus.MMLR.4.5)
-anova(Melb.Trainbus.MMLR.4.5)
+Anova(Melb.Trainbus.MMLR.4.5)
 
 #LUEntropy
-Melb.Trainbus.MMLR.4.6<-lm(cbind(ln_centroid, ln_bus) ~ PropComm+Balance+PedConnect+PBN+ ACDist+ ACCount+EmpAccess+C_LOS+O_Bus_LOS+PropOS+ Parking + Parkiteer, data =Melb.Trainbus.rd4)
+Melb.Trainbus.MMLR.4.6<-lm(cbind(ln_centroid, ln_bus) ~ PropComm+Balance+PedConnect+PBN+ ACDist+ ACCount+EmpAccess+C_LOS+O_Bus_LOS+ln_Pop_surrogate +Parking + Parkiteer, data =Melb.Trainbus.rd4)
 summary(Melb.Trainbus.MMLR.4.6)
-anova(Melb.Trainbus.MMLR.4.6)
+Anova(Melb.Trainbus.MMLR.4.6)
 
-#pRopOS
-Melb.Trainbus.MMLR.4.7<-lm(cbind(ln_centroid, ln_bus) ~ PropComm+Balance+PedConnect+PBN+ ACDist+ ACCount+EmpAccess+C_LOS+O_Bus_LOS+ Parking + Parkiteer, data =Melb.Trainbus.rd4)
+#propcomm
+Melb.Trainbus.MMLR.4.7<-lm(cbind(ln_centroid, ln_bus) ~ Balance+PedConnect+PBN+ ACDist+ ACCount+EmpAccess+C_LOS+O_Bus_LOS+ln_Pop_surrogate +Parking + Parkiteer, data =Melb.Trainbus.rd4)
 summary(Melb.Trainbus.MMLR.4.7)
 Anova(Melb.Trainbus.MMLR.4.7)
-?Anova()
 
 capture.output(summary(Melb.Trainbus.MMLR.4.7), file = "trainbus.PM.summary.rd.4.txt")
-capture.output(anova(Melb.Trainbus.MMLR.4.7), file = "trainbus.PM.anova.rd.4.txt")
+capture.output(Anova(Melb.Trainbus.MMLR.4.7), file = "trainbus.PM.Anova.rd.4.txt")
 
 #standardised coefficients
-Melb.Trainbus.bus.MMLR.4.7<-lm.beta(lm(ln_bus~ PropComm+Balance+PedConnect+PBN+ ACDist+ ACCount+EmpAccess+C_LOS+O_Bus_LOS+ Parking + Parkiteer, data =Melb.Trainbus.rd4))
+Melb.Trainbus.bus.MMLR.4.7<-lm.beta(lm(ln_bus~ Balance+PedConnect+PBN+ ACDist+ ACCount+EmpAccess+C_LOS+O_Bus_LOS+ln_Pop_surrogate +Parking + Parkiteer, data =Melb.Trainbus.rd4))
 
 capture.output(summary(Melb.Trainbus.bus.MMLR.4.7), file = "trainbus.bus.PM.summary.rd.4.2.txt")
 
-Melb.Trainbus.train.MMLR.4.7<-lm.beta(lm(ln_centroid~ PropComm+Balance+PedConnect+PBN+ ACDist+ ACCount+EmpAccess+C_LOS+O_Bus_LOS+ Parking + Parkiteer, data =Melb.Trainbus.rd4))
+Melb.Trainbus.train.MMLR.4.7<-lm.beta(lm(ln_centroid~ Balance+PedConnect+PBN+ ACDist+ ACCount+EmpAccess+C_LOS+O_Bus_LOS+ln_Pop_surrogate +Parking + Parkiteer, data =Melb.Trainbus.rd4))
 
 capture.output(summary(Melb.Trainbus.train.MMLR.4.7), file = "trainbus.train.PM.summary.rd.4.2.txt")
 
 #diagnostics
-plot(lm(ln_bus ~ PropComm+Balance+PedConnect+PBN+ ACDist+ ACCount+EmpAccess+C_LOS+O_Bus_LOS+ Parking + Parkiteer, data =Melb.Trainbus.rd4))
+plot(lm(ln_bus ~ Balance+PedConnect+PBN+ ACDist+ ACCount+EmpAccess+C_LOS+O_Bus_LOS+ln_Pop_surrogate +Parking + Parkiteer, data =Melb.Trainbus.rd4))
 #527 is outlier but generally fits assumptions. investigate but retain. 
 
-plot(lm(ln_centroid ~ PropComm+Balance+PedConnect+PBN+ ACDist+ ACCount+EmpAccess+C_LOS+O_Bus_LOS+ Parking + Parkiteer, data =Melb.Trainbus.rd4))
+plot(lm(ln_centroid ~ Balance+PedConnect+PBN+ ACDist+ ACCount+EmpAccess+C_LOS+O_Bus_LOS+ln_Pop_surrogate +Parking + Parkiteer, data =Melb.Trainbus.rd4))
 #493 is outlier but generally fits assumptions, investigate but retain

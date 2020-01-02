@@ -1,31 +1,27 @@
 
 Call:
-lm(formula = ln_centroid ~ PropComm + Balance + PedConnect + 
-    PBN + ACDist + ACCount + C_LOS + O_Bus_LOS + PropBach + Parking + 
-    Parkiteer, data = Melb.Trainbus)
+lm(formula = ln_centroid ~ Balance + PBN + ACDist + ACCount + 
+    C_LOS + O_Bus_LOS + PropBach + Parkiteer, data = Melb.Trainbus)
 
 Residuals:
      Min       1Q   Median       3Q      Max 
--2.64856 -0.18276  0.04215  0.26039  1.48145 
+-2.69344 -0.20693  0.03575  0.27272  1.39357 
 
 Coefficients:
-              Estimate Standardized Std. Error t value             Pr(>|t|)    
-(Intercept)  6.2476682    0.0000000  0.2809157  22.240 < 0.0000000000000002 ***
-PropComm    -0.0700526   -0.0109500  0.4261138  -0.164             0.869663    
-Balance      0.5721865    0.0502292  0.6962430   0.822             0.412628    
-PedConnect  -0.0006420   -0.0295481  0.0013651  -0.470             0.638896    
-PBN         -0.6167581   -0.1244822  0.2768498  -2.228             0.027551 *  
-ACDist      -0.2220605   -0.3460607  0.0484752  -4.581           0.00001041 ***
-ACCount     -0.2226845   -0.1205838  0.1315154  -1.693             0.092720 .  
-C_LOS        0.0040970    0.2479630  0.0009258   4.425           0.00001967 ***
-O_Bus_LOS    0.0046949    0.3301585  0.0009561   4.910           0.00000258 ***
-PropBach     1.6600325    0.2685342  0.4303277   3.858             0.000177 ***
-Parking     22.3666695    0.0930986 12.5069711   1.788             0.075965 .  
-Parkiteer    0.4088981    0.2249928  0.1031135   3.966             0.000118 ***
+              Estimate Standardized Std. Error t value Pr(>|t|)    
+(Intercept)  6.3325688    0.0000000  0.2662857  23.781  < 2e-16 ***
+Balance      0.4553754    0.0399749  0.6010323   0.758 0.449949    
+PBN         -0.6839093   -0.1380355  0.2622043  -2.608 0.010101 *  
+ACDist      -0.2305688   -0.3593201  0.0475657  -4.847 3.32e-06 ***
+ACCount     -0.2193698   -0.1187889  0.1282273  -1.711 0.089367 .  
+C_LOS        0.0042420    0.2567389  0.0009111   4.656 7.49e-06 ***
+O_Bus_LOS    0.0046132    0.3244099  0.0008728   5.286 4.78e-07 ***
+PropBach     1.5045654    0.2433852  0.3857581   3.900 0.000149 ***
+Parkiteer    0.4215944    0.2319789  0.1026281   4.108 6.81e-05 ***
 ---
 Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 
-Residual standard error: 0.5435 on 135 degrees of freedom
-Multiple R-squared:  0.6671,	Adjusted R-squared:  0.6399 
-F-statistic: 24.59 on 11 and 135 DF,  p-value: < 0.00000000000000022
+Residual standard error: 0.5447 on 138 degrees of freedom
+Multiple R-squared:  0.6581,	Adjusted R-squared:  0.6383 
+F-statistic: 33.21 on 8 and 138 DF,  p-value: < 2.2e-16
 
