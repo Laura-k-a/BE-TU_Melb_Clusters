@@ -791,11 +791,11 @@ capture.output(Anova(Melb.Trainbus.MMLR.4.7), file = "trainbus.PM.anova.rd.4.txt
 #standardised coefficients
 Melb.Trainbus.bus.MMLR.4.7<-lm.beta(lm(ln_bus~ PropComm+Balance+PedConnect+PBN+ ACDist+ ACCount+EmpAccess+C_LOS+O_Bus_LOS+ Parking + Parkiteer, data =Melb.Trainbus.rd4))
 
-capture.output(summary(Melb.Trainbus.bus.MMLR.4.7), file = "trainbus.bus.PM.summary.rd.4.txt")
+capture.output(summary(Melb.Trainbus.bus.MMLR.4.7), file = "trainbus.bus.PM.summary.rd.4.2.txt")
 
 Melb.Trainbus.train.MMLR.4.7<-lm.beta(lm(ln_centroid~ PropComm+Balance+PedConnect+PBN+ ACDist+ ACCount+EmpAccess+C_LOS+O_Bus_LOS+ Parking + Parkiteer, data =Melb.Trainbus.rd4))
 
-capture.output(summary(Melb.Trainbus.train.MMLR.4.7), file = "trainbus.train.PM.summary.rd.4.txt")
+capture.output(summary(Melb.Trainbus.train.MMLR.4.7), file = "trainbus.train.PM.summary.rd.4.2.txt")
 
 #diagnostics
 plot(lm(ln_bus ~ PropComm+Balance+PedConnect+PBN+ ACDist+ ACCount+EmpAccess+C_LOS+O_Bus_LOS+ Parking + Parkiteer, data =Melb.Trainbus.rd4))

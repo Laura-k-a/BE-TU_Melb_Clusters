@@ -185,6 +185,7 @@ row.names(Clustersample.train.800) <- Clustersample.train.800[,c(2)]
 #Col headers: ln_Patronage + PropComm +	Balance +	LUEntropy	+ PedConnect+	PBN	+ DestScore	+ Parkiteer	+ ACDist	+ ACCount	+ FTZ	+ Parking	+ PropUrban	+ PropRural	+ EmpAccess	+ C_LOS	+ O_Bus_LOS	+ O_Tram_LOS	+ O_Train_LOS	+ O_LOS	MedInc +	PropOS +	PropBach	+ censored_PropFTE	+ censored_MeanSize	+ 	ln_Emp +	ln_Pop
 
 
+
 #Bus
 #step 3 Check for multicolinearity
 Bus.cluster.LM.VIF<-vif(lm(ln_Patronage ~ PropComm +	Balance +	LUEntropy	+ PedConnect+	PBN	+ DestScore	+ Parkiteer	+ ACDist	+ ACCount	+ Parking	+ PropUrban	+ EmpAccess	+ C_LOS	+ O_Tram_LOS	+ O_Train_LOS	+ MedInc +	PropOS +	PropBach	+ censored_PropFTE	+ censored_MeanSize	+	ln_Pop, data =Clustersample.bus.400))
@@ -312,7 +313,7 @@ Melb.tramcluster.LM.1.regb<-step(Melb.tramcluster.LM.1,
 summary(Melb.tramcluster.LM.1.regb)
 
 Melb.tramcluster.LM.1.regb<-lm.beta(Melb.tramcluster.LM.1.regb)
-capture.output(Melb.tramcluster.LM.1.regb, file = "tramcluster.PM.txt")
+capture.output(summary(Melb.tramcluster.LM.1.regb), file = "tramcluster.PM.txt")
 
 #diagnostics
 par(mfrow=c(2,2))
@@ -455,7 +456,7 @@ Melb.traincluster.LM.5.1<-lm(ln_Patronage ~ PropComm +	Balance +	LUEntropy	+ Ped
 summary(Melb.traincluster.LM.5.1)
 
 Melb.traincluster.LM.5.1<-lm.beta(Melb.traincluster.LM.5.1)
-  capture.output(summary(Melb.traincluster.LM.5.1), file = "traincluster.MArd.5.txt")
+capture.output(summary(Melb.traincluster.LM.5.1), file = "traincluster.MArd.5.txt")
 
 Melb.traincluster.LM.5.1.regb<-step(Melb.traincluster.LM.5.1,
                                     direction = "backward",
