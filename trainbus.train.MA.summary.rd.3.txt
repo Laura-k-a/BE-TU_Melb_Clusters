@@ -1,0 +1,57 @@
+
+Call:
+lm(formula = ln_centroid ~ PropComm + Balance + LUEntropy + PedConnect + 
+    PBN + ACDist + ACCount + EmpAccess + C_LOS + O_Bus_LOS + 
+    PropOS + PropBach + X34_censored_PropFTE + DestScore_surrogate + 
+    ln_Pop_surrogate + Parking + Parkiteer, data = Melb.Trainbus.rd3)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-1.46714 -0.18298  0.00526  0.21620  1.07382 
+
+Coefficients:
+                       Estimate Standardized Std. Error t value Pr(>|t|)
+(Intercept)           6.306e+00    0.000e+00  1.215e+00   5.189 8.21e-07
+PropComm             -3.368e-02   -7.075e-03  3.431e-01  -0.098  0.92195
+Balance               1.037e+00    1.217e-01  5.882e-01   1.762  0.08045
+LUEntropy            -3.258e-01   -6.006e-02  3.774e-01  -0.863  0.38963
+PedConnect           -9.508e-04   -5.818e-02  1.420e-03  -0.670  0.50440
+PBN                  -5.225e-01   -1.416e-01  2.121e-01  -2.464  0.01509
+ACDist               -7.259e-02   -1.345e-01  4.518e-02  -1.607  0.11065
+ACCount               4.909e-02    3.561e-02  1.097e-01   0.448  0.65515
+EmpAccess             9.622e-07    2.296e-01  3.548e-07   2.712  0.00763
+C_LOS                 3.103e-03    2.458e-01  7.576e-04   4.095 7.49e-05
+O_Bus_LOS             4.193e-03    3.942e-01  7.617e-04   5.506 1.98e-07
+PropOS               -1.748e+00   -4.804e-02  2.265e+00  -0.772  0.44181
+PropBach              2.890e-01    6.007e-02  4.126e-01   0.700  0.48493
+X34_censored_PropFTE -1.087e+00   -6.268e-02  1.112e+00  -0.977  0.33035
+DestScore_surrogate  -2.760e-03   -5.269e-03  3.677e-02  -0.075  0.94029
+ln_Pop_surrogate      1.521e-01    1.236e-01  1.221e-01   1.246  0.21526
+Parking               2.607e+01    1.457e-01  1.003e+01   2.599  0.01048
+Parkiteer             3.799e-01    2.796e-01  8.387e-02   4.530 1.35e-05
+                        
+(Intercept)          ***
+PropComm                
+Balance              .  
+LUEntropy               
+PedConnect              
+PBN                  *  
+ACDist                  
+ACCount                 
+EmpAccess            ** 
+C_LOS                ***
+O_Bus_LOS            ***
+PropOS                  
+PropBach                
+X34_censored_PropFTE    
+DestScore_surrogate     
+ln_Pop_surrogate        
+Parking              *  
+Parkiteer            ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 0.4099 on 126 degrees of freedom
+Multiple R-squared:  0.6784,	Adjusted R-squared:  0.6351 
+F-statistic: 15.64 on 17 and 126 DF,  p-value: < 2.2e-16
+

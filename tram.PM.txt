@@ -1,0 +1,35 @@
+
+Call:
+lm(formula = ln_Patronage ~ PropComm + Balance + LUEntropy + 
+    PBN + DestScore + ACCount + PropUrban + FTZ + EmpAccess + 
+    C_LOS + O_Bus_LOS + O_Train_LOS + PropOS + censored_MeanSize, 
+    data = TramSample.600)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-2.67461 -0.37840  0.00484  0.38551  2.67791 
+
+Coefficients:
+                    Estimate Standardized Std. Error t value Pr(>|t|)    
+(Intercept)        3.337e+00    0.000e+00  3.759e-01   8.878  < 2e-16 ***
+PropComm           1.281e+00    2.796e-01  1.619e-01   7.911 7.36e-15 ***
+Balance           -3.841e-01   -5.432e-02  2.099e-01  -1.830  0.06762 .  
+LUEntropy          3.570e-01    5.415e-02  1.790e-01   1.995  0.04637 *  
+PBN                3.795e-01    7.849e-02  1.053e-01   3.604  0.00033 ***
+DestScore          5.798e-02    7.788e-02  1.822e-02   3.181  0.00151 ** 
+ACCount           -7.853e-02   -3.350e-02  5.122e-02  -1.533  0.12560    
+PropUrban          3.874e-01    6.054e-02  1.827e-01   2.120  0.03425 *  
+FTZ                2.263e-01    5.576e-02  1.212e-01   1.867  0.06218 .  
+EmpAccess          5.446e-07    9.158e-02  1.965e-07   2.771  0.00570 ** 
+C_LOS              1.165e-02    5.543e-01  4.784e-04  24.347  < 2e-16 ***
+O_Bus_LOS          1.237e-03    4.293e-02  5.995e-04   2.064  0.03932 *  
+O_Train_LOS       -1.104e-03   -3.331e-02  6.681e-04  -1.652  0.09882 .  
+PropOS            -1.613e+00   -3.508e-02  9.542e-01  -1.691  0.09125 .  
+censored_MeanSize  1.547e-01    3.527e-02  1.043e-01   1.482  0.13861    
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 0.6164 on 910 degrees of freedom
+Multiple R-squared:  0.6575,	Adjusted R-squared:  0.6523 
+F-statistic: 124.8 on 14 and 910 DF,  p-value: < 2.2e-16
+

@@ -1,0 +1,54 @@
+
+Call:
+lm(formula = ln_Bus ~ X10_PropComm + X12_LUEntropy + X22_EmpAccess + 
+    X23_C_LOS + X24_O_Bus_LOS + X26_O_Train_LOS + X29_PropOS + 
+    X30_PropBach + X34_censored_PropFTE + ln_Pop, data = Melb.Trambus.noFTZ.rd4)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-3.6791 -0.7675  0.0738  0.8824  3.1402 
+
+Coefficients:
+                             Estimate     Standardized
+(Intercept)             -1.9199302944     0.0000000000
+X10_PropComm             1.1432860998     0.0116019628
+X12_LUEntropy           -0.9633214915    -0.0006283661
+X22_EmpAccess           -0.0000009677 -7438.9661207212
+X23_C_LOS                0.0014584730     0.4120542312
+X24_O_Bus_LOS            0.0273109404    14.0708426557
+X26_O_Train_LOS          0.0067987795     2.0121389643
+X29_PropOS              -6.2428500219    -0.0008663881
+X30_PropBach             3.3451304903     0.0084998054
+X34_censored_PropFTE    -4.7145003887    -0.0050470050
+ln_Pop                   0.6181888740     0.0536219162
+                           Std. Error t value             Pr(>|t|)
+(Intercept)              1.5978605707  -1.202              0.23040
+X10_PropComm             0.4884429310   2.341              0.01985
+X12_LUEntropy            1.7977909487  -0.536              0.59244
+X22_EmpAccess            0.0000007230  -1.338              0.18170
+X23_C_LOS                0.0025554304   0.571              0.56857
+X24_O_Bus_LOS            0.0020266474  13.476 < 0.0000000000000002
+X26_O_Train_LOS          0.0025039143   2.715              0.00697
+X29_PropOS               4.0872060811  -1.527              0.12763
+X30_PropBach             1.0387268520   3.220              0.00141
+X34_censored_PropFTE     1.4223586823  -3.315              0.00102
+ln_Pop                   0.1908124835   3.240              0.00132
+                        
+(Intercept)             
+X10_PropComm         *  
+X12_LUEntropy           
+X22_EmpAccess           
+X23_C_LOS               
+X24_O_Bus_LOS        ***
+X26_O_Train_LOS      ** 
+X29_PropOS              
+X30_PropBach         ** 
+X34_censored_PropFTE ** 
+ln_Pop               ** 
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 1.224 on 327 degrees of freedom
+Multiple R-squared:  0.4487,	Adjusted R-squared:  0.4319 
+F-statistic: 26.62 on 10 and 327 DF,  p-value: < 0.00000000000000022
+

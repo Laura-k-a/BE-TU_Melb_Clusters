@@ -1,0 +1,27 @@
+
+Call:
+lm(formula = ln_Patronage ~ X26_PropComm + +X28_Balance + X40_Parking + 
+    X44_C_LOS + X53_PropBach + X50_censored_MeanSize + ln_Emp, 
+    data = Clustersample.tram.600.noFTZ.rd2)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-2.13938 -0.31171  0.02979  0.32416  1.44391 
+
+Coefficients:
+                        Estimate Standardized Std. Error t value             Pr(>|t|)    
+(Intercept)             1.934212     0.000000   0.817760   2.365              0.01899 *  
+X26_PropComm            1.389228     0.262940   0.308287   4.506          0.000011299 ***
+X28_Balance            -2.358558    -0.356164   0.433952  -5.435          0.000000161 ***
+X40_Parking           119.500596     0.133361  45.351047   2.635              0.00908 ** 
+X44_C_LOS               0.018537     0.607172   0.001575  11.771 < 0.0000000000000002 ***
+X53_PropBach           -1.367296    -0.153330   0.528631  -2.586              0.01042 *  
+X50_censored_MeanSize   0.477173     0.167734   0.175775   2.715              0.00722 ** 
+ln_Emp                  0.282355     0.291380   0.073662   3.833              0.00017 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 0.543 on 197 degrees of freedom
+Multiple R-squared:  0.5073,	Adjusted R-squared:  0.4898 
+F-statistic: 28.98 on 7 and 197 DF,  p-value: < 0.00000000000000022
+

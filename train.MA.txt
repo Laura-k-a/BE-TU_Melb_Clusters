@@ -1,0 +1,39 @@
+
+Call:
+lm(formula = ln_Patronage ~ PropComm + Balance + LUEntropy + 
+    PedConnect + DestScore + Parkiteer + ACDist + ACCount + Parking + 
+    PropUrban + EmpAccess + C_LOS + O_Bus_LOS + O_Tram_LOS + 
+    PropOS + PropBach + censored_MeanSize + ln_Pop, data = TrainSample.800)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-2.7017 -0.3705  0.0240  0.3841  2.4700 
+
+Coefficients:
+                    Estimate Standardized Std. Error t value Pr(>|t|)    
+(Intercept)        4.880e-01    0.000e+00  1.254e+00   0.389 0.697591    
+PropComm           6.731e-01    8.841e-02  4.364e-01   1.542 0.124575    
+Balance            2.022e+00    1.525e-01  7.074e-01   2.859 0.004703 ** 
+LUEntropy         -4.570e-01   -4.762e-02  5.464e-01  -0.836 0.403930    
+PedConnect         5.246e-04    2.360e-02  1.548e-03   0.339 0.734995    
+DestScore          4.889e-03    5.555e-03  4.636e-02   0.105 0.916123    
+Parkiteer          5.912e-01    2.232e-01  1.246e-01   4.745 3.96e-06 ***
+ACDist            -1.738e-01   -1.971e-01  5.581e-02  -3.114 0.002118 ** 
+ACCount            5.918e-02    2.256e-02  1.505e-01   0.393 0.694540    
+Parking            4.387e+01    1.292e-01  1.435e+01   3.058 0.002534 ** 
+PropUrban         -2.593e-01   -3.004e-02  5.765e-01  -0.450 0.653270    
+EmpAccess          1.013e-06    1.568e-01  4.497e-07   2.252 0.025426 *  
+C_LOS              3.085e-03    1.518e-01  9.188e-04   3.358 0.000939 ***
+O_Bus_LOS          3.854e-03    1.888e-01  1.126e-03   3.424 0.000748 ***
+O_Tram_LOS         2.841e-03    1.493e-01  1.034e-03   2.749 0.006529 ** 
+PropOS            -1.283e+00   -2.264e-02  2.762e+00  -0.465 0.642786    
+PropBach           4.235e-01    5.216e-02  5.151e-01   0.822 0.411930    
+censored_MeanSize  5.159e-01    1.204e-01  2.073e-01   2.488 0.013647 *  
+ln_Pop             5.940e-01    3.135e-01  1.763e-01   3.369 0.000903 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 0.7078 on 201 degrees of freedom
+Multiple R-squared:  0.7059,	Adjusted R-squared:  0.6796 
+F-statistic:  26.8 on 18 and 201 DF,  p-value: < 2.2e-16
+

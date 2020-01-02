@@ -1,0 +1,27 @@
+
+Call:
+lm(formula = ln_Patronage ~ LUEntropy + PBN + DestScore + ACCount + 
+    PropUrban + C_LOS + censored_MeanSize + ln_Pop, data = Clustersample.bus.400.rd2)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-3.7465 -0.5869  0.0568  0.7063  2.1850 
+
+Coefficients:
+                   Estimate Standardized Std. Error t value Pr(>|t|)    
+(Intercept)       -7.624554     0.000000   1.724523  -4.421 1.60e-05 ***
+LUEntropy          2.232589     0.257325   0.628404   3.553 0.000474 ***
+PBN                0.945356     0.104325   0.477375   1.980 0.049025 *  
+DestScore          0.120824     0.150204   0.052820   2.287 0.023203 *  
+ACCount            0.691801     0.118733   0.296735   2.331 0.020719 *  
+PropUrban          1.051516     0.105248   0.711801   1.477 0.141163    
+C_LOS              0.020642     0.459443   0.002328   8.866 4.01e-16 ***
+censored_MeanSize  0.883089     0.199124   0.276905   3.189 0.001654 ** 
+ln_Pop             0.597201     0.228390   0.166406   3.589 0.000417 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 1.084 on 202 degrees of freedom
+Multiple R-squared:  0.5272,	Adjusted R-squared:  0.5085 
+F-statistic: 28.15 on 8 and 202 DF,  p-value: < 2.2e-16
+
