@@ -226,6 +226,7 @@ capture.output(Corrdata.buscluster,file="Corrdata.buscluster.csv")
 Melb.buscluster.LM.1<-lm(ln_Patronage ~ PropComm +	Balance +	LUEntropy	+ PedConnect+	PBN	+ DestScore	+ Parkiteer	+ ACDist	+ ACCount	+ Parking	+ PropUrban	+ EmpAccess	+ C_LOS	+ O_Tram_LOS	+ O_Train_LOS +	PropOS +	PropBach	+ censored_MeanSize	+	ln_Pop, data =Clustersample.bus.400)
 summary(Melb.buscluster.LM.1)
 
+Melb.buscluster.LM.1<-lm.beta(Melb.buscluster.LM.1)
 capture.output(summary(Melb.buscluster.LM.1), file = "buscluster.MA.txt")
 
 #function for backward (starts with maximal model)
@@ -234,6 +235,7 @@ Melb.buscluster.LM.1.regb<-step(Melb.buscluster.LM.1,
                                   trace = 0) #don't print steps
 summary(Melb.buscluster.LM.1.regb)
 
+Melb.buscluster.LM.1.regb<-lm.beta(Melb.buscluster.LM.1.regb)
 capture.output(summary(Melb.buscluster.LM.1.regb), file = "buscluster.PM.txt")
 
 #diagnostics
@@ -247,6 +249,7 @@ Clustersample.bus.400.rd2 <- Clustersample.bus.400[-c(212),]
 Melb.buscluster.LM.2.1<-lm(ln_Patronage ~ PropComm +	Balance +	LUEntropy	+ PedConnect+	PBN	+ DestScore	+ Parkiteer	+ ACDist	+ ACCount	+ Parking	+ PropUrban	+ EmpAccess	+ C_LOS	+ O_Tram_LOS	+ O_Train_LOS +	PropOS +	PropBach	+ censored_MeanSize	+	ln_Pop, data =Clustersample.bus.400.rd2)
 summary(Melb.buscluster.LM.2.1)
 
+Melb.buscluster.LM.2.1<-lm.beta(Melb.buscluster.LM.2.1)
 capture.output(summary(Melb.buscluster.LM.2.1), file = "buscluster.MA.rd.2.txt")
 
 #PM
@@ -255,6 +258,7 @@ Melb.buscluster.LM.2.1.regb<-step(Melb.buscluster.LM.2.1,
                                 trace = 0) #don't print steps
 summary(Melb.buscluster.LM.2.1.regb)
 
+Melb.buscluster.LM.2.1.regb<-lm.beta(Melb.buscluster.LM.2.1.regb)
 capture.output(summary(Melb.buscluster.LM.2.1.regb), file = "buscluster.PM.rd.2.txt")
 
 plot(Melb.buscluster.LM.2.1.regb)
@@ -304,6 +308,8 @@ Melb.tramcluster.LM.1.regb<-step(Melb.tramcluster.LM.1,
                                   trace = 0) #don't print steps
 
 summary(Melb.tramcluster.LM.1.regb)
+
+Melb.tramcluster.LM.1.regb<-lm.beta(Melb.tramcluster.LM.1.regb)
 capture.output(Melb.tramcluster.LM.1.regb, file = "tramcluster.PM.txt")
 
 #diagnostics
@@ -342,12 +348,15 @@ capture.output(Corrdata.traincluster,file="Corrdata.traincluster.csv")
 Melb.traincluster.LM.1<-lm(ln_Patronage ~ PropComm +	Balance +	LUEntropy	+ PedConnect	+ DestScore	+ FTZ + ACDist	+ ACCount	+ Parking +Parkiteer + EmpAccess	+ C_LOS	+ O_Bus_LOS	+ O_Tram_LOS +	PropOS +	PropBach + censored_MeanSize	+	ln_Pop, data =Clustersample.train.800)
 summary(Melb.traincluster.LM.1)
 
+Melb.traincluster.LM.1<-lm.beta(Melb.traincluster.LM.1)
 capture.output(summary(Melb.traincluster.LM.1), file = "traincluster.MA.txt")
 
 Melb.traincluster.LM.1.regb<-step(Melb.traincluster.LM.1,
                                  direction = "backward",
                                  trace = 0) #don't print steps
 summary(Melb.traincluster.LM.1.regb)
+
+Melb.traincluster.LM.1.regb<-lm.beta(Melb.traincluster.LM.1.regb)
 capture.output(summary(Melb.traincluster.LM.1.regb), file = "traincluster.PM.txt")
 
 #diagnostic
@@ -367,6 +376,7 @@ Clustersample.train.800.rd2 <- Clustersample.train.800[-c(93, 125, 79, 209, 210,
 Melb.traincluster.LM.2.1<-lm(ln_Patronage ~ PropComm +	Balance +	LUEntropy	+ PedConnect	+ DestScore	+ FTZ + ACDist	+ ACCount	+ Parking +Parkiteer + EmpAccess	+ C_LOS	+ O_Bus_LOS	+ O_Tram_LOS +	PropOS +	PropBach + censored_MeanSize	+	ln_Pop, data =Clustersample.train.800.rd2)
 summary(Melb.traincluster.LM.2.1)
 
+Melb.traincluster.LM.2.1<-lm.beta(Melb.traincluster.LM.2.1)
 capture.output(summary(Melb.traincluster.LM.2.1), file = "traincluster.MA.rd.2.txt")
 
 Melb.traincluster.LM.2.1.regb<-step(Melb.traincluster.LM.2.1,
@@ -375,6 +385,7 @@ Melb.traincluster.LM.2.1.regb<-step(Melb.traincluster.LM.2.1,
 summary(Melb.traincluster.LM.2.1.regb)
 #actually reduced the explanatory power by removing the outliers. 
 
+Melb.traincluster.LM.2.1<-lm.beta(Melb.traincluster.LM.2.1)
 capture.output(summary(Melb.traincluster.LM.2.1), file = "traincluster.PM.rd.2.txt")
 
 #diagnostics
@@ -391,6 +402,7 @@ Clustersample.train.800.rd3 <- Clustersample.train.800.rd2[-c(72, 73),]
 Melb.traincluster.LM.3.1<-lm(ln_Patronage ~ PropComm +	Balance +	LUEntropy	+ PedConnect	+ DestScore	+ FTZ + ACDist	+ ACCount	+ Parking +Parkiteer + EmpAccess	+ C_LOS	+ O_Bus_LOS	+ O_Tram_LOS +	PropOS +	PropBach + censored_MeanSize	+	ln_Pop, data =Clustersample.train.800.rd3)
 summary(Melb.traincluster.LM.3.1)
 
+Melb.traincluster.LM.3.1<-lm.beta(Melb.traincluster.LM.3.1)
 capture.output(summary(Melb.traincluster.LM.3.1), file = "traincluster.MA.rd.3.txt")
 
 Melb.traincluster.LM.3.1.regb<-step(Melb.traincluster.LM.3.1,
@@ -398,6 +410,8 @@ Melb.traincluster.LM.3.1.regb<-step(Melb.traincluster.LM.3.1,
                                     trace = 0) #don't print steps
 summary(Melb.traincluster.LM.3.1.regb)
 
+
+Melb.traincluster.LM.3.1.regb<-lm.beta(Melb.traincluster.LM.3.1.regb)
 capture.output(summary(Melb.traincluster.LM.3.1.regb), file = "traincluster.PM.rd.3.txt")
 
 plot(Melb.traincluster.LM.3.1.regb)
@@ -413,34 +427,40 @@ which(rownames(Clustersample.train.800.rd3) == "570-train") #204
 Clustersample.train.800.rd4 <- Clustersample.train.800.rd3[-c(66, 72, 204, 63),]
 
 #maxmially adjusted model
-Melb.traincluster.LM.4.1<-lm(ln_Patronage ~ PropComm +	Balance +	LUEntropy	+ PedConnect	+ DestScore	+ FTZ + ACDist	+ ACCount	+ Parking +Parkiteer + EmpAccess	+ C_LOS	+ O_Bus_LOS	+ O_Tram_LOS +	PropOS +	PropBach + censored_MeanSize	+	ln_Pop, data =Clustersample.train.800.rd4)
+Melb.traincluster.LM.4.1<-lm(ln_Patronage ~ PropComm +	Balance +	LUEntropy	+ PedConnect	+ DestScore + ACDist	+ ACCount	+ Parking +Parkiteer + EmpAccess	+ C_LOS	+ O_Bus_LOS	+ O_Tram_LOS +	PropOS +	PropBach + censored_MeanSize	+	ln_Pop, data =Clustersample.train.800.rd4)
 summary(Melb.traincluster.LM.4.1)
-
+#nothing in FTZ, remove
+Melb.traincluster.LM.4.1<-lm.beta(Melb.traincluster.LM.4.1)
 capture.output(summary(Melb.traincluster.LM.4.1), file = "traincluster.MArd.4.txt")
 
 Melb.traincluster.LM.4.1.regb<-step(Melb.traincluster.LM.4.1,
                                   direction = "backward",
                                   trace = 0) #don't print steps
 summary(Melb.traincluster.LM.4.1.regb)
+Melb.traincluster.LM.4.1.regb<-lm.beta(Melb.traincluster.LM.4.1.regb)
 capture.output(summary(Melb.traincluster.LM.4.1.regb), file = "traincluster.PM.rd.4.txt")
 
 #diagnostic
 plot(Melb.traincluster.LM.4.1.regb)
+
 #almost adheres to assumptions - one more influential outlier affecting assumptions: 615. 
 
 which(rownames(Clustersample.train.800.rd4) == "615-train") #69
 Clustersample.train.800.rd5 <- Clustersample.train.800.rd4[-c(69),]
 
 #maxmially adjusted model #rd 5
-Melb.traincluster.LM.5.1<-lm(ln_Patronage ~ PropComm +	Balance +	LUEntropy	+ PedConnect	+ DestScore	+ FTZ + ACDist	+ ACCount	+ Parking +Parkiteer + EmpAccess	+ C_LOS	+ O_Bus_LOS	+ O_Tram_LOS +	PropOS +	PropBach + censored_MeanSize	+	ln_Pop, data =Clustersample.train.800.rd5)
+Melb.traincluster.LM.5.1<-lm(ln_Patronage ~ PropComm +	Balance +	LUEntropy	+ PedConnect	+ DestScore + ACDist	+ ACCount	+ Parking +Parkiteer + EmpAccess	+ C_LOS	+ O_Bus_LOS	+ O_Tram_LOS +	PropOS +	PropBach + censored_MeanSize	+	ln_Pop, data =Clustersample.train.800.rd5)
 summary(Melb.traincluster.LM.5.1)
 
-capture.output(summary(Melb.traincluster.LM.5.1), file = "traincluster.MArd.5.txt")
+Melb.traincluster.LM.5.1<-lm.beta(Melb.traincluster.LM.5.1)
+  capture.output(summary(Melb.traincluster.LM.5.1), file = "traincluster.MArd.5.txt")
 
 Melb.traincluster.LM.5.1.regb<-step(Melb.traincluster.LM.5.1,
                                     direction = "backward",
                                     trace = 0)#don't print steps
 summary(Melb.traincluster.LM.5.1.regb)
+
+Melb.traincluster.LM.5.1.regb<-lm.beta(Melb.traincluster.LM.5.1.regb)
 capture.output(summary(Melb.traincluster.LM.5.1.regb), file = "traincluster.PM.rd.5.txt")
 
 #diagnostic

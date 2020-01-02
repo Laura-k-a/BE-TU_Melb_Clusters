@@ -1,0 +1,39 @@
+
+Call:
+lm(formula = ln_Patronage ~ PropComm + Balance + LUEntropy + 
+    PedConnect + DestScore + FTZ + ACDist + ACCount + Parking + 
+    Parkiteer + EmpAccess + C_LOS + O_Bus_LOS + O_Tram_LOS + 
+    PropOS + PropBach + censored_MeanSize + ln_Pop, data = Clustersample.train.800.rd2)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-2.4022 -0.3124  0.0162  0.3216  1.8376 
+
+Coefficients:
+                    Estimate Standardized Std. Error t value Pr(>|t|)    
+(Intercept)        2.041e+00    0.000e+00  1.123e+00   1.818  0.07067 .  
+PropComm           1.585e-01    3.493e-03  4.172e-01   0.380  0.70437    
+Balance            6.740e-01    3.947e-03  7.159e-01   0.941  0.34768    
+LUEntropy          3.264e-01    5.662e-03  4.183e-01   0.780  0.43629    
+PedConnect        -3.173e-04   -8.085e-01  1.350e-03  -0.235  0.81449    
+DestScore         -3.329e-02   -6.621e-02  4.095e-02  -0.813  0.41730    
+FTZ                1.697e+00    8.472e-03  7.218e-01   2.351  0.01977 *  
+ACDist            -1.279e-01   -2.248e-01  4.951e-02  -2.584  0.01054 *  
+ACCount            1.280e-01    3.009e-02  1.231e-01   1.040  0.29951    
+Parking            3.839e+01    5.451e-04  1.213e+01   3.165  0.00181 ** 
+Parkiteer          5.058e-01    1.165e-01  1.052e-01   4.807 3.14e-06 ***
+EmpAccess          8.649e-07    3.087e+04  3.914e-07   2.210  0.02832 *  
+C_LOS              4.061e-03    1.445e+01  8.176e-04   4.968 1.52e-06 ***
+O_Bus_LOS          4.483e-03    1.707e+01  9.314e-04   4.813 3.05e-06 ***
+O_Tram_LOS         2.363e-03    2.059e+00  1.778e-03   1.329  0.18548    
+PropOS            -4.311e-01   -2.203e-04  2.318e+00  -0.186  0.85263    
+PropBach           6.628e-01    1.535e-02  4.491e-01   1.476  0.14172    
+censored_MeanSize  2.704e-01    2.417e-02  1.804e-01   1.499  0.13556    
+ln_Pop             4.306e-01    1.610e-01  1.362e-01   3.161  0.00183 ** 
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 0.5884 on 187 degrees of freedom
+Multiple R-squared:  0.6752,	Adjusted R-squared:  0.6439 
+F-statistic: 21.59 on 18 and 187 DF,  p-value: < 2.2e-16
+

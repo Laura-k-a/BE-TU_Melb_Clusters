@@ -78,6 +78,7 @@ capture.output(Corrdata.bus,file="Corrdata.bus.csv")
 Melb.bus.LM.1<-lm(ln_Patronage ~ PropComm +	Balance +	LUEntropy	+ PedConnect+	PBN	+ DestScore	+ Parkiteer	+ ACDist	+ ACCount	+ Parking	+ PropUrban	+ PropRural + EmpAccess	+ C_LOS	+ O_Tram_LOS	+ O_Train_LOS	+ MedInc +	PropOS +	PropBach	+ censored_MeanSize	+	ln_Pop + ln_Emp, data =BusSample.400)
 summary(Melb.bus.LM.1)
 
+Melb.bus.LM.1<-lm.beta(Melb.bus.LM.1)
 capture.output(summary(Melb.bus.LM.1), file = "bus.MA.txt")
 
 #function for backward (starts with maximal model)
@@ -86,6 +87,7 @@ Melb.bus.LM.1.regb<-step(Melb.bus.LM.1,
                                 trace = 0) #don't print steps
 summary(Melb.bus.LM.1.regb)
 
+Melb.bus.LM.1.regb<-lm.beta(Melb.bus.LM.1.regb)
 capture.output(summary(Melb.bus.LM.1.regb), file = "bus.PM.txt")
 
 #diagnostics
@@ -101,6 +103,7 @@ BusSample.400.rd2 <- BusSample.400[-c(212),]
 Melb.bus.LM.2.1<-lm(ln_Patronage ~ PropComm +	Balance +	LUEntropy	+ PedConnect+	PBN	+ DestScore	+ Parkiteer	+ ACDist	+ ACCount	+ Parking	+ PropUrban	+ PropRural + EmpAccess	+ C_LOS	+ O_Tram_LOS	+ O_Train_LOS	+ MedInc +	PropOS +	PropBach	+ censored_MeanSize	+	ln_Pop + ln_Emp, data =BusSample.400.rd2)
 summary(Melb.bus.LM.2.1)
 
+Melb.bus.LM.2.1<-lm.beta(Melb.bus.LM.2.1)
 capture.output(summary(Melb.bus.LM.2.1), file = "bus.MA.rd.2.txt")
 
 #function for backward (starts with maximal model)
@@ -108,6 +111,7 @@ Melb.bus.LM.2.regb<-step(Melb.bus.LM.2.1,
                          direction = "backward",
                          trace = 0) #don't print steps
 summary(Melb.bus.LM.2.regb)
+Melb.bus.LM.2.regb<-lm.beta(Melb.bus.LM.2.regb)
 
 capture.output(summary(Melb.bus.LM.2.regb), file = "bus.PM.rd2.txt")
 
@@ -140,6 +144,7 @@ capture.output(Corrdata.tram,file="Corrdata.tram.csv")
 Melb.tram.LM.1<-lm(ln_Patronage ~ PropComm +	Balance +	LUEntropy	+ PedConnect+	PBN	+ DestScore	+ Parkiteer	+ ACDist	+ ACCount	+ PropUrban+ FTZ+ EmpAccess	+ C_LOS	+ O_Bus_LOS	+ O_Train_LOS+	PropOS	+ censored_PropFTE	+ censored_MeanSize	+	ln_Pop, data =TramSample.600)
 summary(Melb.tram.LM.1)
 
+Melb.tram.LM.1<-lm.beta(Melb.tram.LM.1)
 capture.output(summary(Melb.tram.LM.1), file = "tram.MA.txt")
 
 #function for backward (starts with maximal model)
@@ -148,6 +153,7 @@ Melb.tram.LM.1.regb<-step(Melb.tram.LM.1,
                          trace = 0) #don't print steps
 summary(Melb.tram.LM.1.regb)
 
+Melb.tram.LM.1.regb<-lm.beta(Melb.tram.LM.1.regb)
 capture.output(summary(Melb.tram.LM.1.regb), file = "tram.PM.txt")
 
 #diagnostics
@@ -183,6 +189,7 @@ Melb.train.LM.1<-lm(ln_Patronage ~ PropComm +	Balance +	LUEntropy	+ PedConnect	+
 
 summary(Melb.train.LM.1)
 
+Melb.train.LM.1<- lm.beta(Melb.train.LM.1)
 capture.output(summary(Melb.train.LM.1), file = "train.MA.txt")
 
 #function for backward (starts with maximal model)
@@ -191,6 +198,7 @@ Melb.train.LM.1.regb<-step(Melb.train.LM.1,
                           trace = 0) #don't print steps
 summary(Melb.train.LM.1.regb)
 
+Melb.train.LM.1.regb<- lm.beta(Melb.train.LM.1.regb)
 capture.output(summary(Melb.train.LM.1.regb), file = "train.PM.txt")
 
 #diagnostics
@@ -208,6 +216,7 @@ Melb.train.LM.2.1<-lm(ln_Patronage ~ PropComm +	Balance +	LUEntropy	+ PedConnect
 
 summary(Melb.train.LM.2.1)
 
+Melb.train.LM.2.1<-lm.beta(Melb.train.LM.2.1)
 capture.output(summary(Melb.train.LM.2.1), file = "train.MA.rd2.txt")
 
 #function for backward (starts with maximal model)
@@ -216,6 +225,7 @@ Melb.train.LM.2.regb<-step(Melb.train.LM.2.1,
                            trace = 0) #don't print steps
 summary(Melb.train.LM.2.regb)
 
+Melb.train.LM.2.regb<-lm.beta(Melb.train.LM.2.regb)
 capture.output(summary(Melb.train.LM.2.regb), file = "train.PM.rd2.txt")
 
 #diagnostics
@@ -232,6 +242,7 @@ Melb.train.LM.3.1<-lm(ln_Patronage ~ PropComm +	Balance +	LUEntropy	+ PedConnect
 
 summary(Melb.train.LM.3.1)
 
+Melb.train.LM.3.1<-lm.beta(Melb.train.LM.3.1)
 capture.output(summary(Melb.train.LM.3.1), file = "train.MA.rd3.txt")
 
 #function for backward (starts with maximal model)
@@ -240,6 +251,7 @@ Melb.train.LM.3.regb<-step(Melb.train.LM.3.1,
                            trace = 0) #don't print steps
 summary(Melb.train.LM.3.regb)
 
+Melb.train.LM.3.regb<-lm.beta(Melb.train.LM.3.regb)
 capture.output(summary(Melb.train.LM.3.regb), file = "train.PM.rd3.txt")
 
 plot(Melb.train.LM.3.regb)
@@ -257,6 +269,7 @@ Melb.train.LM.4.1<-lm(ln_Patronage ~ PropComm +	Balance +	LUEntropy	+ PedConnect
 summary(Melb.train.LM.4.1)
 #explanatory power went significantly down
 
+Melb.train.LM.4.1<-lm.beta(Melb.train.LM.4.1)
 capture.output(summary(Melb.train.LM.4.1), file = "train.MA.rd4.txt")
 
 #function for backward (starts with maximal model)
@@ -265,6 +278,7 @@ Melb.train.LM.4.regb<-step(Melb.train.LM.4.1,
                            trace = 0) #don't print steps
 summary(Melb.train.LM.4.regb)
 
+Melb.train.LM.4.regb<-lm.beta(Melb.train.LM.4.regb)
 capture.output(summary(Melb.train.LM.4.regb), file = "train.PM.rd4.txt")
 
 plot(Melb.train.LM.4.regb)
@@ -280,6 +294,7 @@ Melb.train.LM.5.1<-lm(ln_Patronage ~ PropComm +	Balance +	LUEntropy	+ PedConnect
 summary(Melb.train.LM.5.1)
 #explanatory power back up (second highest)
 
+Melb.train.LM.5.1<-lm.beta(Melb.train.LM.5.1)
 capture.output(summary(Melb.train.LM.5.1), file = "train.MA.rd5.txt")
 
 #function for backward (starts with maximal model)
@@ -288,6 +303,7 @@ Melb.train.LM.5.regb<-step(Melb.train.LM.5.1,
                            trace = 0) #don't print steps
 summary(Melb.train.LM.5.regb)
 
+Melb.train.LM.5.regb<-lm.beta(Melb.train.LM.5.regb)
 capture.output(summary(Melb.train.LM.5.regb), file = "train.PM.rd5.txt")
 
 plot(Melb.train.LM.5.regb)
