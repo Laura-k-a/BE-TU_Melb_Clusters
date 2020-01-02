@@ -221,6 +221,7 @@ capture.output(Corrdata.buscluster,file="Corrdata.buscluster.csv")
 #MedInc
 #censored_PropFTE
 
+setwd("C:/Users/lkast1/Google Drive/PhD/2.Analysis/2. Empirical Analysis/BE-TR_Multi Country Samples/Melbourne/Melb.All.Stops/Melb.AllStops.Repo/30Dec19/Results/Regression outputs/Cluster")
 
 #Step 4 maximally adjusted model
 Melb.buscluster.LM.1<-lm(ln_Patronage ~ PropComm +	Balance +	LUEntropy	+ PedConnect+	PBN	+ DestScore	+ Parkiteer	+ ACDist	+ ACCount	+ Parking	+ PropUrban	+ EmpAccess	+ C_LOS	+ O_Tram_LOS	+ O_Train_LOS +	PropOS +	PropBach	+ censored_MeanSize	+	ln_Pop, data =Clustersample.bus.400)
@@ -301,6 +302,7 @@ Corrdata.tramcluster
 Melb.tramcluster.LM.1<-lm(ln_Patronage ~ PropComm +	Balance + PedConnect+	PBN	+ DestScore	+ FTZ + ACDist	+ ACCount	+ EmpAccess	+ C_LOS	+	PropOS +	PropBach	+ censored_MeanSize	+	ln_Pop, data =Clustersample.tram.600)
 summary(Melb.tramcluster.LM.1)
 
+Melb.tramcluster.LM.1<-lm.beta(Melb.tramcluster.LM.1)
 capture.output(Melb.tramcluster.LM.1, file = "tramcluster.MA.txt")
 
 Melb.tramcluster.LM.1.regb<-step(Melb.tramcluster.LM.1,

@@ -17,9 +17,9 @@
 #outlier: 
 #analysis method: Linear regression
 
-
+options(scipen = 999)
 #Set working directory
-setwd("C:/Users/lkast1/Google Drive/PhD/2.Analysis/2. Empirical Analysis/BE-TR_Multi Country Samples/Melbourne/Melb.All.Stops/Melb.AllStops.Repo/30Dec19")
+setwd("C:/Users/lkast1/Google Drive/PhD/2.Analysis/2. Empirical Analysis/BE-TR_Multi Country Samples/Melbourne/Melb.All.Stops/Melb.AllStops.Repo/30Dec19/")
 
 library(dplyr)# mutate function
 library(car)#VIF function
@@ -41,6 +41,8 @@ TrainSample.800<-MMLR_Data[which (MMLR_Data$Mode=='train'
 
 #Col headers: ln_Patronage + PropComm +	Balance +	LUEntropy	+ PedConnect+	PBN	+ DestScore	+ Parkiteer	+ ACDist	+ ACCount	+ FTZ	+ Parking	+ PropUrban	+ PropRural	+ EmpAccess	+ C_LOS	+ O_Bus_LOS	+ O_Tram_LOS	+ O_Train_LOS	+ O_LOS	MedInc +	PropOS +	PropBach	+ censored_PropFTE	+ censored_MeanSize	+ 	ln_Emp +	ln_Pop
 
+
+setwd("C:/Users/lkast1/Google Drive/PhD/2.Analysis/2. Empirical Analysis/BE-TR_Multi Country Samples/Melbourne/Melb.All.Stops/Melb.AllStops.Repo/30Dec19/Results/Regression outputs/Census")
 
 #Bus
 #step 3 Check for multicolinearity
@@ -302,6 +304,7 @@ Melb.train.LM.5.regb<-step(Melb.train.LM.5.1,
                            direction = "backward",
                            trace = 0) #don't print steps
 summary(Melb.train.LM.5.regb)
+
 
 Melb.train.LM.5.regb<-lm.beta(Melb.train.LM.5.regb)
 capture.output(summary(Melb.train.LM.5.regb), file = "train.PM.rd5.txt")

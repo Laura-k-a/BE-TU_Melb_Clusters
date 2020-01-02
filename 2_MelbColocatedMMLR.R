@@ -58,6 +58,9 @@ cov_Trainbus #0.76,
 
 capture.output(cov_Trainbus_ln,file="cov_Trainbus_ln.txt")
 
+setwd("C:/Users/lkast1/Google Drive/PhD/2.Analysis/2. Empirical Analysis/BE-TR_Multi Country Samples/Melbourne/Melb.All.Stops/Melb.AllStops.Repo/30Dec19/Results/Regression outputs/Colocated")
+
+
 #step 3 Check for multicolinearity
 Melb.Trambus.noFTZ.VIF<-vif(lm(ln_centroid ~ PropComm+Balance+LUEntropy+PedConnect+PBN+ ACDist+ ACCount+EmpAccess+C_LOS+O_Bus_LOS+O_Train_LOS+ PropOS+ PropBach+ X34_censored_PropFTE+ X35_censored_MeanSize+ DestScore_surrogate +ln_Pop_surrogate + ln_Emp_surrogate +Parking, data =Melb.Trambus.noFTZ))
 #removed  rural, overlapping level of service to get rid of singularity

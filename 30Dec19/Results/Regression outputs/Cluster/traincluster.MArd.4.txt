@@ -1,39 +1,57 @@
 
 Call:
 lm(formula = ln_Patronage ~ PropComm + Balance + LUEntropy + 
-    PedConnect + DestScore + FTZ + ACDist + ACCount + Parking + 
-    Parkiteer + EmpAccess + C_LOS + O_Bus_LOS + O_Tram_LOS + 
-    PropOS + PropBach + censored_MeanSize + ln_Pop, data = Clustersample.train.800.rd4)
+    PedConnect + DestScore + ACDist + ACCount + Parking + Parkiteer + 
+    EmpAccess + C_LOS + O_Bus_LOS + O_Tram_LOS + PropOS + PropBach + 
+    censored_MeanSize + ln_Pop, data = Clustersample.train.800.rd4)
 
 Residuals:
      Min       1Q   Median       3Q      Max 
 -2.06976 -0.27524  0.02065  0.28238  1.31064 
 
-Coefficients: (1 not defined because of singularities)
-                    Estimate Std. Error t value Pr(>|t|)    
-(Intercept)        4.721e+00  9.448e-01   4.997 1.36e-06 ***
-PropComm           1.161e-01  3.383e-01   0.343 0.731744    
-Balance            2.650e-01  5.799e-01   0.457 0.648306    
-LUEntropy          7.331e-02  3.365e-01   0.218 0.827768    
-PedConnect        -7.160e-04  1.106e-03  -0.647 0.518277    
-DestScore         -1.611e-02  3.374e-02  -0.477 0.633630    
-FTZ                       NA         NA      NA       NA    
-ACDist            -1.046e-01  4.089e-02  -2.557 0.011363 *  
-ACCount            1.547e-01  1.003e-01   1.543 0.124684    
-Parking            3.544e+01  9.825e+00   3.607 0.000400 ***
-Parkiteer          4.115e-01  8.451e-02   4.870 2.42e-06 ***
-EmpAccess          1.121e-06  3.160e-07   3.549 0.000492 ***
-C_LOS              4.226e-03  6.672e-04   6.334 1.82e-09 ***
-O_Bus_LOS          4.055e-03  7.566e-04   5.360 2.50e-07 ***
-O_Tram_LOS         1.953e-03  1.420e-03   1.376 0.170583    
-PropOS            -7.910e-01  1.871e+00  -0.423 0.673017    
-PropBach          -9.397e-02  3.756e-01  -0.250 0.802740    
-censored_MeanSize  5.274e-02  1.463e-01   0.360 0.718965    
-ln_Pop             2.274e-01  1.125e-01   2.021 0.044727 *  
+Coefficients:
+                         Estimate    Standardized      Std. Error t value      Pr(>|t|)
+(Intercept)           4.721039560     0.000000000     0.944780063   4.997 0.00000136067
+PropComm              0.116148754     0.003724407     0.338297573   0.343      0.731744
+Balance               0.264954545     0.002313574     0.579928433   0.457      0.648306
+LUEntropy             0.073311847     0.002011401     0.336480199   0.218      0.827768
+PedConnect           -0.000715996    -2.599738207     0.001106189  -0.647      0.518277
+DestScore            -0.016107758    -0.048719124     0.033738603  -0.477      0.633630
+ACDist               -0.104571346    -0.265097877     0.040890503  -2.557      0.011363
+ACCount               0.154670977     0.058271838     0.100271690   1.543      0.124684
+Parking              35.441832655     0.000814064     9.825185152   3.607      0.000400
+Parkiteer             0.411538231     0.154006507     0.084512869   4.870 0.00000241940
+EmpAccess             0.000001121 60912.375662492     0.000000316   3.549      0.000492
+C_LOS                 0.004225784    22.714410892     0.000667192   6.334 0.00000000182
+O_Bus_LOS             0.004054884    25.095695993     0.000756562   5.360 0.00000025027
+O_Tram_LOS            0.001953063     2.540340406     0.001419614   1.376      0.170583
+PropOS               -0.791049881    -0.000642248     1.871446005  -0.423      0.673017
+PropBach             -0.093969356    -0.003174737     0.375625061  -0.250      0.802740
+censored_MeanSize     0.052739979     0.007560011     0.146337049   0.360      0.718965
+ln_Pop                0.227434544     0.115593627     0.112526132   2.021      0.044727
+                     
+(Intercept)       ***
+PropComm             
+Balance              
+LUEntropy            
+PedConnect           
+DestScore            
+ACDist            *  
+ACCount              
+Parking           ***
+Parkiteer         ***
+EmpAccess         ***
+C_LOS             ***
+O_Bus_LOS         ***
+O_Tram_LOS           
+PropOS               
+PropBach             
+censored_MeanSize    
+ln_Pop            *  
 ---
 Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 
 Residual standard error: 0.4692 on 182 degrees of freedom
 Multiple R-squared:  0.6683,	Adjusted R-squared:  0.6373 
-F-statistic: 21.57 on 17 and 182 DF,  p-value: < 2.2e-16
+F-statistic: 21.57 on 17 and 182 DF,  p-value: < 0.00000000000000022
 
