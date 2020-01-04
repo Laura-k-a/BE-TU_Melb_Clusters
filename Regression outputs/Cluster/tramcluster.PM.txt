@@ -1,0 +1,30 @@
+
+Call:
+lm(formula = ln_Patronage ~ PropComm + Balance + DestScore + 
+    FTZ + ACDist + EmpAccess + C_LOS + PropOS + PropBach + censored_MeanSize, 
+    data = Clustersample.tram.600)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-1.54669 -0.30996  0.02872  0.27236  1.48850 
+
+Coefficients:
+                       Estimate  Standardized    Std. Error t value             Pr(>|t|)    
+(Intercept)        3.1733230603  0.0000000000  0.7017791094   4.522        0.00001046567 ***
+PropComm           1.7528119307  0.3710711669  0.2820676509   6.214        0.00000000292 ***
+Balance           -1.5927386969 -0.2576288750  0.4133208981  -3.854             0.000157 ***
+DestScore          0.0584466194  0.1100258852  0.0287932749   2.030             0.043688 *  
+FTZ                0.6031765993  0.1237797380  0.2922973423   2.064             0.040343 *  
+ACDist            -0.1106822248 -0.1333003857  0.0531965911  -2.081             0.038736 *  
+EmpAccess          0.0000007725  0.1447616367  0.0000003710   2.082             0.038570 *  
+C_LOS              0.0147802403  0.5727189625  0.0013529123  10.925 < 0.0000000000000002 ***
+PropOS            -5.1842884846 -0.1165330509  2.3169512423  -2.238             0.026348 *  
+PropBach          -0.9230471928 -0.0959308189  0.5383638139  -1.715             0.087971 .  
+censored_MeanSize  0.7019259341  0.2327430479  0.2173971858   3.229             0.001452 ** 
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 0.5388 on 201 degrees of freedom
+Multiple R-squared:  0.5786,	Adjusted R-squared:  0.5576 
+F-statistic: 27.59 on 10 and 201 DF,  p-value: < 0.00000000000000022
+
