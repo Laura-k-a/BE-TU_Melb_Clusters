@@ -31,7 +31,7 @@ library(dplyr)
 options(scipen = 999)
 
 #Set working directory
-setwd("C:/Users/lkast1/Google Drive/PhD/2.Analysis/2. Empirical Analysis/BE-TR_Multi Country Samples/Melbourne/Melb.All.Stops/Melb.AllStops.Repo/30Dec19")
+setwd("C:/Users/lkast1/Google Drive/PhD/2.Analysis/2. Empirical Analysis/BE-TR_Multi Country Samples/Melbourne/Melb.All.Stops/Melb.AllStops.Repo/Data")
 #read in data
 
 Colocated_Data<-read.csv(file="BE-TR_Co-Located_data.csv")
@@ -58,7 +58,7 @@ cov_Trainbus #0.76,
 
 capture.output(cov_Trainbus_ln,file="cov_Trainbus_ln.txt")
 
-setwd("C:/Users/lkast1/Google Drive/PhD/2.Analysis/2. Empirical Analysis/BE-TR_Multi Country Samples/Melbourne/Melb.All.Stops/Melb.AllStops.Repo/30Dec19/Results/Regression outputs/Colocated")
+setwd("C:\Users\lkast1\Google Drive\PhD\2.Analysis\2. Empirical Analysis\BE-TR_Multi Country Samples\Melbourne\Melb.All.Stops\Melb.AllStops.Repo\Regression outputs\Colocoated")
 
 
 #step 3 Check for multicolinearity
