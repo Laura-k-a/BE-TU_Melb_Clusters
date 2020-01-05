@@ -19,7 +19,7 @@
 
 options(scipen = 999)
 #Set working directory
-setwd("C:\Users\lkast1\Google Drive\PhD\2.Analysis\2. Empirical Analysis\BE-TR_Multi Country Samples\Melbourne\Melb.All.Stops\Melb.AllStops.Repo\Data")
+setwd("C:/Users/lkast1/Google Drive/PhD/2.Analysis/2. Empirical Analysis/BE-TR_Multi Country Samples/Melbourne/Melb.All.Stops/Melb.AllStops.Repo/Data")
 
 library(dplyr)# mutate function
 library(car)#VIF function
@@ -42,16 +42,16 @@ TrainSample.800<-MMLR_Data[which (MMLR_Data$Mode=='train'
 #Col headers: ln_Patronage + PropComm +	Balance +	LUEntropy	+ PedConnect+	PBN	+ DestScore	+ Parkiteer	+ ACDist	+ ACCount	+ FTZ	+ Parking	+ PropUrban	+ PropRural	+ EmpAccess	+ C_LOS	+ O_Bus_LOS	+ O_Tram_LOS	+ O_Train_LOS	+ O_LOS	MedInc +	PropOS +	PropBach	+ censored_PropFTE	+ censored_MeanSize	+ 	ln_Emp +	ln_Pop
 
 
-setwd("C:\Users\lkast1\Google Drive\PhD\2.Analysis\2. Empirical Analysis\BE-TR_Multi Country Samples\Melbourne\Melb.All.Stops\Melb.AllStops.Repo\Regression outputs\Census")
+setwd("C:/Users/lkast1/Google Drive/PhD/2.Analysis/2. Empirical Analysis/BE-TR_Multi Country Samples/Melbourne/Melb.All.Stops/Melb.AllStops.Repo/Regression outputs/Census/wo_AC")
 
 #Bus
 #step 3 Check for multicolinearity
-Bus.LM.VIF<-vif(lm(ln_Patronage ~ PropComm +	Balance +	LUEntropy	+ PedConnect+	PBN	+ DestScore	+ Parkiteer	+ ACDist	+ ACCount	+ Parking	+ PropUrban	+ PropRural + EmpAccess	+ C_LOS	+ O_Tram_LOS	+ O_Train_LOS	+ MedInc +	PropOS +	PropBach	+ censored_PropFTE	+ censored_MeanSize	+	ln_Pop + ln_Emp, data =BusSample.400))
+Bus.LM.VIF<-vif(lm(ln_Patronage ~ PropComm +	Balance +	LUEntropy	+ PedConnect+	PBN	+ DestScore	+ Parkiteer	+ ACCount	+ Parking	+ PropUrban	+ PropRural + EmpAccess	+ C_LOS	+ O_Tram_LOS	+ O_Train_LOS	+ MedInc +	PropOS +	PropBach	+ censored_PropFTE	+ censored_MeanSize	+	ln_Pop + ln_Emp, data =BusSample.400))
 #removed  overlapping (total) level of service, FTZ to get rid of singularity
 Bus.LM.VIF
 
 #step 4 Simple correlations
-Corrdata.bus<-BusSample.400[,c(19:27, 29:33, 35, 36, 38:42, 49:51)]
+Corrdata.bus<-BusSample.400[,c(19:25, 27, 29:33, 35, 36, 38:42, 49:51)]
 
 #Option 1 for Correlation matrices with p-values
 Corrdata.bus<-rcorr(as.matrix(Corrdata.bus))
@@ -76,21 +76,22 @@ capture.output(Corrdata.bus,file="Corrdata.bus.csv")
 #not significant for ln_bus
 #censored_PropFTE
 
-#Step 4 maximally adjusted model
-Melb.bus.LM.1<-lm(ln_Patronage ~ PropComm +	Balance +	LUEntropy	+ PedConnect+	PBN	+ DestScore	+ Parkiteer	+ ACDist	+ ACCount	+ Parking	+ PropUrban	+ PropRural + EmpAccess	+ C_LOS	+ O_Tram_LOS	+ O_Train_LOS	+ MedInc +	PropOS +	PropBach	+ censored_MeanSize	+	ln_Pop + ln_Emp, data =BusSample.400)
-summary(Melb.bus.LM.1)
+#Step 4 maximally adjusted model with ACCount
+Melb.bus.LM.1.ACDist<-lm(ln_Patronage ~ PropComm +	Balance +	LUEntropy	+ PedConnect+	PBN	+ DestScore	+ Parkiteer	+ ACDist	+ Parking	+ PropUrban	+ PropRural + EmpAccess	+ C_LOS	+ O_Tram_LOS	+ O_Train_LOS	+ MedInc +	PropOS +	PropBach	+ censored_MeanSize	+	ln_Pop + ln_Emp, data =BusSample.400)
+summary(Melb.bus.LM.1.ACDist)
 
-Melb.bus.LM.1<-lm.beta(Melb.bus.LM.1)
-capture.output(summary(Melb.bus.LM.1), file = "bus.MA.txt")
+Melb.bus.LM.1.ACDist<-lm.beta(Melb.bus.LM.1.ACDist)
+capture.output(summary(Melb.bus.LM.1.ACDist), file = "bus.MA.ACDist.txt")
+#
 
 #function for backward (starts with maximal model)
-Melb.bus.LM.1.regb<-step(Melb.bus.LM.1,
+Melb.bus.LM.1.ACDist.regb<-step(Melb.bus.LM.1.ACDist,
                                 direction = "backward",
                                 trace = 0) #don't print steps
-summary(Melb.bus.LM.1.regb)
+summary(Melb.bus.LM.1.ACDist.regb)
 
-Melb.bus.LM.1.regb<-lm.beta(Melb.bus.LM.1.regb)
-capture.output(summary(Melb.bus.LM.1.regb), file = "bus.PM.txt")
+Melb.bus.LM.1.ACDist.regb<-lm.beta(Melb.bus.LM.1.ACDist.regb)
+capture.output(summary(Melb.bus.LM.1.ACDist.regb), file = "bus.PM.ACDist.txt")
 
 #diagnostics
 par(mfrow=c(2,2))
@@ -102,20 +103,20 @@ BusSample.400.rd2 <- BusSample.400[-c(212),]
 
 #bus round 2 maximally adjusted
 #Step 4 maximally adjusted model
-Melb.bus.LM.2.1<-lm(ln_Patronage ~ PropComm +	Balance +	LUEntropy	+ PedConnect+	PBN	+ DestScore	+ Parkiteer	+ ACDist	+ ACCount	+ Parking	+ PropUrban	+ PropRural + EmpAccess	+ C_LOS	+ O_Tram_LOS	+ O_Train_LOS	+ MedInc +	PropOS +	PropBach	+ censored_MeanSize	+	ln_Pop + ln_Emp, data =BusSample.400.rd2)
-summary(Melb.bus.LM.2.1)
+Melb.bus.LM.ACDist.2.1<-lm(ln_Patronage ~ PropComm +	Balance +	LUEntropy	+ PedConnect+	PBN	+ DestScore	+ Parkiteer	+ ACDist + Parking	+ PropUrban	+ PropRural + EmpAccess	+ C_LOS	+ O_Tram_LOS	+ O_Train_LOS	+ MedInc +	PropOS +	PropBach	+ censored_MeanSize	+	ln_Pop + ln_Emp, data =BusSample.400.rd2)
+summary(Melb.bus.LM.ACDist.2.1)
 
-Melb.bus.LM.2.1<-lm.beta(Melb.bus.LM.2.1)
-capture.output(summary(Melb.bus.LM.2.1), file = "bus.MA.rd.2.txt")
+Melb.bus.LM.ACDist.2.1<-lm.beta(Melb.bus.LM.ACDist.2.1)
+capture.output(summary(Melb.bus.LM.ACDist.2.1), file = "bus.MA.rd.2.ACDist.txt")
 
 #function for backward (starts with maximal model)
-Melb.bus.LM.2.regb<-step(Melb.bus.LM.2.1,
+Melb.bus.LM.2.ACDist.regb<-step(Melb.bus.LM.ACDist.2.1,
                          direction = "backward",
                          trace = 0) #don't print steps
-summary(Melb.bus.LM.2.regb)
-Melb.bus.LM.2.regb<-lm.beta(Melb.bus.LM.2.regb)
+summary(Melb.bus.LM.2.ACDist.regb)
+Melb.bus.LM.2.regb<-lm.beta(Melb.bus.LM.2.ACDist.regb)
 
-capture.output(summary(Melb.bus.LM.2.regb), file = "bus.PM.rd2.txt")
+capture.output(summary(Melb.bus.LM.2.ACDist.regb), file = "bus.PM.rd2.ACDist.txt")
 
 plot(Melb.bus.LM.2.regb)
 #looks like some naturally outlying values but majority of points occur in a linear region of all graphs. Investigate: 1416-bus, 1144-bus and 1131-bus
