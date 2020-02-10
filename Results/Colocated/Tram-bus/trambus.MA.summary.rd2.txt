@@ -1,0 +1,88 @@
+Response ln_bus :
+
+Call:
+lm(formula = ln_bus ~ ln_pop + X6_PropComm + X9_LUEntropy + X10_HousingDiv + 
+    X11_PedConnect + X12_PBN + X13_DestScore + X16_CBDDist + 
+    X17_ACDist + X18_ACCount + X20_Parking + X21_PropUrban + 
+    X22_EmpAccess + X23_C_LOS + X24_O_Bus_LOS + X26_O_Train_LOS + 
+    X28_PropFTE + X29_MeanSize + X31_PropOS + X32_PropBach, data = Melb.Trambus.noFTZ.rd2)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-3.9705 -0.7523 -0.0168  0.9205  2.7264 
+
+Coefficients:
+                     Estimate    Std. Error t value             Pr(>|t|)    
+(Intercept)     -3.6963769969  2.6587683666  -1.390               0.1654    
+ln_pop           0.5733128232  0.2429563284   2.360               0.0189 *  
+X6_PropComm      0.5930460395  0.5758188448   1.030               0.3038    
+X9_LUEntropy     0.7255197711  0.7005454625   1.036               0.3011    
+X10_HousingDiv  -0.3244099990  0.1197286818  -2.710               0.0071 ** 
+X11_PedConnect   0.0033945335  0.0028735950   1.181               0.2384    
+X12_PBN          0.6692519095  0.3878185324   1.726               0.0854 .  
+X13_DestScore    0.0612958727  0.0622600260   0.985               0.3256    
+X16_CBDDist      0.0717655989  0.0365632728   1.963               0.0505 .  
+X17_ACDist       0.0013169032  0.1094864396   0.012               0.9904    
+X18_ACCount      0.0362256274  0.2041169596   0.177               0.8592    
+X20_Parking     -0.0000558384  0.0001241581  -0.450               0.6532    
+X21_PropUrban    1.1340961003  0.8658765844   1.310               0.1912    
+X22_EmpAccess   -0.0000005932  0.0000009617  -0.617               0.5378    
+X23_C_LOS        0.0034983285  0.0026739110   1.308               0.1917    
+X24_O_Bus_LOS    0.0234431969  0.0019193413  12.214 < 0.0000000000000002 ***
+X26_O_Train_LOS  0.0074642572  0.0032135821   2.323               0.0208 *  
+X28_PropFTE     -2.4075197312  1.4116312669  -1.705               0.0891 .  
+X29_MeanSize    -0.1664250798  0.2969297041  -0.560               0.5755    
+X31_PropOS      -3.3048177521  4.1148320093  -0.803               0.4225    
+X32_PropBach     4.7941342729  1.1509733916   4.165            0.0000401 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 1.222 on 319 degrees of freedom
+Multiple R-squared:  0.4717,	Adjusted R-squared:  0.4386 
+F-statistic: 14.24 on 20 and 319 DF,  p-value: < 0.00000000000000022
+
+
+Response ln_Centroid :
+
+Call:
+lm(formula = ln_Centroid ~ ln_pop + X6_PropComm + X9_LUEntropy + 
+    X10_HousingDiv + X11_PedConnect + X12_PBN + X13_DestScore + 
+    X16_CBDDist + X17_ACDist + X18_ACCount + X20_Parking + X21_PropUrban + 
+    X22_EmpAccess + X23_C_LOS + X24_O_Bus_LOS + X26_O_Train_LOS + 
+    X28_PropFTE + X29_MeanSize + X31_PropOS + X32_PropBach, data = Melb.Trambus.noFTZ.rd2)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-2.53928 -0.32104  0.02015  0.37362  1.82646 
+
+Coefficients:
+                    Estimate   Std. Error t value            Pr(>|t|)    
+(Intercept)      2.295939817  1.307550511   1.756              0.0801 .  
+ln_pop           0.283568751  0.119483019   2.373              0.0182 *  
+X6_PropComm      0.571997284  0.283180827   2.020              0.0442 *  
+X9_LUEntropy     0.563572815  0.344519887   1.636              0.1029    
+X10_HousingDiv  -0.099923077  0.058881135  -1.697              0.0907 .  
+X11_PedConnect   0.000814725  0.001413200   0.577              0.5647    
+X12_PBN          0.388705917  0.190724520   2.038              0.0424 *  
+X13_DestScore    0.068434973  0.030618737   2.235              0.0261 *  
+X16_CBDDist      0.036391598  0.017981381   2.024              0.0438 *  
+X17_ACDist      -0.020181705  0.053844123  -0.375              0.7080    
+X18_ACCount      0.035420733  0.100382282   0.353              0.7244    
+X20_Parking     -0.000026699  0.000061059  -0.437              0.6622    
+X21_PropUrban   -0.086943733  0.425827757  -0.204              0.8383    
+X22_EmpAccess    0.000001247  0.000000473   2.636              0.0088 ** 
+X23_C_LOS        0.016617655  0.001314997  12.637 <0.0000000000000002 ***
+X24_O_Bus_LOS    0.001425016  0.000943909   1.510              0.1321    
+X26_O_Train_LOS  0.000342059  0.001580401   0.216              0.8288    
+X28_PropFTE     -1.051698075  0.694223388  -1.515              0.1308    
+X29_MeanSize     0.072380912  0.146026480   0.496              0.6205    
+X31_PropOS      -4.527072169  2.023625211  -2.237              0.0260 *  
+X32_PropBach    -0.089222876  0.566034960  -0.158              0.8748    
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 0.6012 on 319 degrees of freedom
+Multiple R-squared:  0.5154,	Adjusted R-squared:  0.485 
+F-statistic: 16.96 on 20 and 319 DF,  p-value: < 0.00000000000000022
+
+

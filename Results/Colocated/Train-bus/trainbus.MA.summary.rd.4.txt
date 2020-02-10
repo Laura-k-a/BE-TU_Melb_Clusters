@@ -1,0 +1,84 @@
+Response ln_Centroid :
+
+Call:
+lm(formula = ln_Centroid ~ X6_PropComm + X8_Balance + X9_LUEntropy + 
+    X10_HousingDiv + X11_PedConnect + X12_PBN + X13_DestScore + 
+    X15_Parkiteer + X16_CBDDist + X17_ACDist + X18_ACCount + 
+    X20_Parking + X22_EmpAccess + X23_C_LOS + X24_O_Bus_LOS + 
+    X28_PropFTE + X31_PropOS + ln_pop, data = Melb.Trainbus.rd4)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-1.47500 -0.19572  0.01023  0.21637  1.04640 
+
+Coefficients:
+                 Estimate Std. Error t value Pr(>|t|)    
+(Intercept)     6.059e+00  1.197e+00   5.061 1.49e-06 ***
+X6_PropComm    -7.263e-02  3.405e-01  -0.213  0.83144    
+X8_Balance      1.193e+00  5.806e-01   2.055  0.04204 *  
+X9_LUEntropy   -3.410e-01  3.959e-01  -0.861  0.39084    
+X10_HousingDiv  7.368e-03  4.494e-02   0.164  0.87006    
+X11_PedConnect -1.867e-03  1.939e-03  -0.963  0.33731    
+X12_PBN        -4.636e-01  2.140e-01  -2.166  0.03224 *  
+X13_DestScore  -1.371e-02  3.626e-02  -0.378  0.70598    
+X15_Parkiteer   3.587e-01  8.576e-02   4.182 5.47e-05 ***
+X16_CBDDist    -1.358e-03  5.689e-03  -0.239  0.81178    
+X17_ACDist     -3.331e-02  4.930e-02  -0.676  0.50060    
+X18_ACCount     1.209e-01  1.137e-01   1.063  0.28976    
+X20_Parking     2.507e-05  1.009e-05   2.484  0.01434 *  
+X22_EmpAccess   9.399e-07  3.513e-07   2.675  0.00849 ** 
+X23_C_LOS       3.287e-03  7.929e-04   4.146 6.29e-05 ***
+X24_O_Bus_LOS   4.246e-03  7.550e-04   5.623 1.21e-07 ***
+X28_PropFTE    -6.549e-01  1.068e+00  -0.613  0.54075    
+X31_PropOS     -1.888e+00  2.122e+00  -0.890  0.37522    
+ln_pop          1.712e-01  1.302e-01   1.315  0.19113    
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 0.4083 on 122 degrees of freedom
+Multiple R-squared:  0.6647,	Adjusted R-squared:  0.6152 
+F-statistic: 13.44 on 18 and 122 DF,  p-value: < 2.2e-16
+
+
+Response ln_bus :
+
+Call:
+lm(formula = ln_bus ~ X6_PropComm + X8_Balance + X9_LUEntropy + 
+    X10_HousingDiv + X11_PedConnect + X12_PBN + X13_DestScore + 
+    X15_Parkiteer + X16_CBDDist + X17_ACDist + X18_ACCount + 
+    X20_Parking + X22_EmpAccess + X23_C_LOS + X24_O_Bus_LOS + 
+    X28_PropFTE + X31_PropOS + ln_pop, data = Melb.Trainbus.rd4)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-4.6900 -0.6138  0.0897  0.5792  3.0119 
+
+Coefficients:
+                 Estimate Std. Error t value Pr(>|t|)    
+(Intercept)     4.331e-01  3.119e+00   0.139  0.88976    
+X6_PropComm     1.131e+00  8.869e-01   1.275  0.20466    
+X8_Balance      4.223e+00  1.512e+00   2.793  0.00607 ** 
+X9_LUEntropy   -1.008e+00  1.031e+00  -0.978  0.33017    
+X10_HousingDiv -8.367e-02  1.171e-01  -0.715  0.47614    
+X11_PedConnect -7.409e-03  5.049e-03  -1.467  0.14489    
+X12_PBN        -8.082e-02  5.575e-01  -0.145  0.88497    
+X13_DestScore   1.019e-02  9.446e-02   0.108  0.91429    
+X15_Parkiteer   4.003e-01  2.234e-01   1.792  0.07563 .  
+X16_CBDDist    -2.395e-03  1.482e-02  -0.162  0.87188    
+X17_ACDist      2.280e-01  1.284e-01   1.776  0.07827 .  
+X18_ACCount     9.590e-01  2.962e-01   3.238  0.00155 ** 
+X20_Parking     3.866e-05  2.629e-05   1.471  0.14392    
+X22_EmpAccess  -5.677e-10  9.152e-07  -0.001  0.99951    
+X23_C_LOS       4.713e-03  2.065e-03   2.282  0.02423 *  
+X24_O_Bus_LOS   1.451e-02  1.967e-03   7.381 2.12e-11 ***
+X28_PropFTE    -4.728e-01  2.781e+00  -0.170  0.86529    
+X31_PropOS     -6.049e+00  5.527e+00  -1.094  0.27592    
+ln_pop          4.854e-01  3.392e-01   1.431  0.15501    
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 1.064 on 122 degrees of freedom
+Multiple R-squared:  0.6308,	Adjusted R-squared:  0.5763 
+F-statistic: 11.58 on 18 and 122 DF,  p-value: < 2.2e-16
+
+

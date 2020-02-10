@@ -1,0 +1,29 @@
+
+Call:
+lm(formula = X1ln.ln_Patronage ~ X3ln.ln_Pop + X6_PropComm + 
+    X11_IntDensity + X12_CycleConnect + X13_DestScore + X16_CBDDist + 
+    X22_EmpAccess + X23_C_LOS + X28_Censored_PropFTE, data = Clustersample.tram.600.rd2)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-1.52390 -0.39694 -0.03174  0.34956  1.77109 
+
+Coefficients:
+                       Estimate Standardized Std. Error t value Pr(>|t|)    
+(Intercept)           3.650e+00    0.000e+00  7.177e-01   5.086 8.97e-07 ***
+X3ln.ln_Pop           1.298e-01    1.017e-01  8.277e-02   1.569  0.11843    
+X6_PropComm           6.307e-01    1.425e-01  2.633e-01   2.395  0.01761 *  
+X11_IntDensity        2.822e-03    1.376e-01  1.583e-03   1.782  0.07634 .  
+X12_CycleConnect      5.281e-01    1.237e-01  2.269e-01   2.328  0.02101 *  
+X13_DestScore         5.661e-02    1.128e-01  3.073e-02   1.842  0.06709 .  
+X16_CBDDist           5.036e-02    2.516e-01  1.655e-02   3.043  0.00269 ** 
+X22_EmpAccess         1.387e-06    2.512e-01  5.160e-07   2.688  0.00785 ** 
+X23_C_LOS             1.611e-02    5.329e-01  1.645e-03   9.795  < 2e-16 ***
+X28_Censored_PropFTE -2.608e+00   -2.475e-01  5.713e-01  -4.565 9.12e-06 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 0.5472 on 184 degrees of freedom
+Multiple R-squared:  0.5817,	Adjusted R-squared:  0.5612 
+F-statistic: 28.43 on 9 and 184 DF,  p-value: < 2.2e-16
+

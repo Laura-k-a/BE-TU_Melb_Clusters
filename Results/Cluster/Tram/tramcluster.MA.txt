@@ -1,0 +1,16 @@
+
+Call:
+lm(formula = X1ln.ln_Patronage ~ X3ln.ln_Pop + X6_PropComm + 
+    X10_HousingDiv + X11_IntDensity + X12_CycleConnect + X13_DestScore + 
+    X16_CBDDist + X18_ACCount + X22_EmpAccess + X23_C_LOS + X25_O_Tram_LOS + 
+    X28_Censored_PropFTE + X29_Censored_MeanSize + X32_PropBach, 
+    data = Clustersample.tram.600)
+
+Standardized Coefficients::
+          (Intercept)           X3ln.ln_Pop           X6_PropComm        X10_HousingDiv        X11_IntDensity      X12_CycleConnect 
+          0.000000000           0.174051366           0.181773863          -0.001505058           0.047499079           0.109235341 
+        X13_DestScore           X16_CBDDist           X18_ACCount         X22_EmpAccess             X23_C_LOS        X25_O_Tram_LOS 
+          0.112895168           0.257693768          -0.005533712           0.284504759           0.450727547           0.068508263 
+ X28_Censored_PropFTE X29_Censored_MeanSize          X32_PropBach 
+         -0.139563300           0.104557493          -0.018783835 
+

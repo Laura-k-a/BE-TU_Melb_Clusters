@@ -1,0 +1,33 @@
+
+Call:
+lm(formula = X1ln.ln_Patronage ~ X3ln.ln_Pop + X6_PropComm + 
+    X8_Balance + X15_Parkiteer + X18_ACCount + X20.Parking_m.2 + 
+    X22_EmpAccess + X23_C_LOS + X24_O_Bus_LOS + X25_O_Tram_LOS + 
+    X31_PropOS + X32_PropBach, data = Clustersample.train.800.rd3)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-1.41728 -0.26468 -0.01335  0.33501  1.46568 
+
+Coefficients:
+                  Estimate Standardized Std. Error t value Pr(>|t|)    
+(Intercept)      3.887e+00    0.000e+00  7.035e-01   5.526 1.16e-07 ***
+X3ln.ln_Pop      3.618e-01    2.380e-01  9.366e-02   3.863 0.000157 ***
+X6_PropComm      4.856e-01    9.432e-02  2.870e-01   1.692 0.092458 .  
+X8_Balance       1.711e+00    1.964e-01  4.947e-01   3.458 0.000683 ***
+X15_Parkiteer    3.962e-01    2.266e-01  9.017e-02   4.394 1.92e-05 ***
+X18_ACCount      2.512e-01    1.484e-01  7.964e-02   3.154 0.001896 ** 
+X20.Parking_m.2  3.589e-05    1.629e-01  9.975e-06   3.598 0.000417 ***
+X22_EmpAccess    1.100e-06    2.578e-01  3.001e-07   3.663 0.000329 ***
+X23_C_LOS        2.817e-03    2.040e-01  6.337e-04   4.446 1.55e-05 ***
+X24_O_Bus_LOS    3.497e-03    2.681e-01  7.243e-04   4.827 2.99e-06 ***
+X25_O_Tram_LOS   4.575e-03    2.756e-01  9.344e-04   4.897 2.20e-06 ***
+X31_PropOS      -3.102e+00   -8.408e-02  1.692e+00  -1.833 0.068486 .  
+X32_PropBach    -6.411e-01   -1.045e-01  3.788e-01  -1.692 0.092386 .  
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 0.4701 on 176 degrees of freedom
+Multiple R-squared:  0.692,	Adjusted R-squared:  0.671 
+F-statistic: 32.96 on 12 and 176 DF,  p-value: < 2.2e-16
+

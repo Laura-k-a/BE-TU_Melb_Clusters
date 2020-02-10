@@ -1,0 +1,43 @@
+
+Call:
+lm(formula = X1ln.ln_Patronage ~ X3ln.ln_Pop + X6_PropComm + 
+    X8_Balance + X9_LUEntropy + X10_HousingDiv + X11_IntDensity + 
+    X13_DestScore + X16_CBDDist + X15_Parkiteer + X17_ACDist + 
+    X18_ACCount + X20.Parking_m.2 + X22_EmpAccess + X23_C_LOS + 
+    X24_O_Bus_LOS + X25_O_Tram_LOS + X28_PropFTE + X29_MeanSize + 
+    X31_PropOS + X32_PropBach, data = Clustersample.train.800.rd3)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-1.33876 -0.26562 -0.01922  0.30081  1.34923 
+
+Coefficients:
+                  Estimate Standardized Std. Error t value Pr(>|t|)    
+(Intercept)      5.747e+00    0.000e+00  1.645e+00   3.494 0.000609 ***
+X3ln.ln_Pop      3.184e-01    2.095e-01  1.392e-01   2.288 0.023400 *  
+X6_PropComm      4.588e-01    8.913e-02  3.119e-01   1.471 0.143102    
+X8_Balance       1.653e+00    1.898e-01  5.332e-01   3.099 0.002277 ** 
+X9_LUEntropy    -2.507e-01   -3.989e-02  3.657e-01  -0.685 0.493994    
+X10_HousingDiv  -4.314e-02   -5.387e-02  5.162e-02  -0.836 0.404515    
+X11_IntDensity   9.907e-04    4.137e-02  1.756e-03   0.564 0.573380    
+X13_DestScore   -1.496e-02   -2.262e-02  3.735e-02  -0.400 0.689343    
+X16_CBDDist     -3.801e-03   -4.448e-02  7.925e-03  -0.480 0.632169    
+X15_Parkiteer    3.936e-01    2.251e-01  9.365e-02   4.203 4.27e-05 ***
+X17_ACDist      -4.324e-02   -5.050e-02  6.045e-02  -0.715 0.475463    
+X18_ACCount      2.364e-01    1.397e-01  1.129e-01   2.094 0.037768 *  
+X20.Parking_m.2  3.420e-05    1.553e-01  1.052e-05   3.250 0.001394 ** 
+X22_EmpAccess    1.203e-06    2.821e-01  3.329e-07   3.614 0.000398 ***
+X23_C_LOS        3.030e-03    2.194e-01  6.956e-04   4.356 2.30e-05 ***
+X24_O_Bus_LOS    3.351e-03    2.569e-01  7.934e-04   4.223 3.95e-05 ***
+X25_O_Tram_LOS   4.448e-03    2.680e-01  9.919e-04   4.485 1.35e-05 ***
+X28_PropFTE     -1.434e+00   -8.460e-02  1.077e+00  -1.332 0.184699    
+X29_MeanSize    -5.450e-02   -1.870e-02  1.917e-01  -0.284 0.776486    
+X31_PropOS      -3.664e+00   -9.929e-02  1.918e+00  -1.910 0.057870 .  
+X32_PropBach    -6.549e-01   -1.068e-01  5.348e-01  -1.225 0.222431    
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 0.4753 on 168 degrees of freedom
+Multiple R-squared:  0.6994,	Adjusted R-squared:  0.6637 
+F-statistic: 19.55 on 20 and 168 DF,  p-value: < 2.2e-16
+

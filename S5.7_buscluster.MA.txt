@@ -1,0 +1,43 @@
+
+Call:
+lm(formula = X1ln.ln_Patronage ~ X3ln.ln_Pop + X6_PropComm + 
+    X8_Balance + X10_HousingDiv + X11_IntDensity + X12_CycleConnect + 
+    X13_DestScore + X16_CBDDist + X17_ACDist + X18_ACCount + 
+    X20.Parking_m.2 + X21_PropUrban + X22_EmpAccess + X23_C_LOS + 
+    X25_O_Tram_LOS + X26_O_Train_LOS + X28_Censored_PropFTE + 
+    X29_Censored_MeanSize + X31_PropOS + X32_PropBach, data = Clustersample.bus.400)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-3.3469 -0.5548 -0.0036  0.7261  2.4852 
+
+Coefficients:
+                        Estimate Standardized Std. Error t value Pr(>|t|)    
+(Intercept)           -4.331e+00    0.000e+00  3.417e+00  -1.268  0.20660    
+X3ln.ln_Pop            6.398e-01    2.760e-01  2.693e-01   2.376  0.01858 *  
+X6_PropComm            7.560e-01    9.974e-02  6.134e-01   1.232  0.21945    
+X8_Balance             2.150e+00    1.549e-01  1.099e+00   1.956  0.05210 .  
+X10_HousingDiv        -2.310e-01   -2.065e-01  9.511e-02  -2.429  0.01615 *  
+X11_IntDensity        -2.520e-03   -7.423e-02  2.692e-03  -0.936  0.35050    
+X12_CycleConnect       4.362e-01    5.044e-02  5.260e-01   0.829  0.40813    
+X13_DestScore          1.620e-02    1.820e-02  7.333e-02   0.221  0.82543    
+X16_CBDDist            6.709e-03    3.759e-02  1.535e-02   0.437  0.66265    
+X17_ACDist            -3.872e-02   -2.241e-02  1.199e-01  -0.323  0.74702    
+X18_ACCount            2.831e-01    4.062e-02  4.679e-01   0.605  0.54593    
+X20.Parking_m.2        4.155e-04    1.427e-01  1.929e-04   2.154  0.03265 *  
+X21_PropUrban          6.191e-01    6.636e-02  6.744e-01   0.918  0.35990    
+X22_EmpAccess          2.988e-07    2.203e-02  1.428e-06   0.209  0.83452    
+X23_C_LOS              2.924e-02    5.352e-01  3.493e-03   8.371 1.82e-14 ***
+X25_O_Tram_LOS        -4.889e-05   -1.155e-03  2.663e-03  -0.018  0.98537    
+X26_O_Train_LOS       -3.098e-05   -6.052e-04  3.314e-03  -0.009  0.99255    
+X28_Censored_PropFTE  -1.679e+00   -4.493e-02  2.350e+00  -0.715  0.47585    
+X29_Censored_MeanSize  3.178e-01    5.692e-02  4.346e-01   0.731  0.46560    
+X31_PropOS             3.856e+00    4.755e-02  5.120e+00   0.753  0.45234    
+X32_PropBach           2.785e+00    2.326e-01  9.986e-01   2.789  0.00587 ** 
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 1.182 on 174 degrees of freedom
+Multiple R-squared:  0.5179,	Adjusted R-squared:  0.4625 
+F-statistic: 9.348 on 20 and 174 DF,  p-value: < 2.2e-16
+

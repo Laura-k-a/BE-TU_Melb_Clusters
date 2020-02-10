@@ -1,0 +1,34 @@
+
+Call:
+lm(formula = ln_Centroid ~ ln_pop + X6_PropComm + X9_LUEntropy + 
+    X10_HousingDiv + X12_PBN + X13_DestScore + X16_CBDDist + 
+    X22_EmpAccess + X23_C_LOS + X24_O_Bus_LOS + X26_O_Train_LOS + 
+    X28_PropFTE + X32_PropBach, data = Melb.Trambus.noFTZ.rd3)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-2.45641 -0.34222  0.00156  0.40475  1.91102 
+
+Coefficients:
+                     Estimate  Standardized    Std. Error t value             Pr(>|t|)    
+(Intercept)      2.5586369059  0.0000000000  0.9924428631   2.578              0.01037 *  
+ln_pop           0.2258405523  0.1287354258  0.1015947374   2.223              0.02691 *  
+X6_PropComm      0.6461541600  0.1279343049  0.2467636341   2.619              0.00924 ** 
+X9_LUEntropy     0.6179628014  0.1099179615  0.2560138003   2.414              0.01634 *  
+X10_HousingDiv  -0.1000742421 -0.1019851717  0.0572301996  -1.749              0.08130 .  
+X12_PBN          0.4108598047  0.0951253611  0.1832242877   2.242              0.02561 *  
+X13_DestScore    0.0717061111  0.1271263426  0.0284422982   2.521              0.01218 *  
+X16_CBDDist      0.0381134089  0.1766180243  0.0173795733   2.193              0.02902 *  
+X22_EmpAccess    0.0000012562  0.2134354508  0.0000004008   3.134              0.00188 ** 
+X23_C_LOS        0.0163636974  0.5321619161  0.0012720204  12.864 < 0.0000000000000002 ***
+X24_O_Bus_LOS    0.0013699032  0.0662240393  0.0009365603   1.463              0.14452    
+X26_O_Train_LOS -0.0001347937 -0.0044842738  0.0012479803  -0.108              0.91405    
+X28_PropFTE     -1.1370713998 -0.0993090738  0.5232363347  -2.173              0.03049 *  
+X32_PropBach     0.2590184333  0.0252665807  0.5198498414   0.498              0.61864    
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 0.6007 on 325 degrees of freedom
+Multiple R-squared:  0.5064,	Adjusted R-squared:  0.4867 
+F-statistic: 25.65 on 13 and 325 DF,  p-value: < 0.00000000000000022
+

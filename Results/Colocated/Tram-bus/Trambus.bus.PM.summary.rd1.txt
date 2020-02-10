@@ -1,0 +1,32 @@
+
+Call:
+lm(formula = ln_bus ~ ln_pop + X6_PropComm + X9_LUEntropy + X10_HousingDiv + 
+    X12_PBN + X13_DestScore + X16_CBDDist + X22_EmpAccess + X23_C_LOS + 
+    X24_O_Bus_LOS + X26_O_Train_LOS + X32_PropBach, data = Melb.Trambus.noFTZ)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-3.7464 -0.7190 -0.0285  0.8993  3.1020 
+
+Coefficients:
+                     Estimate  Standardized    Std. Error t value             Pr(>|t|)    
+(Intercept)     -5.3388099969  0.0000000000  1.9571026538  -2.728             0.006717 ** 
+ln_pop           0.6916250032  0.2043201589  0.2042827366   3.386             0.000796 ***
+X6_PropComm      0.9122543634  0.0953883738  0.4942347227   1.846             0.065823 .  
+X9_LUEntropy     0.4078139510  0.0372085733  0.5166622540   0.789             0.430493    
+X10_HousingDiv  -0.3471971934 -0.1816786319  0.1148042428  -3.024             0.002689 ** 
+X12_PBN          0.5095941352  0.0605751608  0.3699063092   1.378             0.169257    
+X13_DestScore    0.0976062331  0.0891585176  0.0573077113   1.703             0.089479 .  
+X16_CBDDist      0.0840024719  0.2005270188  0.0347072355   2.420             0.016050 *  
+X22_EmpAccess   -0.0000005257 -0.0461307443  0.0000008121  -0.647             0.517879    
+X23_C_LOS        0.0015330756  0.0307013348  0.0021734794   0.705             0.481090    
+X24_O_Bus_LOS    0.0237576284  0.6090973924  0.0018580299  12.786 < 0.0000000000000002 ***
+X26_O_Train_LOS  0.0066334746  0.1132010803  0.0025330662   2.619             0.009235 ** 
+X32_PropBach     4.9452062365  0.2481244340  1.0489463223   4.714           0.00000359 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 1.22 on 328 degrees of freedom
+Multiple R-squared:  0.4595,	Adjusted R-squared:  0.4398 
+F-statistic: 23.24 on 12 and 328 DF,  p-value: < 0.00000000000000022
+

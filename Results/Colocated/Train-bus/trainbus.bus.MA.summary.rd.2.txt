@@ -1,0 +1,40 @@
+
+Call:
+lm(formula = ln_bus ~ X6_PropComm + X8_Balance + X9_LUEntropy + 
+    X10_HousingDiv + X11_PedConnect + X12_PBN + X13_DestScore + 
+    X15_Parkiteer + X16_CBDDist + X17_ACDist + X18_ACCount + 
+    X20_Parking + X22_EmpAccess + X23_C_LOS + X24_O_Bus_LOS + 
+    X28_PropFTE + X31_PropOS + ln_pop, data = Melb.Trainbus.rd2)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-4.7114 -0.6059  0.0544  0.6534  2.8526 
+
+Coefficients:
+                 Estimate Standardized Std. Error t value Pr(>|t|)    
+(Intercept)    -5.387e-01    0.000e+00  3.290e+00  -0.164   0.8702    
+X6_PropComm     1.121e+00    9.028e-02  9.574e-01   1.171   0.2440    
+X8_Balance      4.049e+00    1.820e-01  1.631e+00   2.483   0.0143 *  
+X9_LUEntropy    7.305e-02    5.193e-03  1.089e+00   0.067   0.9466    
+X10_HousingDiv -1.645e-01   -1.268e-01  1.239e-01  -1.327   0.1868    
+X11_PedConnect -1.064e-02   -1.603e-01  5.414e-03  -1.966   0.0515 .  
+X12_PBN        -4.792e-01   -4.975e-02  5.877e-01  -0.815   0.4164    
+X13_DestScore   2.063e-02    1.525e-02  1.010e-01   0.204   0.8384    
+X15_Parkiteer   5.662e-01    1.601e-01  2.350e-01   2.409   0.0174 *  
+X16_CBDDist    -1.663e-02   -1.074e-01  1.463e-02  -1.137   0.2578    
+X17_ACDist      5.283e-02    4.137e-02  1.176e-01   0.449   0.6540    
+X18_ACCount     6.798e-01    1.893e-01  3.000e-01   2.266   0.0251 *  
+X20_Parking     4.255e-05    9.109e-02  2.812e-05   1.513   0.1328    
+X22_EmpAccess   4.997e-09    4.580e-04  9.700e-07   0.005   0.9959    
+X23_C_LOS       4.400e-03    1.359e-01  2.214e-03   1.987   0.0491 *  
+X24_O_Bus_LOS   1.470e-02    5.311e-01  2.122e-03   6.927 1.92e-10 ***
+X28_PropFTE     1.443e+00    3.499e-02  2.933e+00   0.492   0.6236    
+X31_PropOS     -5.335e+00   -5.842e-02  5.959e+00  -0.895   0.3723    
+ln_pop          5.651e-01    1.786e-01  3.630e-01   1.557   0.1220    
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 1.155 on 127 degrees of freedom
+Multiple R-squared:  0.6245,	Adjusted R-squared:  0.5713 
+F-statistic: 11.74 on 18 and 127 DF,  p-value: < 2.2e-16
+

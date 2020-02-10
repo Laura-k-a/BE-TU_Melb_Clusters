@@ -1,0 +1,25 @@
+
+Call:
+lm(formula = X1ln.ln_Patronage ~ X3ln.ln_Pop + X8_Balance + X10_HousingDiv + 
+    X20.Parking_m.2 + X23_C_LOS + X32_PropBach, data = Clustersample.bus.400)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-3.13817 -0.64249  0.01377  0.70549  2.70634 
+
+Coefficients:
+                  Estimate Standardized Std. Error t value Pr(>|t|)    
+(Intercept)     -3.7484044    0.0000000  1.2289878  -3.050 0.002619 ** 
+X3ln.ln_Pop      0.6503681    0.2805886  0.1819197   3.575 0.000445 ***
+X8_Balance       2.5107114    0.1808272  0.8689262   2.889 0.004313 ** 
+X10_HousingDiv  -0.2470339   -0.2208119  0.0784022  -3.151 0.001895 ** 
+X20.Parking_m.2  0.0004671    0.1604786  0.0001541   3.031 0.002784 ** 
+X23_C_LOS        0.0311108    0.5694698  0.0030592  10.169  < 2e-16 ***
+X32_PropBach     2.6604139    0.2222152  0.7999283   3.326 0.001060 ** 
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 1.164 on 188 degrees of freedom
+Multiple R-squared:  0.4948,	Adjusted R-squared:  0.4787 
+F-statistic: 30.69 on 6 and 188 DF,  p-value: < 2.2e-16
+

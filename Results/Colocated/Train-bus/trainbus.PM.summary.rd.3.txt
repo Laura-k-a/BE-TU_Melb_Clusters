@@ -1,0 +1,64 @@
+Response ln_Centroid :
+
+Call:
+lm(formula = ln_Centroid ~ X8_Balance + X11_PedConnect + X12_PBN + 
+    X15_Parkiteer + X18_ACCount + X20_Parking + X22_EmpAccess + 
+    X23_C_LOS + X24_O_Bus_LOS + ln_pop, data = Melb.Trainbus.rd3)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-1.33749 -0.20591  0.00182  0.24115  1.06328 
+
+Coefficients:
+                 Estimate Std. Error t value Pr(>|t|)    
+(Intercept)     4.615e+00  6.749e-01   6.838 2.64e-10 ***
+X8_Balance      1.258e+00  4.900e-01   2.568  0.01132 *  
+X11_PedConnect -3.054e-03  1.556e-03  -1.963  0.05170 .  
+X12_PBN        -5.225e-01  1.980e-01  -2.640  0.00929 ** 
+X15_Parkiteer   3.919e-01  8.082e-02   4.849 3.41e-06 ***
+X18_ACCount     1.464e-01  7.702e-02   1.901  0.05952 .  
+X20_Parking     2.949e-05  9.422e-06   3.130  0.00215 ** 
+X22_EmpAccess   9.426e-07  2.979e-07   3.164  0.00193 ** 
+X23_C_LOS       3.085e-03  7.120e-04   4.333 2.88e-05 ***
+X24_O_Bus_LOS   4.112e-03  6.451e-04   6.375 2.78e-09 ***
+ln_pop          2.768e-01  9.420e-02   2.939  0.00389 ** 
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 0.4047 on 133 degrees of freedom
+Multiple R-squared:  0.6693,	Adjusted R-squared:  0.6444 
+F-statistic: 26.92 on 10 and 133 DF,  p-value: < 2.2e-16
+
+
+Response ln_bus :
+
+Call:
+lm(formula = ln_bus ~ X8_Balance + X11_PedConnect + X12_PBN + 
+    X15_Parkiteer + X18_ACCount + X20_Parking + X22_EmpAccess + 
+    X23_C_LOS + X24_O_Bus_LOS + ln_pop, data = Melb.Trainbus.rd3)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-4.8713 -0.6083  0.0445  0.6738  2.8517 
+
+Coefficients:
+                 Estimate Std. Error t value Pr(>|t|)    
+(Intercept)     7.849e-01  1.909e+00   0.411  0.68162    
+X8_Balance      4.012e+00  1.386e+00   2.895  0.00443 ** 
+X11_PedConnect -9.304e-03  4.399e-03  -2.115  0.03632 *  
+X12_PBN        -3.258e-01  5.599e-01  -0.582  0.56157    
+X15_Parkiteer   5.315e-01  2.286e-01   2.325  0.02157 *  
+X18_ACCount     6.274e-01  2.178e-01   2.880  0.00464 ** 
+X20_Parking     4.260e-05  2.665e-05   1.599  0.11225    
+X22_EmpAccess   5.203e-07  8.425e-07   0.618  0.53791    
+X23_C_LOS       2.906e-03  2.014e-03   1.443  0.15128    
+X24_O_Bus_LOS   1.463e-02  1.825e-03   8.020 4.82e-13 ***
+ln_pop          3.438e-01  2.664e-01   1.290  0.19919    
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 1.145 on 133 degrees of freedom
+Multiple R-squared:  0.6019,	Adjusted R-squared:  0.572 
+F-statistic: 20.11 on 10 and 133 DF,  p-value: < 2.2e-16
+
+

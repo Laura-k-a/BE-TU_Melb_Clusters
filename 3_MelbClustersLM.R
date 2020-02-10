@@ -10,7 +10,7 @@
 #                         Copyright statement: This script is the product of Laura Aston
 
 
-#This is the script for the first run through of factor and cluster analysis, involving
+#This is the script for the third run through of factor and cluster analysis, involving
 #modes: train/tram/bus
 #variables: all
 #unit of analysis: 800m (train)/600 (tram)/ 400 (bus)
@@ -34,6 +34,12 @@ library(lm.beta)
 
 options(max.print= 1000000)
 
+setwd("C:/Users/lkast1/Google Drive/PhD/2.Analysis/2. Empirical Analysis/BE-TR_Multi Country Samples/Melbourne/Melb.All.Stops/Melb.AllStops.Repo/Data")
+Melb_Data<- read.csv("BE-TR_AllStops_data.csv", header=TRUE, sep=",")
+row.names(Melb_Data) <- Melb_Data[,c(2)]
+
+Allmodes.Melb.800<- Melb_Data[which(Melb_Data$Target.break=='800'),]
+
 Allmodes.Melb.800.test<-sample(Allmodes.Melb.800$OBJECTID_MODE, 5314, replace = FALSE, prob = NULL)
 Allmodes.Melb.800.test<-as.data.frame(Allmodes.Melb.800.test)
 Allmodes.Melb.800.test<-Allmodes.Melb.800.test %>% 
@@ -45,157 +51,112 @@ Allmodes.Melb.800.test<-Allmodes.Melb.800.test %>%
 
 #scale and select numeric columns
 #all var
-#26_PropComm	28_Balance31_PedConnect	32_PBN	35_Parkiteer	37_ACDist	38_ACCount	39 _FTZ	40_Parking	41_PropUrban	42_PropRural	43_EmpAccess	44_C_LOS	45_O_Bus_LOS	46_O_Tram_LOS	47_O_Train_LOS	48_O_LOS	49_PropFTE	50_MeanSize	51_MedInc	52_PropOS	53_PropBach Factor 1 Factor 2 Factor 3
-Melb.800.BE.Cluster.Z<-scale(Allmodes.Melb.800.test[,c(26, 28, 31, 32, 37, 40:43, 59:61)])
+#1ln.X1ln.ln_Patronage ~ X6_PropComm + X8_Balance + X9_LUEntropy + X10_HousingDiv X11_PedConnect + X12_PBN + X13_DestScore + X16_CBDDist + X17_ACDist + X21_PropUrban + X22_EmpAccess + X28_PropFTE + X29_MeanSize + X31_PropOS + X32_PropBach +  ln_pop
 
-k3.Melb.800.BE.Cluster.Z <- kmeans(Melb.800.BE.Cluster.Z, centers = 3, nstart = 25)
-k4.Melb.800.BE.Cluster.Z <- kmeans(Melb.800.BE.Cluster.Z, centers = 4, nstart = 25)
-k5.Melb.800.BE.Cluster.Z <- kmeans(Melb.800.BE.Cluster.Z, centers = 5, nstart = 25)
-k6.Melb.800.BE.Cluster.Z <- kmeans(Melb.800.BE.Cluster.Z, centers = 6, nstart = 25)
-k7.Melb.800.BE.Cluster.Z <- kmeans(Melb.800.BE.Cluster.Z, centers = 7, nstart = 25)
-k8.Melb.800.BE.Cluster.Z <- kmeans(Melb.800.BE.Cluster.Z, centers = 8, nstart = 25)
-k9.Melb.800.BE.Cluster.Z <- kmeans(Melb.800.BE.Cluster.Z, centers = 9, nstart = 25)
-k10.Melb.800.BE.Cluster.Z <- kmeans(Melb.800.BE.Cluster.Z, centers = 10, nstart = 25)
+Melb.800.Cluster.Z<-scale(Allmodes.Melb.800.test[,c(24, 26:31, 34, 35, 39, 40, 49, 50, 54, 55, 56)])
+
+k3.Melb.800.Cluster.Z <- kmeans(Melb.800.Cluster.Z, centers = 3, nstart = 25)
+k4.Melb.800.Cluster.Z <- kmeans(Melb.800.Cluster.Z, centers = 4, nstart = 25)
+k5.Melb.800.Cluster.Z <- kmeans(Melb.800.Cluster.Z, centers = 5, nstart = 25)
+k6.Melb.800.Cluster.Z <- kmeans(Melb.800.Cluster.Z, centers = 6, nstart = 25)
+k7.Melb.800.Cluster.Z <- kmeans(Melb.800.Cluster.Z, centers = 7, nstart = 25)
+k8.Melb.800.Cluster.Z <- kmeans(Melb.800.Cluster.Z, centers = 8, nstart = 25)
+k9.Melb.800.Cluster.Z <- kmeans(Melb.800.Cluster.Z, centers = 9, nstart = 25)
+k10.Melb.800.Cluster.Z <- kmeans(Melb.800.Cluster.Z, centers = 10, nstart = 25)
 
 #to change legend labels: labs(title = "Temperatures\n", x = "TY [°C]", y = "Txxx")
 #https://stackoverflow.com/questions/23635662/editing-legend-text-labels-in-ggplot
 # plots to compare
-p3Test <- fviz_cluster(k3.Melb.800.BE.Cluster.Z, geom = "point", data = Melb.800.BE.Cluster.Z) + ggtitle("k = 3 (n = 5314)")
+p3Test <- fviz_cluster(k3.Melb.800.Cluster.Z, geom = "point", data = Melb.800.Cluster.Z) + ggtitle("k = 3 (n = 5314)")
 
-p4Test <- fviz_cluster(k4.Melb.800.BE.Cluster.Z, geom = "point", data = Melb.800.BE.Cluster.Z) + ggtitle("k = 4 (n = 5314)")
+p4Test <- fviz_cluster(k4.Melb.800.Cluster.Z, geom = "point", data = Melb.800.Cluster.Z) + ggtitle("k = 4 (n = 5314)")
 
-p5Test <- fviz_cluster(k5.Melb.800.BE.Cluster.Z, geom = "point", data = Melb.800.BE.Cluster.Z) + ggtitle("k = 5 (n = 5314)")
+p5Test <- fviz_cluster(k5.Melb.800.Cluster.Z, geom = "point", data = Melb.800.Cluster.Z) + ggtitle("k = 5 (n = 5314)")
 
-p6Test <- fviz_cluster(k6.Melb.800.BE.Cluster.Z, geom = "point", data = Melb.800.BE.Cluster.Z) + ggtitle("k = 6 (n = 5314)")
+p6Test <- fviz_cluster(k6.Melb.800.Cluster.Z, geom = "point", data = Melb.800.Cluster.Z) + ggtitle("k = 6 (n = 5314)")
 
-p7Test <- fviz_cluster(k7.Melb.800.BE.Cluster.Z, geom = "point", data = Melb.800.BE.Cluster.Z) + ggtitle("k = 7 (n = 5314)")
+p7Test <- fviz_cluster(k7.Melb.800.Cluster.Z, geom = "point", data = Melb.800.Cluster.Z) + ggtitle("k = 7 (n = 5314)")
 
-p8Test <- fviz_cluster(k8.Melb.800.BE.Cluster.Z, geom = "point", data = Melb.800.BE.Cluster.Z) + ggtitle("k = 8 (n = 5314)")
+p8Test <- fviz_cluster(k8.Melb.800.Cluster.Z, geom = "point", data = Melb.800.Cluster.Z) + ggtitle("k = 8 (n = 5314)")
 
-p9Test <- fviz_cluster(k9.Melb.800.BE.Cluster.Z, geom = "point", data = Melb.800.BE.Cluster.Z) + ggtitle("k = 9 (n = 5314)")
+p9Test <- fviz_cluster(k9.Melb.800.Cluster.Z, geom = "point", data = Melb.800.Cluster.Z) + ggtitle("k = 9 (n = 5314)")
 
-p10Test <- fviz_cluster(k10.Melb.800.BE.Cluster.Z, geom = "point", data = Melb.800.BE.Cluster.Z) + ggtitle("k = 10 (n = 5314)")
+p10Test <- fviz_cluster(k10.Melb.800.Cluster.Z, geom = "point", data = Melb.800.Cluster.Z) + ggtitle("k = 10 (n = 5314)")
 
 grid.arrange(p3Test, p4Test, p5Test, p6Test, nrow=2)
-#4-cluster solution
+#3 or 6-cluster solution
 
 grid.arrange(p7Test, p8Test, p9Test, p10Test, nrow=2)
-#4-cluster solution
+#8-cluster solution
+
+grid.arrange(p3Test, p6Test, p7Test, nrow=1)
+#6-cluster soution
 
 #run for all data to validate
-Melb.800.BE.Cluster.Z.validate<-scale(Allmodes.Melb.800[,c(26, 28, 31, 32, 37, 40:43, 59:61)])
-row.names(Melb.800.BE.Cluster.Z.validate)<-Allmodes.Melb.800[,c(2)]
+Melb.800.Cluster.Z.validate<-scale(Allmodes.Melb.800[,c(24, 26:31, 34, 35, 39, 40, 49, 50, 54, 55, 56)])
+row.names(Melb.800.Cluster.Z.validate)<-Allmodes.Melb.800[,c(2)]
 
-k3.Melb.800.BE.Cluster.Z.validate <- kmeans(Melb.800.BE.Cluster.Z.validate, centers = 3, nstart = 25)
-k4.Melb.800.BE.Cluster.Z.validate <- kmeans(Melb.800.BE.Cluster.Z.validate, centers = 4, nstart = 25)
-
-
-p4_All_Validate <- fviz_cluster(k4.Melb.800.BE.Cluster.Z.validate, geom = "point", data = Melb.800.BE.Cluster.Z.validate) + ggtitle("k = 4 (n = 10,629)")
-
-p3_All_Validate <- fviz_cluster(k3.Melb.800.BE.Cluster.Z.validate, geom = "point", data = Melb.800.BE.Cluster.Z.validate) + ggtitle("k = 3 (n = 10,629)")
-
-grid.arrange(p3Test, p4Test, p3_All_Validate , p4_All_Validate , nrow=2)
-#accept 4-factor solution
-Melb.800.BE.Cluster.Z.validate<-as.data.frame(Melb.800.BE.Cluster.Z.validate)
+k3.Melb.800.Cluster.Z.validate <- kmeans(Melb.800.Cluster.Z.validate, centers = 3, nstart = 25)
+k4.Melb.800.Cluster.Z.validate <- kmeans(Melb.800.Cluster.Z.validate, centers = 4, nstart = 25)
+k5.Melb.800.Cluster.Z.validate <- kmeans(Melb.800.Cluster.Z.validate, centers = 5, nstart = 25)
+k6.Melb.800.Cluster.Z.validate <- kmeans(Melb.800.Cluster.Z.validate, centers = 6, nstart = 25)
 
 
-Melb.800.BE.Cluster.Z.validate<-Melb.800.BE.Cluster.Z.validate %>%
-  mutate(Cluster = k4.Melb.800.BE.Cluster.Z.validate$cluster,
-         OBJECTID_MODE = row.names(Melb.800.BE.Cluster.Z.validate),)
+p3_All_Validate <- fviz_cluster(k3.Melb.800.Cluster.Z.validate, geom = "point", data = Melb.800.Cluster.Z.validate) + ggtitle("k = 3 (n = 10,629)")
 
-capture.output(Melb.800.BE.Cluster.Z.validate,file="BEClusterMembership.csv")
-capture.output(print(k4.Melb.800.BE.Cluster.Z.validate),file ="BElusterCentroids.csv")
+p4_All_Validate <- fviz_cluster(k4.Melb.800.Cluster.Z.validate, geom = "point", data = Melb.800.Cluster.Z.validate) + ggtitle("k = 4 (n = 10,629)")
 
-#sociodemographic clusters
-#call in censored Prop FTE and Mean size
-Melb.800.SD.Cluster.Z<-scale(Allmodes.Melb.800.test[,c(54,55,51,52,53)])
-Melb.800.SD.Cluster.Z<-as.data.frame(Melb.800.SD.Cluster.Z)
-row.names(Melb.800.SD.Cluster.Z) <- Allmodes.Melb.800[,c(2)]
+p5_All_Validate <- fviz_cluster(k5.Melb.800.Cluster.Z.validate, geom = "point", data = Melb.800.Cluster.Z.validate) + ggtitle("k = 5 (n = 10,629)")
 
-k3.Melb.800.SD.Cluster.Z <- kmeans(Melb.800.SD.Cluster.Z, centers = 3, nstart = 25)
-k4.Melb.800.SD.Cluster.Z <- kmeans(Melb.800.SD.Cluster.Z, centers = 4, nstart = 25)
-k5.Melb.800.SD.Cluster.Z <- kmeans(Melb.800.SD.Cluster.Z, centers = 5, nstart = 25)
-k6.Melb.800.SD.Cluster.Z <- kmeans(Melb.800.SD.Cluster.Z, centers = 6, nstart = 25)
-k7.Melb.800.SD.Cluster.Z <- kmeans(Melb.800.SD.Cluster.Z, centers = 7, nstart = 25)
-k8.Melb.800.SD.Cluster.Z <- kmeans(Melb.800.SD.Cluster.Z, centers = 8, nstart = 25)
-k9.Melb.800.SD.Cluster.Z <- kmeans(Melb.800.SD.Cluster.Z, centers = 9, nstart = 25)
-k10.Melb.800.SD.Cluster.Z <- kmeans(Melb.800.SD.Cluster.Z, centers = 10, nstart = 25)
+p6_All_Validate <- fviz_cluster(k6.Melb.800.Cluster.Z.validate, geom = "point", data = Melb.800.Cluster.Z.validate) + ggtitle("k = 6 (n = 10,629)")
 
-p3Test.SD <- fviz_cluster(k3.Melb.800.SD.Cluster.Z, geom = "point", data = Melb.800.SD.Cluster.Z) + ggtitle("k = 3 (n = 5314)")
+grid.arrange(p3Test, p4Test, p5Test, p6Test, p3_All_Validate ,p4_All_Validate, p5_All_Validate, p6_All_Validate , nrow=2)
+#Try both 5 and 6 cluster solution for interpretability
 
-p4Test.SD <- fviz_cluster(k4.Melb.800.SD.Cluster.Z, geom = "point", data = Melb.800.SD.Cluster.Z) + ggtitle("k = 4 (n = 5314)")
+Melb.800.Cluster.Z.validate<-as.data.frame(Melb.800.Cluster.Z.validate)
+row.names(Melb.800.Cluster.Z.validate)<-Allmodes.Melb.800[,c(2)]
 
-p5Test.SD <- fviz_cluster(k5.Melb.800.SD.Cluster.Z, geom = "point", data = Melb.800.SD.Cluster.Z) + ggtitle("k = 5 (n = 5314)")
+Melb.800.Cluster.Z6.validate<-Melb.800.Cluster.Z.validate %>%
+  mutate(Cluster = k6.Melb.800.Cluster.Z.validate$cluster,
+         OBJECTID_MODE = row.names(Melb.800.Cluster.Z.validate),)
+row.names(Melb.800.Cluster.Z6.validate)<-Allmodes.Melb.800[,c(2)]
 
-p6Test.SD <- fviz_cluster(k6.Melb.800.SD.Cluster.Z, geom = "point", data = Melb.800.SD.Cluster.Z) + ggtitle("k = 6 (n = 5314)")
+Melb.800.Cluster.Z5.validate<-Melb.800.Cluster.Z.validate %>%
+  mutate(Cluster = k5.Melb.800.Cluster.Z.validate$cluster,
+         OBJECTID_MODE = row.names(Melb.800.Cluster.Z.validate),)
+row.names(Melb.800.Cluster.Z5.validate)<-Allmodes.Melb.800[,c(2)]
 
-p7Test.SD <- fviz_cluster(k7.Melb.800.SD.Cluster.Z, geom = "point", data = Melb.800.SD.Cluster.Z) + ggtitle("k = 7 (n = 5314)")
-
-p8Test.SD <- fviz_cluster(k8.Melb.800.SD.Cluster.Z, geom = "point", data = Melb.800.SD.Cluster.Z) + ggtitle("k = 8 (n = 5314)")
-
-p9Test.SD <- fviz_cluster(k9.Melb.800.SD.Cluster.Z, geom = "point", data = Melb.800.SD.Cluster.Z) + ggtitle("k = 9 (n = 5314)")
-
-p10Test.SD <- fviz_cluster(k10.Melb.800.SD.Cluster.Z, geom = "point", data = Melb.800.SD.Cluster.Z) + ggtitle("k = 10 (n = 5314)")
-
-grid.arrange(p3Test.SD, p4Test.SD, p5Test.SD, p6Test.SD, p7Test.SD, p8Test.SD, p9Test.SD, p10Test.SD, nrow=2)
-#suspect 3-factor solution
-
-Melb.800.SD.Cluster.Z.validate<-scale(Allmodes.Melb.800[,c(51, 52, 53 ,54, 55)])
-Melb.800.SD.Cluster.Z.validate<-as.data.frame(Melb.800.SD.Cluster.Z.validate)
-
-row.names(Melb.800.SD.Cluster.Z.validate)<-Allmodes.Melb.800[,c(2)]
-
-k3.Melb.800.SD.Cluster.Z.validate <- kmeans(Melb.800.SD.Cluster.Z.validate, centers = 3, nstart = 25)
-k4.Melb.800.SD.Cluster.Z.validate <- kmeans(Melb.800.SD.Cluster.Z.validate, centers = 4, nstart = 25)
-
-
-p4_All_SDValidate <- fviz_cluster(k4.Melb.800.SD.Cluster.Z.validate, geom = "point", data = Melb.800.SD.Cluster.Z.validate) + ggtitle("k = 4 (n = 10,622)")
-
-p3_All_SDValidate <- fviz_cluster(k3.Melb.800.SD.Cluster.Z.validate, geom = "point", data = Melb.800.SD.Cluster.Z.validate) + ggtitle("k = 3 (n = 10,622)")
-
-grid.arrange(p3Test.SD, p4Test.SD, p3_All_SDValidate , p4_All_SDValidate , nrow=2)
-#3-cluster solution
-
-capture.output(print(k3.Melb.800.SD.Cluster.Z.validate),file ="SDClusterCentroids.csv")
-
-print(k3.Melb.800.SD.Cluster.Z.validate)
-#Centroids, containing original data
-
-Melb.800.SD.Cluster.Z.validate<-Melb.800.SD.Cluster.Z.validate %>%
-  mutate(Cluster = k3.Melb.800.SD.Cluster.Z.validate$cluster,
-         OBJECTID_MODE = row.names(Melb.800.SD.Cluster.Z.validate),)
-         
-capture.output(Melb.800.SD.Cluster.Z.validate,file="SDClusterMembership.csv")
+capture.output(Melb.800.Cluster.Z6.validate,file="k6_ClusterMembership.csv")
+capture.output(print(k6.Melb.800.Cluster.Z.validate),file ="k6_ClusterCentroids.csv")
+capture.output(Melb.800.Cluster.Z5.validate,file="k5_ClusterMembership.csv")
+capture.output(print(k5.Melb.800.Cluster.Z.validate),file ="k5_ClusterCentroids.csv")
 
 
 #Refer to sampling script
-MMLR_Data<- read.csv("Melb.AllStops.Data.1Jan20.csv", header=TRUE, sep=",")
-row.names(MMLR_Data) <- MMLR_Data[,c(2)]
+Melb_Data<- read.csv("BE-TR_AllStops_data.csv", header=TRUE, sep=",")
+row.names(Melb_Data) <- Melb_Data[,c(2)]
 
-Clustersample.bus.400<- MMLR_Data[which (MMLR_Data$Mode=='bus'
-                                                  & MMLR_Data$Sample=='Yes'),]
+Clustersample.bus.400<- Melb_Data[which (Melb_Data$Mode=='bus'
+                                                  & Melb_Data$Sample=='Yes'),]
 row.names(Clustersample.bus.400) <- Clustersample.bus.400[,c(2)]
-Clustersample.tram.600<- MMLR_Data[which (MMLR_Data$Mode=='tram'
-                                          & MMLR_Data$Sample=='Yes'),]
+Clustersample.tram.600<- Melb_Data[which (Melb_Data$Mode=='tram'
+                                          & Melb_Data$Sample=='Yes'),]
 row.names(Clustersample.tram.600) <- Clustersample.tram.600[,c(2)]
-Clustersample.train.800<- MMLR_Data[which (MMLR_Data$Mode=='train'
-                                           &MMLR_Data$Sample=='Yes'),]
+Clustersample.train.800<- Melb_Data[which (Melb_Data$Mode=='train'
+                                           &Melb_Data$Sample=='Yes'),]
 row.names(Clustersample.train.800) <- Clustersample.train.800[,c(2)]
 
-#Col headers: ln_Patronage + PropComm +	Balance +	LUEntropy	+ PedConnect+	PBN	+ DestScore	+ Parkiteer	+ ACDist	+ ACCount	+ FTZ	+ Parking	+ PropUrban	+ PropRural	+ EmpAccess	+ C_LOS	+ O_Bus_LOS	+ O_Tram_LOS	+ O_Train_LOS	+ O_LOS	MedInc +	PropOS +	PropBach	+ censored_PropFTE	+ censored_MeanSize	+ 	ln_Emp +	ln_Pop
-
-
+#Col headers: X1ln.ln_Patronage ~ X3ln.ln_Pop+ X6_PropComm + X8_Balance + X9_LUEntropy + X10_HousingDiv X11_IntDensity + X12_CycleConnect + X13_DestScore + X15_Parkiteer + X16_CBDDist + X17_ACDist + X18_ACCount + X20.Parking_m.2 + X21_PropUrban + X22_EmpAccess + X23_C_LOS + X24_O_Bus_LOS + X25_O_Tram_LOS + X26_O_Train_LOS + X27_O_LOS + X28_Censored_PropFTE	+ X29_Censored_MeanSize + X31_PropOS + X32_PropBach
 
 #Bus
 #step 3 Check for multicolinearity
-Bus.cluster.LM.VIF<-vif(lm(ln_Patronage ~ PropComm +	Balance +	LUEntropy	+ PedConnect+	PBN	+ DestScore	+ Parkiteer	+ ACDist	+ ACCount	+ Parking	+ PropUrban	+ EmpAccess	+ C_LOS	+ O_Tram_LOS	+ O_Train_LOS	+ MedInc +	PropOS +	PropBach	+ censored_PropFTE	+ censored_MeanSize	+	ln_Pop, data =Clustersample.bus.400))
-#removed  rural, overlapping (total) level of service, FTZ to get rid of singularity
+Bus.cluster.LM.VIF<-vif(lm(X1ln.ln_Patronage ~ X3ln.ln_Pop + X6_PropComm + X8_Balance + X9_LUEntropy + X10_HousingDiv + X11_IntDensity + X12_CycleConnect + X13_DestScore + X15_Parkiteer + X16_CBDDist + X17_ACDist + X18_ACCount + X20.Parking_m.2 + X21_PropUrban + X22_EmpAccess + X23_C_LOS + X24_O_Bus_LOS + X25_O_Tram_LOS + X26_O_Train_LOS + X28_Censored_PropFTE	+ X29_Censored_MeanSize + X31_PropOS + X32_PropBach, data =Clustersample.bus.400))
 Bus.cluster.LM.VIF
-#removed ln_Emp (high VIF >7)
+#ln_pop is 5.127; leave for now as density indicator
 
 
 #step 4 Simple correlations
-Corrdata.buscluster<-Clustersample.bus.400[,c(19:27, 29:30, 32:42, 49, 51)]
+Corrdata.buscluster<-Clustersample.bus.400[,c(52, 54, 24, 26, 27:31, 33:44, 49, 50)]
 
 #Option 1 for Correlation matrices with p-values
 Corrdata.buscluster<-rcorr(as.matrix(Corrdata.buscluster))
@@ -218,14 +179,15 @@ Corrdata.buscluster<-flattenCorrMatrix(Corrdata.buscluster$r,Corrdata.buscluster
 capture.output(Corrdata.buscluster,file="Corrdata.buscluster.csv")
 
 #not significant for ln_bus
-#O_Bus_LOS
-#MedInc
-#censored_PropFTE
+#X9_LUEntropy
+#X15_Parkiteer
+#X24_O_Bus_LOS
+
 
 setwd("C:\Users\lkast1\Google Drive\PhD\2.Analysis\2. Empirical Analysis\BE-TR_Multi Country Samples\Melbourne\Melb.All.Stops\Melb.AllStops.Repo\Regression outputs\Cluster")
 
 #Step 4 maximally adjusted model
-Melb.buscluster.LM.1<-lm(ln_Patronage ~ PropComm +	Balance +	LUEntropy	+ PedConnect+	PBN	+ DestScore	+ Parkiteer	+ ACDist	+ ACCount	+ Parking	+ PropUrban	+ EmpAccess	+ C_LOS	+ O_Tram_LOS	+ O_Train_LOS +	PropOS +	PropBach	+ censored_MeanSize	+	ln_Pop, data =Clustersample.bus.400)
+Melb.buscluster.LM.1<-lm(X1ln.ln_Patronage ~ X3ln.ln_Pop + X6_PropComm + X8_Balance + X10_HousingDiv + X11_IntDensity + X12_CycleConnect + X13_DestScore + X16_CBDDist + X17_ACDist + X18_ACCount + X20.Parking_m.2 + X21_PropUrban + X22_EmpAccess + X23_C_LOS + X25_O_Tram_LOS + X26_O_Train_LOS + X28_Censored_PropFTE	+ X29_Censored_MeanSize + X31_PropOS + X32_PropBach, data =Clustersample.bus.400)
 summary(Melb.buscluster.LM.1)
 
 Melb.buscluster.LM.1<-lm.beta(Melb.buscluster.LM.1)
@@ -241,42 +203,20 @@ Melb.buscluster.LM.1.regb<-lm.beta(Melb.buscluster.LM.1.regb)
 capture.output(summary(Melb.buscluster.LM.1.regb), file = "buscluster.PM.txt")
 
 #diagnostics
+par(mfrow=c(2,2))
 plot(Melb.buscluster.LM.1.regb)
-#1498 is influential outlier
-
-which(rownames(Clustersample.bus.400) == "1498-bus") #212
-Clustersample.bus.400.rd2 <- Clustersample.bus.400[-c(212),]
-
-#rd 2 MA
-Melb.buscluster.LM.2.1<-lm(ln_Patronage ~ PropComm +	Balance +	LUEntropy	+ PedConnect+	PBN	+ DestScore	+ Parkiteer	+ ACDist	+ ACCount	+ Parking	+ PropUrban	+ EmpAccess	+ C_LOS	+ O_Tram_LOS	+ O_Train_LOS +	PropOS +	PropBach	+ censored_MeanSize	+	ln_Pop, data =Clustersample.bus.400.rd2)
-summary(Melb.buscluster.LM.2.1)
-
-Melb.buscluster.LM.2.1<-lm.beta(Melb.buscluster.LM.2.1)
-capture.output(summary(Melb.buscluster.LM.2.1), file = "buscluster.MA.rd.2.txt")
-
-#PM
-Melb.buscluster.LM.2.1.regb<-step(Melb.buscluster.LM.2.1,
-                                direction = "backward",
-                                trace = 0) #don't print steps
-summary(Melb.buscluster.LM.2.1.regb)
-
-Melb.buscluster.LM.2.1.regb<-lm.beta(Melb.buscluster.LM.2.1.regb)
-capture.output(summary(Melb.buscluster.LM.2.1.regb), file = "buscluster.PM.rd.2.txt")
-
-plot(Melb.buscluster.LM.2.1.regb)
-#1131 is bordernig cook's distance ; 2218 is an outlier in all other plots; Shape generally fine; leave as is. 
+#866-bus approaching cooks distance, but generally fits assumptions
 
 
 #Tram
 #step 3 Check for multicolinearity
-Tram.cluster.LM.VIF<-vif(lm(ln_Patronage ~ PropComm +	Balance +	LUEntropy	+ PedConnect+	PBN	+ DestScore	+ FTZ + ACDist	+ ACCount	+ Parking + EmpAccess	+ C_LOS	+ O_Bus_LOS	+ O_Train_LOS +	PropOS +	PropBach	+ censored_PropFTE	+ censored_MeanSize	+	ln_Pop, data =Clustersample.tram.600))
-#removed  rural, parkiteer, overlapping (total) level of service to get rid of singularity
+Tram.cluster.LM.VIF<-vif(lm(X1ln.ln_Patronage ~ X3ln.ln_Pop + X6_PropComm + X8_Balance + X9_LUEntropy + X10_HousingDiv + X11_IntDensity + X12_CycleConnect + X13_DestScore + X16_CBDDist + X17_ACDist + X18_ACCount + X20.Parking_m.2 + X21_PropUrban + X22_EmpAccess + X23_C_LOS + X24_O_Bus_LOS + X25_O_Tram_LOS + X26_O_Train_LOS + X28_Censored_PropFTE	+ X29_Censored_MeanSize + X31_PropOS + X32_PropBach, data =Clustersample.tram.600))
+#removed parkiteer to get rid of singularity
 Tram.cluster.LM.VIF
-#removed Med Inc, propUrban, ln_Emp (high VIF >7)
-
+#ln_pop is 5.127; leave for now as density indicator
 
 #step 4 Simple correlations
-Corrdata.tramcluster<-Clustersample.tram.600[,c(19:24, 26:29, 32:37, 39:42, 49:51)]
+Corrdata.tramcluster<-Clustersample.tram.600[,c(52, 54, 24, 26, 27:31, 34:44, 49, 50)]
 
 #Option 1 for Correlation matrices with p-values
 Corrdata.tramcluster<-rcorr(as.matrix(Corrdata.tramcluster))
@@ -290,17 +230,21 @@ options(scipen = 1)
 
 Corrdata.tramcluster<-flattenCorrMatrix(Corrdata.tramcluster$r,Corrdata.tramcluster$P)
 capture.output(Corrdata.tramcluster,file="Corrdata.tramcluster.csv")
-Corrdata.tramcluster
+
 
 #not significant for ln_tram
-#LUEntropy
-#Parking
-#O_Bus_LOS
-#O_Train_LOS
-#censored_PropFTE
+#X8_Balance
+#X9_LUEntropy
+#X17_ACDist
+#X20.Parking_m.2
+#X21_PropUrban
+#X24_O_Bus_LOS
+#X26_O_Train_LOS
+#X31_PropOS
+
 
 #MA tram
-Melb.tramcluster.LM.1<-lm(ln_Patronage ~ PropComm +	Balance + PedConnect+	PBN	+ DestScore	+ FTZ + ACDist	+ ACCount	+ EmpAccess	+ C_LOS	+	PropOS +	PropBach	+ censored_MeanSize	+	ln_Pop, data =Clustersample.tram.600)
+Melb.tramcluster.LM.1<-lm(X1ln.ln_Patronage ~ X3ln.ln_Pop + X6_PropComm + X10_HousingDiv + X11_IntDensity + X12_CycleConnect + X13_DestScore + X16_CBDDist +  X18_ACCount + X22_EmpAccess + X23_C_LOS + X25_O_Tram_LOS + X28_Censored_PropFTE	+ X29_Censored_MeanSize + X32_PropBach, data =Clustersample.tram.600)
 summary(Melb.tramcluster.LM.1)
 
 Melb.tramcluster.LM.1<-lm.beta(Melb.tramcluster.LM.1)
@@ -318,18 +262,43 @@ capture.output(summary(Melb.tramcluster.LM.1.regb), file = "tramcluster.PM.txt")
 #diagnostics
 par(mfrow=c(2,2))
 plot(Melb.tramcluster.LM.1.regb)
-#276 is far outlying on all plots, however generally conforms to assumptions/ Leave but investigate.
+#278 is influential outlier
+
+which(rownames(Clustersample.tram.600) == "278-tram") #81
+
+Clustersample.tram.600.rd2 <- Clustersample.tram.600[-c(81),]
+
+#MA tram rd 2
+Melb.tramcluster.LM.2<-lm(X1ln.ln_Patronage ~ X3ln.ln_Pop + X6_PropComm + X10_HousingDiv + X11_IntDensity + X12_CycleConnect + X13_DestScore + X16_CBDDist +  X18_ACCount + X22_EmpAccess + X23_C_LOS + X25_O_Tram_LOS + X28_Censored_PropFTE	+ X29_Censored_MeanSize + X32_PropBach, data =Clustersample.tram.600.rd2)
+summary(Melb.tramcluster.LM.2)
+
+Melb.tramcluster.LM.2<-lm.beta(Melb.tramcluster.LM.2)
+capture.output(Melb.tramcluster.LM.2, file = "tramcluster.MA.2.txt")
+
+Melb.tramcluster.LM.2.regb<-step(Melb.tramcluster.LM.2,
+                                 direction = "backward",
+                                 trace = 0) #don't print steps
+
+summary(Melb.tramcluster.LM.2.regb)
+
+Melb.tramcluster.LM.2.regb<-lm.beta(Melb.tramcluster.LM.2.regb)
+capture.output(summary(Melb.tramcluster.LM.2.regb), file = "tramcluster.PM.2.txt")
+
+#diagnostics
+par(mfrow=c(2,2))
+plot(Melb.tramcluster.LM.2.regb)
+#Fits assumption. Most outlying observatoins are: 2213, 1913, 214)
 
 #Train
 #step 3 Check for multicolinearity
-Train.cluster.LM.VIF<-vif(lm(ln_Patronage ~ PropComm +	Balance +	LUEntropy	+ PedConnect+	PBN	+ DestScore	+ FTZ + ACDist	+ ACCount	+ Parking +Parkiteer  + PropRural + EmpAccess	+ C_LOS	+ O_Bus_LOS	+ O_Tram_LOS +	PropOS +	PropBach	+ censored_PropFTE + censored_MeanSize	+	ln_Pop, data =Clustersample.train.800))
-#removed  overlapping (total) level of service to get rid of singularity
+Train.cluster.LM.VIF<-vif(lm(X1ln.ln_Patronage ~ X3ln.ln_Pop+ X6_PropComm + X8_Balance + X9_LUEntropy + X10_HousingDiv +  X11_IntDensity + X12_CycleConnect + X13_DestScore + X16_CBDDist + X15_Parkiteer + X17_ACDist + X18_ACCount + X20.Parking_m.2 + X22_EmpAccess + X23_C_LOS + X24_O_Bus_LOS + X25_O_Tram_LOS + X28_PropFTE	+ X29_MeanSize + X31_PropOS + X32_PropBach, data = Clustersample.train.800))
+#removed  overlapping (total) level of service and overlapping trian to get rid of singularity
 Train.cluster.LM.VIF
-#removed Med Inc, propUrban, ln_Emp (high VIF >7)
+#removed Prop Urban to get rid of pop density VIF
 
 
 #step 4 Simple correlations
-Corrdata.traincluster<-Clustersample.train.800[,c(19:29, 31:35, 39:42, 49:51)]
+Corrdata.traincluster<-Clustersample.train.800[,c(52, 54, 24, 26:31, 33:36, 38, 40:43, 46, 47, 49, 50)]
 
 #Option 1 for Correlation matrices with p-values
 Corrdata.traincluster<-rcorr(as.matrix(Corrdata.traincluster))
@@ -343,12 +312,11 @@ Corrdata.traincluster<-flattenCorrMatrix(Corrdata.traincluster$r,Corrdata.trainc
 capture.output(Corrdata.traincluster,file="Corrdata.traincluster.csv")
 
 #not significant for ln_train
-##PBN
-#PropRural
-#censored_PropFTE
+#X12_CycleConnect
+#X28_PropFTE
 
 #maxmially adjusted model
-Melb.traincluster.LM.1<-lm(ln_Patronage ~ PropComm +	Balance +	LUEntropy	+ PedConnect	+ DestScore	+ FTZ + ACDist	+ ACCount	+ Parking +Parkiteer + EmpAccess	+ C_LOS	+ O_Bus_LOS	+ O_Tram_LOS +	PropOS +	PropBach + censored_MeanSize	+	ln_Pop, data =Clustersample.train.800)
+Melb.traincluster.LM.1<-lm(X1ln.ln_Patronage ~ X3ln.ln_Pop+ X6_PropComm + X8_Balance + X9_LUEntropy + X10_HousingDiv +  X11_IntDensity + X13_DestScore + X16_CBDDist + X15_Parkiteer + X17_ACDist + X18_ACCount + X20.Parking_m.2 + X22_EmpAccess + X23_C_LOS + X24_O_Bus_LOS + X25_O_Tram_LOS + X28_PropFTE	+ X29_MeanSize + X31_PropOS + X32_PropBach, data = Clustersample.train.800)
 summary(Melb.traincluster.LM.1)
 
 Melb.traincluster.LM.1<-lm.beta(Melb.traincluster.LM.1)
@@ -364,19 +332,16 @@ capture.output(summary(Melb.traincluster.LM.1.regb), file = "traincluster.PM.txt
 
 #diagnostic
 plot(Melb.traincluster.LM.1.regb)
-#signs of heteroskedasticity with most outlying 597, 605, 636
-#exceeds Cook's distance: 2, 628, 4
+#signs of heteroskedasticity with most outlying 597, 628, 621
 
-which(rownames(Clustersample.train.800) == "597-train") #93
-which(rownames(Clustersample.train.800) == "605-train") #125
-which(rownames(Clustersample.train.800) == "636-train") #79
-which(rownames(Clustersample.train.800) == "2-train") #209
-which(rownames(Clustersample.train.800) == "628-train") #210
-which(rownames(Clustersample.train.800) == "4-train") #211
+which(rownames(Clustersample.train.800) == "597-train") #15
+which(rownames(Clustersample.train.800) == "628-train") #195
+which(rownames(Clustersample.train.800) == "621-train") #2
 
-Clustersample.train.800.rd2 <- Clustersample.train.800[-c(93, 125, 79, 209, 210, 211),]
 
-Melb.traincluster.LM.2.1<-lm(ln_Patronage ~ PropComm +	Balance +	LUEntropy	+ PedConnect	+ DestScore	+ FTZ + ACDist	+ ACCount	+ Parking +Parkiteer + EmpAccess	+ C_LOS	+ O_Bus_LOS	+ O_Tram_LOS +	PropOS +	PropBach + censored_MeanSize	+	ln_Pop, data =Clustersample.train.800.rd2)
+Clustersample.train.800.rd2 <- Clustersample.train.800[-c(15, 195, 2),]
+
+Melb.traincluster.LM.2.1<-lm(X1ln.ln_Patronage ~ X3ln.ln_Pop+ X6_PropComm + X8_Balance + X9_LUEntropy + X10_HousingDiv +  X11_IntDensity + X13_DestScore + X16_CBDDist + X15_Parkiteer + X17_ACDist + X18_ACCount + X20.Parking_m.2 + X22_EmpAccess + X23_C_LOS + X24_O_Bus_LOS + X25_O_Tram_LOS + X28_PropFTE	+ X29_MeanSize + X31_PropOS + X32_PropBach, data = Clustersample.train.800.rd2)
 summary(Melb.traincluster.LM.2.1)
 
 Melb.traincluster.LM.2.1<-lm.beta(Melb.traincluster.LM.2.1)
@@ -393,16 +358,16 @@ capture.output(summary(Melb.traincluster.LM.2.1), file = "traincluster.PM.rd.2.t
 
 #diagnostics
 plot(Melb.traincluster.LM.2.1.regb)
-#609, 627 affecting assumptions. 8 is also an outlier but will retain.
+#609, affecting assumptions. 609, 627 and 4 bordering toCook's distance --> remove
 
-which(rownames(Clustersample.train.800.rd2) == "609-train") #72
-which(rownames(Clustersample.train.800.rd2) == "627-train") #73
+which(rownames(Clustersample.train.800.rd2) == "609-train") #1 
+which(rownames(Clustersample.train.800.rd2) == "627-train") #2 
+which(rownames(Clustersample.train.800.rd2) == "4-train") #186
 
-
-Clustersample.train.800.rd3 <- Clustersample.train.800.rd2[-c(72, 73),]
+Clustersample.train.800.rd3 <- Clustersample.train.800.rd2[-c(1, 2, 186),]
 
 #rd 3 maximally adjusted
-Melb.traincluster.LM.3.1<-lm(ln_Patronage ~ PropComm +	Balance +	LUEntropy	+ PedConnect	+ DestScore	+ FTZ + ACDist	+ ACCount	+ Parking +Parkiteer + EmpAccess	+ C_LOS	+ O_Bus_LOS	+ O_Tram_LOS +	PropOS +	PropBach + censored_MeanSize	+	ln_Pop, data =Clustersample.train.800.rd3)
+Melb.traincluster.LM.3.1<-lm(X1ln.ln_Patronage ~ X3ln.ln_Pop+ X6_PropComm + X8_Balance + X9_LUEntropy + X10_HousingDiv +  X11_IntDensity + X13_DestScore + X16_CBDDist + X15_Parkiteer + X17_ACDist + X18_ACCount + X20.Parking_m.2 + X22_EmpAccess + X23_C_LOS + X24_O_Bus_LOS + X25_O_Tram_LOS + X28_PropFTE	+ X29_MeanSize + X31_PropOS + X32_PropBach, data =Clustersample.train.800.rd3)
 summary(Melb.traincluster.LM.3.1)
 
 Melb.traincluster.LM.3.1<-lm.beta(Melb.traincluster.LM.3.1)
@@ -418,54 +383,4 @@ Melb.traincluster.LM.3.1.regb<-lm.beta(Melb.traincluster.LM.3.1.regb)
 capture.output(summary(Melb.traincluster.LM.3.1.regb), file = "traincluster.PM.rd.3.txt")
 
 plot(Melb.traincluster.LM.3.1.regb)
-#570(row index 204) is extreme outlier. #642, #632, #8 also outlying and now seem to be impacting assumptions
-
-
-which(rownames(Clustersample.train.800.rd3) == "642-train") #66
-which(rownames(Clustersample.train.800.rd3) == "632-train") #72
-which(rownames(Clustersample.train.800.rd3) == "8-train") #63
-which(rownames(Clustersample.train.800.rd3) == "570-train") #204
-
-
-Clustersample.train.800.rd4 <- Clustersample.train.800.rd3[-c(66, 72, 204, 63),]
-
-#maxmially adjusted model
-Melb.traincluster.LM.4.1<-lm(ln_Patronage ~ PropComm +	Balance +	LUEntropy	+ PedConnect	+ DestScore + ACDist	+ ACCount	+ Parking +Parkiteer + EmpAccess	+ C_LOS	+ O_Bus_LOS	+ O_Tram_LOS +	PropOS +	PropBach + censored_MeanSize	+	ln_Pop, data =Clustersample.train.800.rd4)
-summary(Melb.traincluster.LM.4.1)
-#nothing in FTZ, remove
-Melb.traincluster.LM.4.1<-lm.beta(Melb.traincluster.LM.4.1)
-capture.output(summary(Melb.traincluster.LM.4.1), file = "traincluster.MArd.4.txt")
-
-Melb.traincluster.LM.4.1.regb<-step(Melb.traincluster.LM.4.1,
-                                  direction = "backward",
-                                  trace = 0) #don't print steps
-summary(Melb.traincluster.LM.4.1.regb)
-Melb.traincluster.LM.4.1.regb<-lm.beta(Melb.traincluster.LM.4.1.regb)
-capture.output(summary(Melb.traincluster.LM.4.1.regb), file = "traincluster.PM.rd.4.txt")
-
-#diagnostic
-plot(Melb.traincluster.LM.4.1.regb)
-
-#almost adheres to assumptions - one more influential outlier affecting assumptions: 615. 
-
-which(rownames(Clustersample.train.800.rd4) == "615-train") #69
-Clustersample.train.800.rd5 <- Clustersample.train.800.rd4[-c(69),]
-
-#maxmially adjusted model #rd 5
-Melb.traincluster.LM.5.1<-lm(ln_Patronage ~ PropComm +	Balance +	LUEntropy	+ PedConnect	+ DestScore + ACDist	+ ACCount	+ Parking +Parkiteer + EmpAccess	+ C_LOS	+ O_Bus_LOS	+ O_Tram_LOS +	PropOS +	PropBach + censored_MeanSize	+	ln_Pop, data =Clustersample.train.800.rd5)
-summary(Melb.traincluster.LM.5.1)
-
-Melb.traincluster.LM.5.1<-lm.beta(Melb.traincluster.LM.5.1)
-capture.output(summary(Melb.traincluster.LM.5.1), file = "traincluster.MArd.5.txt")
-
-Melb.traincluster.LM.5.1.regb<-step(Melb.traincluster.LM.5.1,
-                                    direction = "backward",
-                                    trace = 0)#don't print steps
-summary(Melb.traincluster.LM.5.1.regb)
-
-Melb.traincluster.LM.5.1.regb<-lm.beta(Melb.traincluster.LM.5.1.regb)
-capture.output(summary(Melb.traincluster.LM.5.1.regb), file = "traincluster.PM.rd.5.txt")
-
-#diagnostic
-plot(Melb.traincluster.LM.5.1.regb)
-#conforms to assumptions, no influential outliers although 467 comes closest to Cook's distance
+#467, 9 and 569 are outliers; Sclae-location is only graph not holding to assumptions. Retain. 
