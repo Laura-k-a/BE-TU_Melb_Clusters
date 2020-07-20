@@ -1,0 +1,56 @@
+
+Call:
+lm(formula = X1ln.ln_Patronage ~ X6_PropComm + X8_Balance + X9_LUEntropy + 
+    X11_IntDensity + X12_CycleConnect + X13_DestScore + X19._FTZ + 
+    X18_ACCount + X21_PropUrban + X22_EmpAccess + X23_C_LOS + 
+    X24_O_Bus_LOS + X25_O_Tram_LOS + X26_O_Train_LOS + X29_Censored_MeanSize + 
+    X31_PropOS, data = TramSample.600)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-2.44362 -0.41192  0.00125  0.38127  2.45858 
+
+Coefficients:
+                           Estimate  Standardized    Std. Error
+(Intercept)            3.1758953318  0.0000000000  0.3077839444
+X6_PropComm            1.1096152844  0.2423100360  0.1670526083
+X8_Balance            -0.5557525361 -0.0786971346  0.2104518466
+X9_LUEntropy           0.4168351502  0.0632857501  0.1793224917
+X11_IntDensity         0.0011843195  0.0592196668  0.0006781107
+X12_CycleConnect       0.3100806569  0.0641614088  0.1057964550
+X13_DestScore          0.0504429057  0.0677747377  0.0181237641
+X19._FTZ               0.2078839176  0.0512269784  0.1209434091
+X18_ACCount           -0.0749031799 -0.0319635090  0.0503107487
+X21_PropUrban          0.4301666076  0.0672292098  0.1836347680
+X22_EmpAccess          0.0000003290  0.0553413132  0.0000002246
+X23_C_LOS              0.0118278187  0.5630255941  0.0004739876
+X24_O_Bus_LOS          0.0011884351  0.0412464488  0.0005952069
+X25_O_Tram_LOS         0.0017087407  0.1007749264  0.0003805819
+X26_O_Train_LOS       -0.0009815793 -0.0296280581  0.0006653883
+X29_Censored_MeanSize  0.1805184926  0.0594468725  0.0676771264
+X31_PropOS            -1.4983537424 -0.0331486456  0.9257742013
+                      t value             Pr(>|t|)    
+(Intercept)            10.319 < 0.0000000000000002 ***
+X6_PropComm             6.642      0.0000000000531 ***
+X8_Balance             -2.641              0.00841 ** 
+X9_LUEntropy            2.325              0.02032 *  
+X11_IntDensity          1.746              0.08106 .  
+X12_CycleConnect        2.931              0.00346 ** 
+X13_DestScore           2.783              0.00549 ** 
+X19._FTZ                1.719              0.08598 .  
+X18_ACCount            -1.489              0.13688    
+X21_PropUrban           2.343              0.01937 *  
+X22_EmpAccess           1.465              0.14321    
+X23_C_LOS              24.954 < 0.0000000000000002 ***
+X24_O_Bus_LOS           1.997              0.04616 *  
+X25_O_Tram_LOS          4.490      0.0000080458615 ***
+X26_O_Train_LOS        -1.475              0.14051    
+X29_Censored_MeanSize   2.667              0.00778 ** 
+X31_PropOS             -1.618              0.10590    
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 0.608 on 908 degrees of freedom
+Multiple R-squared:  0.6674,	Adjusted R-squared:  0.6615 
+F-statistic: 113.9 on 16 and 908 DF,  p-value: < 0.00000000000000022
+
