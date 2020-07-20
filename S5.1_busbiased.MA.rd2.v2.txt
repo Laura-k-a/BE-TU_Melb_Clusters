@@ -1,0 +1,70 @@
+
+Call:
+lm(formula = X1ln.ln_Patronage ~ X3ln.ln_Pop + X6_PropComm + 
+    X8_Balance + X9_LUEntropy + X10_HousingDiv + X11_IntDensity + 
+    X12_CycleConnect + X13_DestScore + X15_Parkiteer + X16_CBDDist + 
+    X17_ACDist + X18_ACCount + X20.Parking_m.2 + X21_PropUrban + 
+    X22_EmpAccess + X23_C_LOS + X24_O_Bus_LOS + X25_O_Tram_LOS + 
+    X26_O_Train_LOS + X29_Censored_MeanSize + X31_PropOS + X32_PropBach, 
+    data = BusSample.400.rd2)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-6.3419 -0.7080  0.0973  0.7593  4.9125 
+
+Coefficients:
+                              Estimate     Standardized       Std. Error t value
+(Intercept)              -2.2732892363     0.0000000000     0.1990297310 -11.422
+X3ln.ln_Pop               0.2272514589     0.1178546770     0.0199804847  11.374
+X6_PropComm               0.5847191927     0.0082491859     0.0912200374   6.410
+X8_Balance                0.9141898991     0.0058859897     0.1250439833   7.311
+X9_LUEntropy              0.3889100078     0.0050479200     0.0912860951   4.260
+X10_HousingDiv           -0.0126493753    -0.0147878543     0.0113355532  -1.116
+X11_IntDensity            0.0021654175     1.1531419893     0.0004003356   5.409
+X12_CycleConnect          0.1368592454     0.0014063521     0.0824704353   1.659
+X13_DestScore             0.1147679075     0.1242871104     0.0097600264  11.759
+X15_Parkiteer             0.1210163974     0.0004229854     0.1787478937   0.677
+X16_CBDDist              -0.0009829348    -0.0745513964     0.0014571479  -0.675
+X17_ACDist                0.0043025056     0.0145731377     0.0056022402   0.768
+X18_ACCount               0.1479902345     0.0022877490     0.0695383753   2.128
+X20.Parking_m.2          -0.0000024070    -0.6733617092     0.0000186345  -0.129
+X21_PropUrban             0.1820981319     0.0048103462     0.0839475193   2.169
+X22_EmpAccess            -0.0000013763 -1766.6319409642     0.0000003012  -4.569
+X23_C_LOS                 0.0328522622     6.8670963112     0.0006042478  54.369
+X24_O_Bus_LOS            -0.0028169973    -0.2223722332     0.0009021018  -3.123
+X25_O_Tram_LOS           -0.0006894652    -0.0864367350     0.0007758829  -0.889
+X26_O_Train_LOS           0.0056754316     0.6850813295     0.0009267057   6.124
+X29_Censored_MeanSize     0.2316819832     0.0124089964     0.0413095756   5.608
+X31_PropOS                2.6583814977     0.0006047740     0.6034259019   4.405
+X32_PropBach              0.8095639509     0.0080562315     0.1174768209   6.891
+                                  Pr(>|t|)    
+(Intercept)           < 0.0000000000000002 ***
+X3ln.ln_Pop           < 0.0000000000000002 ***
+X6_PropComm              0.000000000152480 ***
+X8_Balance               0.000000000000287 ***
+X9_LUEntropy             0.000020609030656 ***
+X10_HousingDiv                      0.2645    
+X11_IntDensity           0.000000064921275 ***
+X12_CycleConnect                    0.0970 .  
+X13_DestScore         < 0.0000000000000002 ***
+X15_Parkiteer                       0.4984    
+X16_CBDDist                         0.5000    
+X17_ACDist                          0.4425    
+X18_ACCount                         0.0333 *  
+X20.Parking_m.2                     0.8972    
+X21_PropUrban                       0.0301 *  
+X22_EmpAccess            0.000004965211751 ***
+X23_C_LOS             < 0.0000000000000002 ***
+X24_O_Bus_LOS                       0.0018 ** 
+X25_O_Tram_LOS                      0.3742    
+X26_O_Train_LOS          0.000000000947040 ***
+X29_Censored_MeanSize    0.000000020990707 ***
+X31_PropOS               0.000010671109333 ***
+X32_PropBach             0.000000000005883 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 1.122 on 9460 degrees of freedom
+Multiple R-squared:  0.4257,	Adjusted R-squared:  0.4244 
+F-statistic: 318.8 on 22 and 9460 DF,  p-value: < 0.00000000000000022
+

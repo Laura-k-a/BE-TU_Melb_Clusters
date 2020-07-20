@@ -1,0 +1,43 @@
+
+Call:
+lm(formula = X1ln.ln_Patronage ~ X3ln.ln_Pop + X6_PropComm + 
+    X8_Balance + X10_HousingDiv + X11_IntDensity + X12_CycleConnect + 
+    X13_DestScore + X16_CBDDist + X17_ACDist + X18_ACCount + 
+    X20.Parking_m.2 + X21_PropUrban + X22_EmpAccess + X23_C_LOS + 
+    X25_O_Tram_LOS + X26_O_Train_LOS + X28_Censored_PropFTE + 
+    X29_Censored_MeanSize + X31_PropOS + X32_PropBach, data = Stratifiedsample.bus.400.rd2)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-3.2509 -0.5821  0.0349  0.7121  2.3108 
+
+Coefficients:
+                           Estimate  Standardized    Std. Error t value            Pr(>|t|)    
+(Intercept)           -4.8317852154  0.0000000000  3.3275666777  -1.452             0.14831    
+X3ln.ln_Pop            0.7464926134  0.3231074626  0.2739081251   2.725             0.00709 ** 
+X6_PropComm            1.2449299952  0.1589122573  0.6159449181   2.021             0.04481 *  
+X8_Balance             2.6359962434  0.1903509311  1.1073797442   2.380             0.01839 *  
+X10_HousingDiv        -0.2660968132 -0.2418761098  0.0928337695  -2.866             0.00467 ** 
+X11_IntDensity        -0.0015150993 -0.0439505716  0.0026610253  -0.569             0.56985    
+X12_CycleConnect       0.4621378359  0.0543503678  0.5121476331   0.902             0.36813    
+X13_DestScore          0.0248665154  0.0281076236  0.0709426842   0.351             0.72638    
+X16_CBDDist            0.0069566727  0.0395325015  0.0148434931   0.469             0.63990    
+X17_ACDist             0.0117382570  0.0068942695  0.1166869391   0.101             0.91999    
+X18_ACCount            0.4297502593  0.0601626598  0.4618135263   0.931             0.35338    
+X20.Parking_m.2        0.0003942929  0.1382675620  0.0001866227   2.113             0.03606 *  
+X21_PropUrban          0.9232463259  0.1007546370  0.6576825528   1.404             0.16219    
+X22_EmpAccess         -0.0000006588 -0.0485284945  0.0000014039  -0.469             0.63949    
+X23_C_LOS              0.0358806307  0.5624031731  0.0041679389   8.609 0.00000000000000454 ***
+X25_O_Tram_LOS        -0.0005175260 -0.0122935857  0.0027186736  -0.190             0.84925    
+X26_O_Train_LOS       -0.0025550287 -0.0509329651  0.0032920756  -0.776             0.43875    
+X28_Censored_PropFTE  -2.1258454626 -0.0572644558  2.3135908674  -0.919             0.35946    
+X29_Censored_MeanSize  0.1100618675  0.0199861339  0.4239623962   0.260             0.79548    
+X31_PropOS             2.3373921260  0.0294098172  4.9840761907   0.469             0.63968    
+X32_PropBach           3.0072486470  0.2556708466  0.9711206974   3.097             0.00229 ** 
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 1.142 on 172 degrees of freedom
+Multiple R-squared:  0.536,	Adjusted R-squared:  0.482 
+F-statistic: 9.933 on 20 and 172 DF,  p-value: < 0.00000000000000022
+

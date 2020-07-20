@@ -1,0 +1,61 @@
+
+Call:
+lm(formula = X1ln.ln_Patronage ~ X3ln.ln_Pop + X6_PropComm + 
+    X8_Balance + X9_LUEntropy + X10_HousingDiv + X13_DestScore + 
+    X15_Parkiteer + X18_ACCount + X20.Parking_m.2 + X21_PropUrban + 
+    X22_EmpAccess + X23_C_LOS + X24_O_Bus_LOS + X25_O_Tram_LOS + 
+    X28_Censored_PropFTE + X29_Censored_MeanSize + X31_PropOS + 
+    X32_PropBach, data = Allmodes.rd2)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-6.8928 -0.7435  0.1054  0.8149  6.9676 
+
+Coefficients:
+                           Estimate  Standardized    Std. Error t value
+(Intercept)           -2.3895270552  0.0000000000  0.2472709336  -9.664
+X3ln.ln_Pop            0.1465695654  0.0811087551  0.0199475899   7.348
+X6_PropComm            0.1385077966  0.0133419341  0.0878401909   1.577
+X8_Balance             0.7981079514  0.0512653181  0.1224310021   6.519
+X9_LUEntropy           0.6242285701  0.0562003138  0.0902597885   6.916
+X10_HousingDiv         0.0469901920  0.0419711394  0.0114058212   4.120
+X13_DestScore          0.1639480141  0.1508934072  0.0096988065  16.904
+X15_Parkiteer          1.0924712494  0.0672790515  0.1204776437   9.068
+X18_ACCount            0.3378410612  0.0425035935  0.0553929353   6.099
+X20.Parking_m.2        0.0000610200  0.0319524323  0.0000140432   4.345
+X21_PropUrban          0.2982132945  0.0365221909  0.0846379162   3.523
+X22_EmpAccess          0.0000018705  0.0966354646  0.0000001854  10.089
+X23_C_LOS              0.0283709976  0.4638191507  0.0004711157  60.221
+X24_O_Bus_LOS          0.0036034605  0.0372145078  0.0006389038   5.640
+X25_O_Tram_LOS         0.0007514188  0.0105690298  0.0005034571   1.493
+X28_Censored_PropFTE   0.4037344615  0.0092600016  0.2833138682   1.425
+X29_Censored_MeanSize  0.2971088911  0.0558666447  0.0415278567   7.154
+X31_PropOS             2.6476561168  0.0313464374  0.5838214850   4.535
+X32_PropBach           0.8233862070  0.0666755398  0.1035865930   7.949
+                                  Pr(>|t|)    
+(Intercept)           < 0.0000000000000002 ***
+X3ln.ln_Pop            0.00000000000021643 ***
+X6_PropComm                       0.114868    
+X8_Balance             0.00000000007407241 ***
+X9_LUEntropy           0.00000000000491636 ***
+X10_HousingDiv         0.00003820100046514 ***
+X13_DestScore         < 0.0000000000000002 ***
+X15_Parkiteer         < 0.0000000000000002 ***
+X18_ACCount            0.00000000110460199 ***
+X20.Parking_m.2        0.00001404704939176 ***
+X21_PropUrban                     0.000428 ***
+X22_EmpAccess         < 0.0000000000000002 ***
+X23_C_LOS             < 0.0000000000000002 ***
+X24_O_Bus_LOS          0.00000001743353342 ***
+X25_O_Tram_LOS                    0.135593    
+X28_Censored_PropFTE              0.154174    
+X29_Censored_MeanSize  0.00000000000089557 ***
+X31_PropOS             0.00000582230860919 ***
+X32_PropBach           0.00000000000000207 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 1.205 on 10608 degrees of freedom
+Multiple R-squared:  0.5999,	Adjusted R-squared:  0.5992 
+F-statistic: 883.7 on 18 and 10608 DF,  p-value: < 0.00000000000000022
+

@@ -1,0 +1,41 @@
+
+Call:
+lm(formula = ln_Centroid ~ ln_pop + X6_PropComm + X9_LUEntropy + 
+    X10_HousingDiv + X11_PedConnect + X12_PBN + X13_DestScore + 
+    X17_ACDist + X18_ACCount + X20_Parking + X21_PropUrban + 
+    X22_EmpAccess + X23_C_LOS + X24_O_Bus_LOS + X26_O_Train_LOS + 
+    X28_PropFTE + X29_MeanSize + X31_PropOS + X32_PropBach, data = Melb.Trambus.noFTZ.rd6)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-2.53014 -0.33304  0.02605  0.36587  1.85602 
+
+Coefficients:
+                  Estimate Standardized Std. Error t value Pr(>|t|)    
+(Intercept)      3.612e+00    0.000e+00  1.142e+00   3.161  0.00172 ** 
+ln_pop           2.454e-01    1.405e-01  1.190e-01   2.062  0.03998 *  
+X6_PropComm      4.945e-01    9.492e-02  2.844e-01   1.739  0.08306 .  
+X9_LUEntropy     5.885e-01    1.050e-01  3.523e-01   1.671  0.09576 .  
+X10_HousingDiv  -1.465e-01   -1.497e-01  5.489e-02  -2.669  0.00800 ** 
+X11_PedConnect   5.550e-04    2.842e-02  1.427e-03   0.389  0.69764    
+X12_PBN          3.096e-01    7.192e-02  1.897e-01   1.633  0.10355    
+X13_DestScore    6.112e-02    1.083e-01  3.077e-02   1.987  0.04783 *  
+X17_ACDist      -3.292e-03   -3.517e-03  5.391e-02  -0.061  0.95134    
+X18_ACCount      7.292e-02    3.739e-02  9.944e-02   0.733  0.46390    
+X20_Parking     -1.575e-05   -1.338e-02  6.230e-05  -0.253  0.80059    
+X21_PropUrban   -2.845e-02   -4.263e-03  4.296e-01  -0.066  0.94724    
+X22_EmpAccess    9.175e-07    1.553e-01  4.509e-07   2.035  0.04270 *  
+X23_C_LOS        1.653e-02    5.393e-01  1.327e-03  12.461  < 2e-16 ***
+X24_O_Bus_LOS    1.582e-03    6.306e-02  1.122e-03   1.410  0.15958    
+X26_O_Train_LOS  4.991e-04    1.667e-02  1.602e-03   0.311  0.75564    
+X28_PropFTE     -1.298e+00   -1.137e-01  6.888e-01  -1.885  0.06037 .  
+X29_MeanSize     4.642e-02    1.956e-02  1.468e-01   0.316  0.75213    
+X31_PropOS      -4.672e+00   -1.096e-01  2.043e+00  -2.287  0.02288 *  
+X32_PropBach    -2.670e-01   -2.613e-02  5.661e-01  -0.472  0.63752    
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 0.6064 on 317 degrees of freedom
+Multiple R-squared:  0.5053,	Adjusted R-squared:  0.4756 
+F-statistic: 17.04 on 19 and 317 DF,  p-value: < 2.2e-16
+
